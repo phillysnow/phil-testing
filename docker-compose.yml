@@ -1,0 +1,16 @@
+version: '3'
+services:
+    tfe:
+        container_name: tfe
+        environment:
+            NPM_FORCE_REBUILD: 'true'
+            NPM_DEV: 'true'
+            NPM_GENERATE: 'true'
+        build:
+            context: ./.docker
+            dockerfile: Dockerfile
+        volumes:
+            - '.:/var/www/app'
+            - /var/www/app/node_modules/
+        ports:
+            - '3000:3000'
