@@ -15,7 +15,7 @@ export default {
 	/*
 	 ** Customize the progress-bar color
 	 */
-	loading: { color: '#fff' },
+	loading: { color: '#3edb58' },
 	/*
 	 ** Global CSS / SCSS
 	 */
@@ -23,7 +23,7 @@ export default {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: [],
+	plugins: ['@/plugins/link-resolver.ts'],
 	/*
 	 ** Nuxt.js dev-modules
 	 */
@@ -45,7 +45,7 @@ export default {
 	 ** See https://github.com/nuxt-community/style-resources-module/
 	 */
 	styleResources: {
-		scss: ['./assets/scss/_variables.scss', './assets/scss/_mixins.scss'],
+		scss: ['@/assets/scss/_variables.scss', '@/assets/scss/_mixins.scss'],
 	},
 	/*
 	 ** Axios module configuration
@@ -67,4 +67,4 @@ export default {
 			],
 		},
 	},
-}
+};
