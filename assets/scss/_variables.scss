@@ -1,0 +1,33 @@
+// ===============================================================
+//  VARIABLES
+// ===============================================================
+
+// Typography
+$base-font-mobile: 47.5%;
+$base-font-tablet: 52.5%;
+$base-font-laptop: 62.5%; // 1rem = ~10px
+
+$font-base: 'Roboto', sans-serif;
+$font-head: 'Roboto', sans-serif;
+
+$font-s: 1.6rem;
+$font: 1.8rem;
+$font-m: 2rem;
+$font-l: 2.2rem;
+$font-xl: 2.4rem;
+$font-xxl: 3.2rem;
+$font-title: 4.7rem;
+
+// Spacing
+$spacing: 1.6rem; // 1.6rem = ~16px
+$content-width: 67rem;
+
+// Breakpoints
+$s: 576px;
+$m: 768px;
+$l: 992px;
+$xl: 1200px;
+$max: 1670px;
+
+// Animations
+$gom: cubic-bezier(0.7, 0.06, 0.42, 0.99);

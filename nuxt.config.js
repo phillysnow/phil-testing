@@ -17,9 +17,9 @@ export default {
 	 */
 	loading: { color: '#fff' },
 	/*
-	 ** Global CSS
+	 ** Global CSS / SCSS
 	 */
-	css: [],
+	css: ['@/assets/scss/style.scss'],
 	/*
 	 ** Plugins to load before mounting the App
 	 */
@@ -38,7 +38,15 @@ export default {
 	modules: [
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
+		'@nuxtjs/style-resources',
 	],
+	/*
+	 ** Style resources module configuration
+	 ** See https://github.com/nuxt-community/style-resources-module/
+	 */
+	styleResources: {
+		scss: ['./assets/scss/_variables.scss', './assets/scss/_mixins.scss'],
+	},
 	/*
 	 ** Axios module configuration
 	 ** See https://axios.nuxtjs.org/options
@@ -52,5 +60,11 @@ export default {
 		 ** You can extend webpack config here
 		 */
 		extend(config, ctx) {},
+		babel: {
+			plugins: [
+				['@babel/plugin-proposal-decorators', { legacy: true }],
+				['@babel/plugin-proposal-class-properties', { loose: true }],
+			],
+		},
 	},
 }

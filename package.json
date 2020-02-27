@@ -1,5 +1,5 @@
 {
-	"name": "tfe",
+	"name": "TFE",
 	"version": "1.0.0",
 	"description": "theFactor.e website",
 	"theme_color": "#fff",
@@ -28,7 +28,9 @@
 	},
 	"dependencies": {
 		"@nuxtjs/axios": "^5.3.6",
-		"nuxt": "^2.0.0"
+		"@nuxtjs/style-resources": "^1.0.0",
+		"nuxt": "^2.0.0",
+		"nuxt-property-decorator": "^2.5.1"
 	},
 	"devDependencies": {
 		"@nuxt/typescript-build": "^0.5.7",

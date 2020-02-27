@@ -13,13 +13,15 @@
 </template>
 
 <script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import { Logo } from '@/components/base'
 
-export default {
+@Component({
 	components: {
 		Logo,
 	},
-}
+})
+export default class Index extends Vue {}
 </script>
 
 <style lang="scss">
@@ -36,7 +38,7 @@ export default {
 	font-family: 'Quicksand', sans-serif;
 	display: block;
 	font-weight: 300;
-	font-size: 100px;
+	font-size: $font-xxl;
 	color: #35495e;
 	letter-spacing: 1px;
 }

@@ -1,0 +1,32 @@
+// ===============================================================
+//  MIXINS
+// ===============================================================
+// Clearfix. Only clear down, not up.
+@mixin clearfix() {
+	&::after {
+		clear: both;
+		content: ' ';
+		display: table;
+		width: 100%;
+	}
+}
+
+//screenreader only
+@mixin sr-only() {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+}
+
+@mixin break-long-word() {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word;
+	hyphens: auto;
+}
