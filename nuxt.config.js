@@ -23,7 +23,7 @@ export default {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: ['@/plugins/link-resolver.ts'],
+	plugins: ['@/plugins/link-resolver.ts', '@/plugins/html-serializer.ts'],
 	/*
 	 ** Nuxt.js dev-modules
 	 */
