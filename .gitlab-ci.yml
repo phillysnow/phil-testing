@@ -1,0 +1,31 @@
+stages:
+  - deploy
+
+deploy:acc:
+  stage: deploy
+  environment:
+    name: acc
+  when: manual
+  image: registry.tfe.nl/continuous-integration/aws:latest
+  tags:
+    - docker-unrestricted
+  only:
+    refs:
+      - master
+  script:
+    - cd site && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+
+deploy:prd:
+  stage: deploy
+  environment:
+    name: prd
+  when: manual
+  image: registry.tfe.nl/continuous-integration/aws:latest
+  tags:
+    - docker-unrestricted
+  only:
+    refs:
+      - master
+  script:
+    - cd site && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+
