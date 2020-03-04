@@ -1,0 +1,70 @@
+* {
+	font-family: $font-base;
+}
+
+html {
+	font-size: $base-font-mobile;
+
+	// tablet and up
+	@media all and (min-width: $m) {
+		font-size: $base-font-tablet;
+	}
+
+	// laptop and up
+	@media all and (min-width: $xl) {
+		font-size: $base-font-laptop;
+	}
+}
+
+body {
+	margin: 0;
+	background-color: var(--background-base);
+	color: var(--color);
+}
+
+// Light default theme
+:root {
+	// other
+	--white: #fff;
+	--black: #000;
+	--grey: #40434e;
+	--purple: #764ba2;
+	--green: #3edb58;
+	--purple-alt: #667eea;
+	// background
+	--background-base: #fff;
+	--background: #f1f1f1;
+	// color
+	--color: #5f657f;
+	--color-head: #5f657f;
+}
+
+// Override variables for Dark theme
+body[data-theme='dark'] {
+	// background
+	--background-base: #353845;
+	--background: #35394a;
+	// color
+	--color: #bfc7e8;
+	--color-head: #bfc7e8;
+}
+
+svg {
+	position: relative;
+	vertical-align: middle;
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+	vertical-align: middle;
+}
+
+iframe {
+	width: 100%;
+	border: 0;
+}
+
+.hide-from-layout {
+	@include sr-only();
+}

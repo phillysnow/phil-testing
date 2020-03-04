@@ -4,9 +4,9 @@
 	</div>
 </template>
 
-<style>
+<style lang="scss">
 html {
-	font-family: 'Quicksand', Arial, sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 16px;
 	word-spacing: 1px;
 	-ms-text-size-adjust: 100%;

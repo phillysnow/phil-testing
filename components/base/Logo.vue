@@ -1,0 +1,25 @@
+<template>
+	<svg class="logo" version="1" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 310 310">
+		<path
+			d="M0 155v155h310V0H0v155zm283-95v33l-94.7.2-94.8.3-.3 94.8L93 283H27V27h256v33zm0 95v33l-47.2.2-47.3.3-.3 47.2-.2 47.3h-66V122h161v33zm0 95v33h-66v-66h66v33z"
+		/>
+	</svg>
+</template>
+<style lang="scss">
+.logo {
+	animation: 1s appear;
+	margin: auto;
+	height: $spacing * 3;
+	width: $spacing * 3;
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+</style>
