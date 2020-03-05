@@ -1,5 +1,33 @@
 stages:
+  - build
   - deploy
+
+build:acc:
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
+  stage: build
+  script:
+      - yarn
+      - yarn build
+  artifacts:
+      paths:
+          - ./dist
+      expire_in: 1 hrs
+  tags:
+      - docker-unrestricted
+
+build:prd:
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
+  stage: build
+  script:
+      - yarn
+      - yarn generate
+  artifacts:
+      paths:
+          - ./dist
+      expire_in: 1 hrs
+  tags:
+      - docker-unrestricted
+
 
 deploy:acc:
   stage: deploy
@@ -7,15 +35,16 @@ deploy:acc:
       name: acc
   when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
+  needs:
+    - job: build:acc
+      artifacts: true
   tags:
       - docker-unrestricted
   only:
       refs:
           - staging
   script:
-      - yarn
-      - yarn build
-      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - aws s3 sync --delete . s3://$AWS_S3_BUCKET
 
 deploy:prd:
   stage: deploy
@@ -23,12 +52,13 @@ deploy:prd:
     name: prd
   when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
+  needs:
+    - job: build:prd
+      artifacts: true
   tags:
       - docker-unrestricted
   only:
       refs:
           - master
   script:
-      - yarn
-      - yarn generate
-      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - aws s3 sync --delete . s3://$AWS_S3_BUCKET
