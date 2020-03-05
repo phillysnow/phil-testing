@@ -15,3 +15,10 @@ import { Logo } from '@/components/base';
 })
 export default class Header extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+.header {
+	width: 100%;
+	padding: $spacing;
+}
+</style>

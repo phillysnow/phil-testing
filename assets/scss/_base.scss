@@ -18,35 +18,8 @@ html {
 
 body {
 	margin: 0;
-	background-color: var(--background-base);
-	color: var(--color);
-}
-
-// Light default theme
-:root {
-	// other
-	--white: #fff;
-	--black: #000;
-	--grey: #40434e;
-	--purple: #764ba2;
-	--green: #3edb58;
-	--purple-alt: #667eea;
-	// background
-	--background-base: #fff;
-	--background: #f1f1f1;
-	// color
-	--color: #5f657f;
-	--color-head: #5f657f;
-}
-
-// Override variables for Dark theme
-body[data-theme='dark'] {
-	// background
-	--background-base: #353845;
-	--background: #35394a;
-	// color
-	--color: #bfc7e8;
-	--color-head: #bfc7e8;
+	background-color: $background;
+	color: $color;
 }
 
 svg {
