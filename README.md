@@ -6,9 +6,9 @@
 
 # 📦 Requirments
 
-- [Node.js v10 or higher](https://nodejs.org/en/)
-- [Yarn v1.16 or higher](https://yarnpkg.com/lang/en/) or NPM v6.7
-- ☕ Coffee
+-   [Node.js v10 or higher](https://nodejs.org/en/)
+-   [Yarn v1.16 or higher](https://yarnpkg.com/lang/en/) or NPM v6.7
+-   ☕ Coffee
 
 # 🐎 QuickStart
 
@@ -16,13 +16,13 @@
 
 1. type in the terminal:
 
-   ```bash
-   # install dependencies
-   $ yarn
+    ```bash
+    # install dependencies
+    $ yarn
 
-   # serve with hot reload at localhost:3000
-   $ yarn dev
-   ```
+    # serve with hot reload at localhost:3000
+    $ yarn dev
+    ```
 
 2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
 
@@ -47,14 +47,14 @@ or for automatic builds, use CI build process
 
 # 🌎 Browser support
 
-- Chrome
-- Edge
-- Firefox (not officially supported, functional)
-- IE11
-- Safari
+-   Chrome
+-   Edge
+-   Firefox (not officially supported, functional)
+-   IE11
+-   Safari
 
 # 🔗 Url's
 
-- [develop](https://localhost:3000)
-- [staging](https://testwebsite/)
-- [production](https://tfe.nl)
+-   [Local](https://localhost:3000)
+-   [Staging](https://tfe.acc.tfe.nl/)
+-   [Production](https://www2.tfe.nl/)

@@ -1,6 +1,20 @@
 // ===============================================================
 //  VARIABLES
 // ===============================================================
+// Color
+$white: #fff;
+$black: #000;
+$grey: #40434e;
+$purple: #764ba2;
+$green: #3edb58;
+$purple-alt: #667eea;
+
+// background
+$background-base: #fff;
+$background: #f1f1f1;
+// color
+$color: #000;
+$color-head: #000;
 
 // Typography
 $base-font-mobile: 47.5%;
@@ -19,7 +33,7 @@ $font-xxl: 3.2rem;
 $font-title: 4.7rem;
 
 // Spacing
-$spacing: 1.6rem; // 1.6rem = ~16px
+$spacing: 2.4rem; // 2.4rem = ~24px
 $content-width: 67rem;
 
 // Breakpoints
