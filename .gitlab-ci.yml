@@ -10,7 +10,7 @@ build:acc:
       - yarn build
   artifacts:
     paths:
-      - dist/
+      - ./dist
   cache:
     key:
       files:
@@ -31,9 +31,9 @@ build:prd:
   script:
       - yarn
       - yarn generate
-artifacts:
-  paths:
-    - dist/
+  artifacts:
+    paths:
+      - ./dist
   cache:
     key:
       files:
