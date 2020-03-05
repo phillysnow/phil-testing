@@ -8,6 +8,9 @@ build:acc:
   script:
       - yarn
       - yarn build
+  artifacts:
+    paths:
+      - dist/
   cache:
     key:
       files:
@@ -15,6 +18,7 @@ build:acc:
         - yarn.lock
     paths:
       - node_modules
+      - dist
   tags:
       - docker-unrestricted
   only:
@@ -27,6 +31,9 @@ build:prd:
   script:
       - yarn
       - yarn generate
+artifacts:
+  paths:
+    - dist/
   cache:
     key:
       files:
@@ -34,6 +41,7 @@ build:prd:
         - yarn.lock
     paths:
       - node_modules
+      - dist
   tags:
       - docker-unrestricted
   only:
