@@ -12,6 +12,9 @@ build:acc:
       paths:
           - ./dist
       expire_in: 1 hrs
+  only:
+      refs:
+      		- staging
   tags:
       - docker-unrestricted
 
@@ -24,7 +27,10 @@ build:prd:
   artifacts:
       paths:
           - ./dist
-      expire_in: 1 hrs
+			expire_in: 1 hrs
+	only:
+			refs:
+					- master
   tags:
       - docker-unrestricted
 
