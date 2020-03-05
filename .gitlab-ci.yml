@@ -1,15 +1,13 @@
 stages:
-  - pre
   - build
   - deploy
 
-pre:
-  stage: pre
+build:acc:
+  stage: build
   image: 'registry.tfe.nl/frontend/docker-frontend:latest'
-  tags:
-    - docker-unrestricted
   script:
-    - yarn
+      - yarn
+      - yarn build
   cache:
     key:
       files:
@@ -17,14 +15,6 @@ pre:
         - yarn.lock
     paths:
       - node_modules
-
-build:acc:
-  stage: build
-  needs:
-    - job: pre
-      artifacts: true
-  script:
-      - yarn build
   tags:
       - docker-unrestricted
   only:
@@ -33,11 +23,17 @@ build:acc:
 
 build:prd:
   stage: build
-  needs:
-    - job: pre
-      artifacts: true
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   script:
+      - yarn
       - yarn generate
+  cache:
+    key:
+      files:
+        - package.json
+        - yarn.lock
+    paths:
+      - node_modules
   tags:
       - docker-unrestricted
   only:
