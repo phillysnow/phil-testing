@@ -9,6 +9,7 @@ build:acc:
       - yarn
       - yarn build
   artifacts:
+    expire_in: 5 min
     paths:
       - ./dist
   cache:
@@ -32,6 +33,7 @@ build:prd:
       - yarn
       - yarn generate
   artifacts:
+    expire_in: 5 min
     paths:
       - ./dist
   cache:
@@ -52,7 +54,6 @@ deploy:acc:
   stage: deploy
   environment:
       name: acc
-  when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
   needs:
     - job: build:acc
@@ -69,7 +70,6 @@ deploy:prd:
   stage: deploy
   environment:
     name: prd
-  when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
   needs:
     - job: build:prd
