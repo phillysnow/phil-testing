@@ -3,43 +3,57 @@ stages:
   - deploy
 
 build:acc:
-  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   stage: build
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   script:
       - yarn
       - yarn build
   artifacts:
-      paths:
-          - ./dist
-      expire_in: 1 hrs
-  only:
-      refs:
-      		- staging
+    expire_in: 5 min
+    paths:
+      - ./dist
+  cache:
+    key:
+      files:
+        - package.json
+        - yarn.lock
+    paths:
+      - node_modules
+      - dist
   tags:
       - docker-unrestricted
+  only:
+    refs:
+      - staging
 
 build:prd:
-  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   stage: build
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   script:
       - yarn
       - yarn generate
   artifacts:
-      paths:
-          - ./dist
-			expire_in: 1 hrs
-	only:
-			refs:
-					- master
+    expire_in: 5 min
+    paths:
+      - ./dist
+  cache:
+    key:
+      files:
+        - package.json
+        - yarn.lock
+    paths:
+      - node_modules
+      - dist
   tags:
       - docker-unrestricted
-
+  only:
+    refs:
+      - master
 
 deploy:acc:
   stage: deploy
   environment:
       name: acc
-  when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
   needs:
     - job: build:acc
@@ -50,13 +64,12 @@ deploy:acc:
       refs:
           - staging
   script:
-      - aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
 
 deploy:prd:
   stage: deploy
   environment:
     name: prd
-  when: manual
   image: registry.tfe.nl/continuous-integration/aws:latest
   needs:
     - job: build:prd
@@ -67,4 +80,4 @@ deploy:prd:
       refs:
           - master
   script:
-      - aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
