@@ -8,27 +8,25 @@ import Kinet from 'kinet';
 
 @Component({})
 export default class CursorAlt extends Vue {
-	private cursor: HTMLElement;
-	private links: NodeListOf<HTMLLinkElement>;
+	// private links: NodeListOf<HTMLLinkElement>;
 
 	mounted() {
-		const kinet = new Kinet({
+		const kinet: any = new Kinet({
 			acceleration: 0.08,
 			friction: 0.3,
 			names: ['x', 'y'],
 		});
-
-		this.cursor = this.$el;
 
 		document.addEventListener('mousemove', (event) => {
 			kinet.animate('x', event.clientX - window.innerWidth / 2);
 			kinet.animate('y', event.clientY - window.innerHeight / 2);
 		});
 
-		kinet.on('tick', (instances) => {
-			this.cursor.style.transform = `translate3d(${instances.x.current}px, ${
-				instances.y.current
-			}px, 0) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y.velocity / 2}deg)`;
+		kinet.on('tick', (instances: any) => {
+			(this.$el as HTMLElement).style.transform = `translate3d(${
+				instances.x.current
+			}px, ${instances.y.current}px, 0) rotateX(${instances.x.velocity /
+				2}deg) rotateY(${instances.y.velocity / 2}deg)`;
 		});
 	}
 }
