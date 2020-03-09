@@ -20,6 +20,8 @@ body {
 	margin: 0;
 	background-color: $background;
 	color: $color;
+	cursor: none;
+	overflow-x: hidden;
 }
 
 svg {
