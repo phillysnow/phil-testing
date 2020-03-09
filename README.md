@@ -28,22 +28,8 @@
 
 ## Production
 
-To export your project for production:
-
-```bash
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-or for automatic builds, use CI build process
-
-1. Go to [gitlab](https://git.tfe.nl)
-2. Create a new `tag`
-3. Notify that builds are downloadable from `CI > Jobs`
+When merged to `staging` an CI build will be triggered and build a new version for you.
+For production you need to merge to `master` and an other CI build will be triggerd.
 
 # 🌎 Browser support
 

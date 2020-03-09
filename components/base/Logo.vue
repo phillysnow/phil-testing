@@ -18,6 +18,7 @@
 .logo {
 	display: flex;
 	align-items: center;
+	width: 24rem;
 
 	svg {
 		height: $spacing * 3;
@@ -26,12 +27,15 @@
 
 	h3 {
 		font-size: $font-s;
+		width: 2rem;
 		margin-left: $spacing * 2;
 		text-transform: uppercase;
 		line-height: 1.5;
 		letter-spacing: 0.4em;
 		opacity: 0;
-		transition: 0.3s $gom opacity;
+		text-overflow: '';
+		overflow: hidden;
+		transition: 0.3s linear opacity, 0.3s $gom width;
 
 		> span {
 			display: inline-block;
@@ -43,6 +47,7 @@
 	&:hover {
 		h3 {
 			opacity: 1;
+			width: 12rem;
 		}
 	}
 }
