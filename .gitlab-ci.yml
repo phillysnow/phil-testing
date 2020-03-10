@@ -1,12 +1,32 @@
 stages:
+  - pre
   - build
   - deploy
 
-build:acc:
-  stage: build
+pre:
+  stage: pre
   image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   script:
-      - yarn
+    - yarn
+  artifacts:
+    paths:
+      - ./node_modules
+  cache:
+    key:
+      files:
+        - package.json
+        - yarn.lock
+    paths:
+      - node_modules
+  tags:
+      - docker-unrestricted   
+
+build:acc:
+  stage: build
+  needs:
+    - job: pre
+      artifacts: true
+  script:
       - yarn build
   artifacts:
     expire_in: 5 min
@@ -28,9 +48,10 @@ build:acc:
 
 build:prd:
   stage: build
-  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
+  needs:
+    - job: pre
+      artifacts: true
   script:
-      - yarn
       - yarn generate
   artifacts:
     expire_in: 5 min
