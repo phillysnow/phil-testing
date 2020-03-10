@@ -69,8 +69,7 @@ deploy:acc:
       refs:
           - staging
   script:
-      - cd dist
-      # - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
 
 deploy:prd:
   stage: deploy
@@ -86,5 +85,4 @@ deploy:prd:
       refs:
           - master
   script:
-      - cd dist
-      # - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
+      - cd dist && aws s3 sync --delete . s3://$AWS_S3_BUCKET
