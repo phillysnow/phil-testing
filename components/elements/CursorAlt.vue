@@ -14,19 +14,31 @@ export default class CursorAlt extends Vue {
 		const kinet: any = new Kinet({
 			acceleration: 0.08,
 			friction: 0.3,
-			names: ['x', 'y'],
+			names: ['x', 'y', 'z'],
 		});
+
+		kinet.animate('z', 1);
 
 		document.addEventListener('mousemove', (event) => {
 			kinet.animate('x', event.clientX - window.innerWidth / 2);
 			kinet.animate('y', event.clientY - window.innerHeight / 2);
 		});
 
+		document.addEventListener('mousedown', (event) => {
+			kinet.animate('z', 0.7);
+		});
+
+		document.addEventListener('mouseup', (event) => {
+			kinet.animate('z', 1);
+		});
+
 		kinet.on('tick', (instances: any) => {
 			(this.$el as HTMLElement).style.transform = `translate3d(${
 				instances.x.current
-			}px, ${instances.y.current}px, 0) rotateX(${instances.x.velocity /
-				2}deg) rotateY(${instances.y.velocity / 2}deg)`;
+			}px, ${instances.y.current}px, 0) scale(${
+				instances.z.current
+			}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y
+				.velocity / 2}deg)`;
 		});
 	}
 }
@@ -35,16 +47,16 @@ export default class CursorAlt extends Vue {
 <style lang="scss" scoped>
 .cursor {
 	display: block;
-	width: $spacing;
-	height: $spacing;
+	width: $spacing * 0.8;
+	height: $spacing * 0.8;
 	background: linear-gradient(to top left, #be0000, #fe0000);
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin: -$spacing * 0.5 0 0 -$spacing * 0.5;
+	margin: -$spacing * 0.4 0 0 -$spacing * 0.4;
 	pointer-events: none;
-	mix-blend-mode: multiply;
-	z-index: 20;
+	// mix-blend-mode: multiply;
+	z-index: 10;
 }
 </style>

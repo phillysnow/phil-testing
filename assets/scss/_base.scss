@@ -24,6 +24,10 @@ body {
 	overflow-x: hidden;
 }
 
+::selection {
+	background-color: $green;
+}
+
 svg {
 	position: relative;
 	vertical-align: middle;
