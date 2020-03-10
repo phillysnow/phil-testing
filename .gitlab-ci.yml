@@ -23,6 +23,7 @@ pre:
 
 build:acc:
   stage: build
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   needs:
     - job: pre
       artifacts: true
@@ -48,6 +49,7 @@ build:acc:
 
 build:prd:
   stage: build
+  image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   needs:
     - job: pre
       artifacts: true
