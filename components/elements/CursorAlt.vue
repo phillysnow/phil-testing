@@ -33,11 +33,9 @@ export default class CursorAlt extends Vue {
 		});
 
 		kinet.on('tick', (instances: any) => {
-			(this.$el as HTMLElement).style.transform = `translate3d(${
-				instances.x.current
-			}px, ${instances.y.current}px, 0) scale(${
-				instances.z.current
-			}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y
+			(this.$el as HTMLElement).style.transform = `translate3d(${instances.x.current}px, ${
+				instances.y.current
+			}px, 0) scale(${instances.z.current}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y
 				.velocity / 2}deg)`;
 		});
 	}
@@ -51,7 +49,7 @@ export default class CursorAlt extends Vue {
 	height: 1.8rem;
 	background: linear-gradient(to top left, #be0000, #fe0000);
 	border-radius: 50%;
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	margin: -0.9rem 0 0 -0.9rem;
