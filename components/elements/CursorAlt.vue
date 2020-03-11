@@ -47,14 +47,14 @@ export default class CursorAlt extends Vue {
 <style lang="scss" scoped>
 .cursor {
 	display: block;
-	width: $spacing * 0.8;
-	height: $spacing * 0.8;
+	width: 1.8rem;
+	height: 1.8rem;
 	background: linear-gradient(to top left, #be0000, #fe0000);
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin: -$spacing * 0.4 0 0 -$spacing * 0.4;
+	margin: -0.9rem 0 0 -0.9rem;
 	pointer-events: none;
 	// mix-blend-mode: multiply;
 	z-index: 10;
