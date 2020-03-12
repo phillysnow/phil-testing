@@ -23,7 +23,7 @@ export default {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: ['@/plugins/link-resolver.ts', '@/plugins/html-serializer.ts', '@/plugins/prismic-vue.ts'],
+	plugins: [],
 	/*
 	 ** Nuxt.js dev-modules
 	 */
@@ -39,7 +39,16 @@ export default {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/style-resources',
+		'@/modules/static',
+		'@/modules/crawler',
+		'@nuxtjs/prismic',
 	],
+	prismic: {
+		endpoint: 'https://tfe-test.cdn.prismic.io/api/v2',
+		preview: '/preview',
+		linkResolver: '@/plugins/link-resolver',
+		htmlSerializer: '@/plugins/html-serializer',
+	},
 	/*
 	 ** Style resources module configuration
 	 ** See https://github.com/nuxt-community/style-resources-module/
@@ -66,5 +75,8 @@ export default {
 				['@babel/plugin-proposal-class-properties', { loose: true }],
 			],
 		},
+	},
+	generate: {
+		fallback: '404.html',
 	},
 };

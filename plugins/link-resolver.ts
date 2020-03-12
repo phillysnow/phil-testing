@@ -8,7 +8,7 @@ export default function(doc: any) {
 	}
 
 	if (doc.type === 'test') {
-		return '/';
+		return '/test';
 	}
 
 	// if (doc.type === 'post') {
