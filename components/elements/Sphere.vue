@@ -1,28 +1,8 @@
 <template>
-	<main class="home">{{ document.page_title }}</main>
+	<div class="circle">
+		<span class="bubble"></span>
+	</div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
-import { Options } from '@/types';
-
-@Component({})
-export default class Index extends Vue {
-	async asyncData({ $prismic, error }: Options) {
-		try {
-			const document = (await $prismic.api.getSingle('test')).data;
-
-			console.log(document);
-
-			return {
-				document,
-			};
-		} catch (e) {
-			error({ statusCode: 404, message: 'Page not found' });
-		}
-	}
-}
-</script>
 
 <style lang="scss" scoped>
 .circle {

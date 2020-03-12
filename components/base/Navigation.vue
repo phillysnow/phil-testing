@@ -9,14 +9,33 @@
 		>menu</button>
 
 		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
-			<li class="menu-item">
-				<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+			<li class="menu-item top">
+				<svg width="100%" height="100%" viewBox="0 0 262 262">
+					<path d="M 148 139
+					m -97, 0
+					a 97,97 0 1,0 -194,0" id="path-top" />
+					<text>
+						<textPath xlink:href="#path-top">
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+						</textPath>
+					</text>
+				</svg>
 			</li>
-			<li class="menu-item">
-				<nuxt-link to="/projects" itemprop="url">Projects</nuxt-link>
-			</li>
-			<li class="menu-item">
-				<nuxt-link to="/about" itemprop="url">About</nuxt-link>
+			<li class="menu-item bottom">
+				<svg width="100%" height="100%" viewBox="0 0 262 262">
+					<path d="M 148 139
+					m -97, 0
+					a 97,97 0 1,0 -194,0" id="path-bottom" />
+					<text>
+						<textPath xlink:href="#path-bottom">
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
+						</textPath>
+					</text>
+				</svg>
 			</li>
 		</ul>
 	</nav>
