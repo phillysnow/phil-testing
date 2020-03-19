@@ -19,5 +19,9 @@ import { CursorAlt } from '@/components/elements';
 		CursorAlt,
 	},
 })
-export default class Default extends Vue {}
+export default class Default extends Vue {
+	async middleware({ store, $prismic }) {
+		await store.dispatch('fetchMenu', $prismic);
+	}
+}
 </script>

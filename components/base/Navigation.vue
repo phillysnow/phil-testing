@@ -6,36 +6,13 @@
 			class="menu-button init"
 			aria-expanded="false"
 			aria-controls="menu"
-		>menu</button>
+		>
+			menu
+		</button>
 
 		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
-			<li class="menu-item top">
-				<svg width="100%" height="100%" viewBox="0 0 262 262">
-					<path d="M 148 139
-					m -97, 0
-					a 97,97 0 1,0 -194,0" id="path-top" />
-					<text>
-						<textPath xlink:href="#path-top">
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-						</textPath>
-					</text>
-				</svg>
-			</li>
-			<li class="menu-item bottom">
-				<svg width="100%" height="100%" viewBox="0 0 262 262">
-					<path d="M 148 139
-					m -97, 0
-					a 97,97 0 1,0 -194,0" id="path-bottom" />
-					<text>
-						<textPath xlink:href="#path-bottom">
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-							<nuxt-link to="/" itemprop="url">Home</nuxt-link>
-						</textPath>
-					</text>
-				</svg>
+			<li v-for="menuLink in $store.state.menu.menu" :key="menuLink.id">
+				<prismic-link :field="menuLink.menu_link">{{ $prismic.asText(menuLink.menu_label) }}</prismic-link>
 			</li>
 		</ul>
 	</nav>
@@ -50,6 +27,8 @@ export default class Navigation extends Vue {
 	private active: boolean = false;
 
 	mounted() {
+		console.log(this.$store.state.menu.menu);
+
 		setTimeout(() => {
 			(this.$refs.toggleMenu as HTMLElement).classList.remove('init');
 		}, 300);
@@ -74,22 +53,25 @@ export default class Navigation extends Vue {
 	}
 
 	toggle() {
-		const open =
-			(this.$refs.toggleMenu as HTMLElement).getAttribute(
-				'aria-expanded'
-			) === 'true';
-		(this.$refs.toggleMenu as HTMLElement).setAttribute(
-			'aria-expanded',
-			`${!open}`
-		);
-		(this.$refs.menu as HTMLElement).hidden = !(this.$refs
-			.menu as HTMLElement).hidden;
+		const open = (this.$refs.toggleMenu as HTMLElement).getAttribute('aria-expanded') === 'true';
+		(this.$refs.toggleMenu as HTMLElement).setAttribute('aria-expanded', `${!open}`);
+		(this.$refs.menu as HTMLElement).hidden = !(this.$refs.menu as HTMLElement).hidden;
 		this.active = !this.active;
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+@mixin rotated-text($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+	$angle-per-char: $angle-span / $num-letters;
+
+	@for $i from 1 through $num-letters {
+		.char#{$i} {
+			@include transform(rotate($angle-offset + $angle-per-char * $i));
+		}
+	}
+}
+
 .nav {
 	display: block;
 	position: fixed;
@@ -102,10 +84,19 @@ export default class Navigation extends Vue {
 }
 
 .menu {
-	display: flex;
+	display: block;
+	width: 40rem;
+	height: 40rem;
+	transform: translateX(20rem);
 }
 
 .menu-item {
 	color: $pink;
+	width: 40rem;
+	height: 20rem;
+
+	a {
+		font-size: $font-xl;
+	}
 }
 </style>
