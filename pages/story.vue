@@ -1,5 +1,5 @@
 <template>
-	<main class="home">
+	<main class="story">
 		<Hero :content="document" />
 	</main>
 </template>
@@ -14,11 +14,10 @@ import { Options } from '@/types';
 		Hero,
 	},
 })
-export default class Index extends Vue {
+export default class Story extends Vue {
 	async asyncData({ $prismic, error }: Options) {
 		try {
-			const document = (await $prismic.api.getSingle('home')).data;
-			console.log(document);
+			const document = (await $prismic.api.getSingle('story')).data;
 
 			return {
 				document,

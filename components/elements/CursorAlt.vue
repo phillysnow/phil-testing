@@ -56,5 +56,12 @@ export default class CursorAlt extends Vue {
 	pointer-events: none;
 	// mix-blend-mode: multiply;
 	z-index: 10;
+	transition: 0.3s $gom width, 0.3s $gom height;
+
+	&.hover {
+		width: 4rem;
+		height: 4rem;
+		mix-blend-mode: multiply;
+	}
 }
 </style>

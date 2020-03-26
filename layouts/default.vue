@@ -8,9 +8,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Action } from 'nuxt-property-decorator';
 import { Header, Navigation } from '@/components/base';
 import { CursorAlt } from '@/components/elements';
+import { Options } from '@/types';
 
 @Component({
 	components: {
@@ -20,7 +21,8 @@ import { CursorAlt } from '@/components/elements';
 	},
 })
 export default class Default extends Vue {
-	async middleware({ store, $prismic }) {
+	// set navigation for all routes
+	async middleware({ store, $prismic }: Options) {
 		await store.dispatch('fetchMenu', $prismic);
 	}
 }

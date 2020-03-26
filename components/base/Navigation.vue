@@ -11,7 +11,13 @@
 		</button>
 
 		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
-			<li v-for="menuLink in $store.state.menu.menu" :key="menuLink.id">
+			<li
+				v-for="menuLink in stateMenu.menu"
+				:key="menuLink.id"
+				@mouseover="cursorHover(true)"
+				@mouseleave="cursorHover(false)"
+				class="menu-item"
+			>
 				<prismic-link :field="menuLink.menu_link">{{ $prismic.asText(menuLink.menu_label) }}</prismic-link>
 			</li>
 		</ul>
@@ -19,16 +25,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, State } from 'nuxt-property-decorator';
 
-@Component({})
+@Component
 export default class Navigation extends Vue {
+	@State('menu') stateMenu: any;
 	private menuStyling: object = {};
 	private active: boolean = false;
 
 	mounted() {
-		console.log(this.$store.state.menu.menu);
-
 		setTimeout(() => {
 			(this.$refs.toggleMenu as HTMLElement).classList.remove('init');
 		}, 300);
@@ -58,6 +63,18 @@ export default class Navigation extends Vue {
 		(this.$refs.menu as HTMLElement).hidden = !(this.$refs.menu as HTMLElement).hidden;
 		this.active = !this.active;
 	}
+
+	cursorHover(value: boolean) {
+		const cursor = document.querySelector('.cursor');
+
+		if (!cursor) return;
+
+		if (value) {
+			cursor.classList.add('hover');
+		} else {
+			cursor.classList.remove('hover');
+		}
+	}
 }
 </script>
 
@@ -72,28 +89,32 @@ export default class Navigation extends Vue {
 	}
 }
 
-.nav {
+.navigation {
 	display: block;
 	position: fixed;
-	bottom: 0;
+	bottom: $spacing * 3;
 	left: 50%;
 }
 
 .menu-button {
 	background: $pink;
+	width: 16rem;
+	height: 16rem;
+	border: 0;
+	border-radius: 50%;
+	font-size: $font-m;
+	letter-spacing: 0.1rem;
 }
 
 .menu {
-	display: block;
-	width: 40rem;
-	height: 40rem;
-	transform: translateX(20rem);
+	display: none;
+	position: absolute;
+	top: -10rem;
+	left: -20rem;
 }
 
 .menu-item {
-	color: $pink;
-	width: 40rem;
-	height: 20rem;
+	margin: 0 $spacing;
 
 	a {
 		font-size: $font-xl;
