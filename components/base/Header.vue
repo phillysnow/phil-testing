@@ -4,7 +4,7 @@
 	</header>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'nuxt-property-decorator';
 import { Logo } from '@/components/base';
 

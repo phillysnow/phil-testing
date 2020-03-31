@@ -7,11 +7,10 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue, Action } from 'nuxt-property-decorator';
 import { Header, Navigation } from '@/components/base';
 import { CursorAlt } from '@/components/elements';
-import { Options } from '@/types';
 
 @Component({
 	components: {
@@ -22,7 +21,7 @@ import { Options } from '@/types';
 })
 export default class Default extends Vue {
 	// set navigation for all routes
-	async middleware({ store, $prismic }: Options) {
+	async middleware({ store, $prismic }) {
 		await store.dispatch('fetchMenu', $prismic);
 	}
 }

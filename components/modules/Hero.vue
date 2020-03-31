@@ -7,12 +7,12 @@
 	</section>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component
 export default class Hero extends Vue {
-	@Prop() content: any;
+	@Prop() content;
 }
 </script>
 

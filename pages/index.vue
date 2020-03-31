@@ -4,10 +4,9 @@
 	</main>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'nuxt-property-decorator';
 import { Hero } from '@/components/modules';
-import { Options } from '@/types';
 
 @Component({
 	components: {
@@ -15,10 +14,9 @@ import { Options } from '@/types';
 	},
 })
 export default class Index extends Vue {
-	async asyncData({ $prismic, error }: Options) {
+	async asyncData({ $prismic, error }) {
 		try {
 			const document = (await $prismic.api.getSingle('home')).data;
-			console.log(document);
 
 			return {
 				document,

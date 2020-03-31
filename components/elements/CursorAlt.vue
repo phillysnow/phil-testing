@@ -2,16 +2,16 @@
 	<span class="cursor"></span>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'nuxt-property-decorator';
 import Kinet from 'kinet';
 
 @Component({})
 export default class CursorAlt extends Vue {
-	// private links: NodeListOf<HTMLLinkElement>;
+	// links: NodeListOf<HTMLLinkElement>;
 
 	mounted() {
-		const kinet: any = new Kinet({
+		const kinet = new Kinet({
 			acceleration: 0.08,
 			friction: 0.3,
 			names: ['x', 'y', 'z'],
@@ -32,8 +32,8 @@ export default class CursorAlt extends Vue {
 			kinet.animate('z', 1);
 		});
 
-		kinet.on('tick', (instances: any) => {
-			(this.$el as HTMLElement).style.transform = `translate3d(${instances.x.current}px, ${
+		kinet.on('tick', instances => {
+			this.$el.style.transform = `translate3d(${instances.x.current}px, ${
 				instances.y.current
 			}px, 0) scale(${instances.z.current}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y
 				.velocity / 2}deg)`;

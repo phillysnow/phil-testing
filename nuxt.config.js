@@ -30,7 +30,6 @@ export default {
 	buildModules: [
 		// Doc: https://github.com/nuxt-community/stylelint-module
 		'@nuxtjs/stylelint-module',
-		'@nuxt/typescript-build',
 	],
 	/*
 	 ** Nuxt.js modules

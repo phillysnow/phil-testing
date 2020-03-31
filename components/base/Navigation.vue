@@ -6,9 +6,7 @@
 			class="menu-button init"
 			aria-expanded="false"
 			aria-controls="menu"
-		>
-			menu
-		</button>
+		>menu</button>
 
 		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
 			<li
@@ -24,23 +22,23 @@
 	</nav>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue, State } from 'nuxt-property-decorator';
 
 @Component
 export default class Navigation extends Vue {
-	@State('menu') stateMenu: any;
-	private menuStyling: object = {};
-	private active: boolean = false;
+	@State('menu') stateMenu;
+	menuStyling = {};
+	active = false;
 
 	mounted() {
 		setTimeout(() => {
-			(this.$refs.toggleMenu as HTMLElement).classList.remove('init');
+			this.$refs.toggleMenu.classList.remove('init');
 		}, 300);
 	}
 
 	toggleMenu() {
-		if (!(this.$refs.menu as HTMLElement).hidden) {
+		if (!this.$refs.menu.hidden) {
 			this.toggle();
 			setTimeout(() => {
 				this.menuStyling = {
@@ -58,13 +56,13 @@ export default class Navigation extends Vue {
 	}
 
 	toggle() {
-		const open = (this.$refs.toggleMenu as HTMLElement).getAttribute('aria-expanded') === 'true';
-		(this.$refs.toggleMenu as HTMLElement).setAttribute('aria-expanded', `${!open}`);
-		(this.$refs.menu as HTMLElement).hidden = !(this.$refs.menu as HTMLElement).hidden;
+		const open = this.$refs.toggleMenu.getAttribute('aria-expanded') === 'true';
+		this.$refs.toggleMenu.setAttribute('aria-expanded', `${!open}`);
+		this.$refs.menu.hidden = !this.$refs.menu.hidden;
 		this.active = !this.active;
 	}
 
-	cursorHover(value: boolean) {
+	cursorHover(value) {
 		const cursor = document.querySelector('.cursor');
 
 		if (!cursor) return;
@@ -79,7 +77,11 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@mixin rotated-text($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+@mixin rotated-text(
+	$num-letters: 100,
+	$angle-span: 180deg,
+	$angle-offset: 0deg
+) {
 	$angle-per-char: $angle-span / $num-letters;
 
 	@for $i from 1 through $num-letters {
