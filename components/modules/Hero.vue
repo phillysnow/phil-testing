@@ -18,7 +18,7 @@ export default class Hero extends Vue {
 
 <style lang="scss" scoped>
 .hero {
-	height: 50vh;
+	height: 20vh;
 }
 
 .hero-content {

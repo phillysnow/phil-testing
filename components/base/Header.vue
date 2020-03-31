@@ -19,6 +19,9 @@ export default class Header extends Vue {}
 <style lang="scss" scoped>
 .header {
 	width: 100%;
-	padding: $spacing;
+	position: absolute;
+	padding-left: $spacing * 4;
+	padding-top: $spacing * 3;
+	z-index: 2;
 }
 </style>

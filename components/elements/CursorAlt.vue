@@ -1,5 +1,7 @@
 <template>
-	<span class="cursor"></span>
+	<div class="cursor">
+		<span class="sphere"></span>
+	</div>
 </template>
 
 <script>
@@ -32,36 +34,48 @@ export default class CursorAlt extends Vue {
 			kinet.animate('z', 1);
 		});
 
-		kinet.on('tick', instances => {
-			this.$el.style.transform = `translate3d(${instances.x.current}px, ${
-				instances.y.current
-			}px, 0) scale(${instances.z.current}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y
-				.velocity / 2}deg)`;
+		kinet.on('tick', (instances) => {
+			this.$el.style.transform = `translate3d(${instances.x.current}px, ${instances.y.current}px, 0) scale(${
+				instances.z.current
+			}) rotateX(${instances.x.velocity / 2}deg) rotateY(${instances.y.velocity / 2}deg)`;
 		});
 	}
 }
 </script>
 
-<style lang="scss" scoped>
-.cursor {
+<style lang="scss">
+// * {
+// 	cursor: none;
+// }
+
+.sphere {
 	display: block;
+	position: absolute;
 	width: 1.8rem;
 	height: 1.8rem;
+	top: -0.2rem;
+	left: -0.15rem;
 	background: linear-gradient(to top left, #be0000, #fe0000);
 	border-radius: 50%;
+	margin: -0.9rem 0 0 -0.9rem;
+	pointer-events: none;
+	transform: scale(1);
+	z-index: 10;
+	transition: 0.3s $gom transform;
+}
+
+.cursor {
+	display: block;
+	width: 1px;
+	height: 1px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	margin: -0.9rem 0 0 -0.9rem;
-	pointer-events: none;
-	// mix-blend-mode: multiply;
-	z-index: 10;
-	transition: 0.3s $gom width, 0.3s $gom height;
 
 	&.hover {
-		width: 4rem;
-		height: 4rem;
-		mix-blend-mode: multiply;
+		.sphere {
+			transform: scale(2);
+		}
 	}
 }
 </style>

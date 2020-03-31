@@ -6,7 +6,9 @@
 			class="menu-button init"
 			aria-expanded="false"
 			aria-controls="menu"
-		>menu</button>
+			@mouseover="cursorHover(true, 'menu')"
+			@mouseleave="cursorHover(false, 'menu')"
+		></button>
 
 		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
 			<li
@@ -62,26 +64,24 @@ export default class Navigation extends Vue {
 		this.active = !this.active;
 	}
 
-	cursorHover(value) {
+	cursorHover(value, extraClass = '') {
 		const cursor = document.querySelector('.cursor');
-
 		if (!cursor) return;
 
+		const classListItems = ['hover'];
+		if (extraClass) classListItems.push(extraClass);
+
 		if (value) {
-			cursor.classList.add('hover');
+			cursor.classList.add(...classListItems);
 		} else {
-			cursor.classList.remove('hover');
+			cursor.classList.remove(...classListItems);
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-@mixin rotated-text(
-	$num-letters: 100,
-	$angle-span: 180deg,
-	$angle-offset: 0deg
-) {
+@mixin rotated-text($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
 	$angle-per-char: $angle-span / $num-letters;
 
 	@for $i from 1 through $num-letters {
@@ -92,16 +92,18 @@ export default class Navigation extends Vue {
 }
 
 .navigation {
-	display: block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: fixed;
+	width: 100%;
 	bottom: $spacing * 3;
-	left: 50%;
 }
 
 .menu-button {
 	background: $pink;
-	width: 16rem;
-	height: 16rem;
+	width: $spacing * 3.5;
+	height: $spacing * 3.5;
 	border: 0;
 	border-radius: 50%;
 	font-size: $font-m;
@@ -111,8 +113,8 @@ export default class Navigation extends Vue {
 .menu {
 	display: none;
 	position: absolute;
-	top: -10rem;
-	left: -20rem;
+	top: -5rem;
+	left: 22%;
 }
 
 .menu-item {

@@ -1,16 +1,17 @@
 <template>
 	<main class="home">
-		<Hero :content="document" />
+		<Slider />
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero } from '@/components/modules';
+import { Hero, Slider } from '@/components/modules';
 
 @Component({
 	components: {
 		Hero,
+		Slider,
 	},
 })
 export default class Index extends Vue {
@@ -27,3 +28,21 @@ export default class Index extends Vue {
 	}
 }
 </script>
+<style lang="scss" scoped>
+.home {
+	height: 100vh;
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: -8vh;
+		left: -25vh;
+		width: 90vh;
+		height: 90vh;
+		border-radius: 50%;
+		background-color: $pink;
+	}
+}
+</style>
