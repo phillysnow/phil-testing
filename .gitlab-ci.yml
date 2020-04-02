@@ -1,5 +1,5 @@
 variables:
-  GIT_DEPTH: 10
+  GIT_DEPTH: 1
 
 stages:
   - build
@@ -10,7 +10,7 @@ build:acc:
   image: 'registry.tfe.nl/frontend/docker-frontend:latest'
   script:
       - yarn
-      - yarn build
+      - yarn generate
   artifacts:
     expire_in: 5 min
     paths:
