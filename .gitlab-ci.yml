@@ -16,7 +16,6 @@ build:acc:
     paths:
       - ./dist
   cache:
-    policy: pull
     key:
       files:
         - package.json
@@ -41,7 +40,6 @@ build:prd:
     paths:
       - ./dist
   cache:
-    policy: pull
     key:
       files:
         - package.json
