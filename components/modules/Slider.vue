@@ -1,12 +1,11 @@
 <template>
-	<div class="wrapper">
-		<div class="item">1</div>
-		<div class="item">2</div>
-		<div class="item">3</div>
-		<div class="item">4</div>
-		<div class="item">5</div>
-		<div class="item">6</div>
-	</div>
+	<ul class="slider">
+		<li class="item"></li>
+		<li class="item"></li>
+		<li class="item"></li>
+		<li class="item"></li>
+		<li class="item"></li>
+	</ul>
 </template>
 
 <script>
@@ -20,67 +19,23 @@ export default class Slider extends Vue {
 }
 </script>
 
-<style lang="scss">
-.wrapper {
-	position: relative;
-	width: 200px;
-	height: 200px;
-	margin: 200px auto;
-	transform-style: preserve-3d;
-	animation: slider 5s linear reverse infinite;
+<style scoped lang="scss">
+.slider {
+	display: grid;
+	grid-gap: $spacing * 2;
+	grid-template-rows: 1fr;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	width: 100%;
+	height: 55rem;
+	margin: 20rem auto;
 }
 
-.wrapper .item {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
+.item {
+	width: 40rem;
 	height: 100%;
-	text-align: center;
-	line-height: 200px;
-	font-size: 30px;
-	color: #fff;
+	background-color: $green;
 	user-select: none;
 	opacity: 0.6;
-}
-
-.wrapper .item:nth-of-type(1) {
-	background: red;
-	transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 200px);
-}
-
-.wrapper .item:nth-of-type(2) {
-	background: blue;
-	transform: rotate3d(0, 1, 0, 60deg) translate3d(0, 0, 200px);
-}
-
-.wrapper .item:nth-of-type(3) {
-	background: orange;
-	transform: rotate3d(0, 1, 0, 120deg) translate3d(0, 0, 200px);
-}
-
-.wrapper .item:nth-of-type(4) {
-	background: purple;
-	transform: rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 200px);
-}
-
-.wrapper .item:nth-of-type(5) {
-	background: green;
-	transform: rotate3d(0, 1, 0, 240deg) translate3d(0, 0, 200px);
-}
-
-.wrapper .item:nth-of-type(6) {
-	background: deeppink;
-	transform: rotate3d(0, 1, 0, 300deg) translate3d(0, 0, 200px);
-}
-
-@keyframes slider {
-	0% {
-		transform: rotate3d(1, 0, 0, -20deg) rotateY(0deg);
-	}
-
-	100% {
-		transform: rotate3d(1, 0, 0, -20deg) rotateY(360deg);
-	}
 }
 </style>

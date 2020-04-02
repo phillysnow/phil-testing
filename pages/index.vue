@@ -33,16 +33,5 @@ export default class Index extends Vue {
 	height: 100vh;
 	position: relative;
 	overflow: hidden;
-
-	&::before {
-		content: '';
-		position: absolute;
-		bottom: -8vh;
-		left: -25vh;
-		width: 90vh;
-		height: 90vh;
-		border-radius: 50%;
-		background-color: $pink;
-	}
 }
 </style>
