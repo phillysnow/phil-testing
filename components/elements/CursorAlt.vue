@@ -42,8 +42,10 @@ export default class CursorAlt extends Vue {
 </script>
 
 <style lang="scss">
-* {
-	cursor: none;
+@media all and (min-width: $m) {
+	* {
+		cursor: none;
+	}
 }
 
 .sphere {

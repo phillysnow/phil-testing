@@ -13,6 +13,10 @@ import { Hero, Slider } from '@/components/modules';
 		Hero,
 		Slider,
 	},
+	transition: {
+		name: 'test',
+		mode: 'in-out',
+	},
 })
 export default class Index extends Vue {
 	async asyncData({ $prismic, error }) {
@@ -33,5 +37,21 @@ export default class Index extends Vue {
 	height: 100vh;
 	position: relative;
 	overflow: hidden;
+}
+
+// .test-enter-active {
+// 	animation: slide-in-from-right 5s ease-out;
+// }
+
+@keyframes slide-in-from-right {
+	0% {
+		transform: translateX(10rem) rotateZ(4deg);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateX(0) rotateZ(0);
+		opacity: 1;
+	}
 }
 </style>
