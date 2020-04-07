@@ -1,9 +1,9 @@
 <template>
 	<transition name="appear" appear>
 		<div class="slider">
-			<ul class="slider--group">
+			<ul ref="group" class="slider--group">
 				<li ref="items" v-for="i in range" :key="i" class="slider--item" :data-id="i">
-					<transition name="fade">
+					<transition v-bind:name="transitionName(i)">
 						<div v-if="inViewById[i]" :key="i">{{ i }}</div>
 					</transition>
 				</li>
@@ -14,6 +14,7 @@
 
 <script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import Kinet from 'kinet';
 
 @Component({})
 export default class Slider extends Vue {
@@ -27,12 +28,14 @@ export default class Slider extends Vue {
 			observer.observe(el);
 		}
 		this.observer = observer;
+
+		this.slideList();
 	}
 
 	beforeDestroy() {
 		this.observer.disconnect();
 	}
-
+	
 	cloneInViewById() {
 		let inViewById = {};
 		for (let [id, inView] of Object.entries(this.inViewById)) {
@@ -51,15 +54,50 @@ export default class Slider extends Vue {
 
 			if (entry.isIntersecting) {
 				inViewById[id] = entry.isIntersecting;
-				// if (this.$refs.items[id]) this.$refs.items[id].classList.add('active');
 			} else if (inViewById[id]) {
 				// Leaving view.
 				inViewById[id] = false;
-				// if (this.$refs.items[id]) this.$refs.items[id].classList.remove('active');
 			}
 		}
 
 		this.inViewById = inViewById;
+	}
+
+
+	transitionName(i) {
+		const inViewById = this.cloneInViewById();
+		const IDArray = Object.keys(inViewById);
+		const index = IDArray.length - 1;
+
+		if (i < IDArray[index]) {
+			return 'before';
+		} else {
+			return 'after';
+		}
+	}
+
+	slideList() {
+		let index = 0;
+		const slidergroup = this.$refs.group;
+
+		const kinet = new Kinet({
+			acceleration: 0.08,
+			friction: 0.5,
+			names: ['x'],
+		});
+		
+		this.$el.addEventListener('wheel', (e) => {
+			e.preventDefault();
+			e = window.event || e;
+			
+			index -= (e.deltaY);
+
+			kinet.animate('x', index);	
+		}, false);
+
+		kinet.on('tick', (inst) => {
+			slidergroup.style.transform = `translateX(${inst.x.current}px)`;
+		});
 	}
 
 	// test items generator
@@ -85,7 +123,7 @@ export default class Slider extends Vue {
 <style scoped lang="scss">
 .slider {
 	transition: 0.5s opacity;
-	overflow: auto hidden;
+	overflow: hidden;
 }
 
 .slider--group {
@@ -97,17 +135,21 @@ export default class Slider extends Vue {
 	width: 100%;
 	height: 55rem;
 	margin: 20rem auto;
-	scroll-behavior: smooth;
 }
 
-.fade-enter-active {
-	animation: bounce-in 0.5s ease-out;
+.before-enter-active {
+	animation: slide-in-from-left 0.5s ease-out;
+}
+
+.after-enter-active {
+	animation: slide-in-from-right 0.5s ease-out;
 }
 
 .appear-enter-active {
 	opacity: 0;
 
-	.fade-enter-active {
+	.before-enter-active,
+	.after-enter-active {
 		animation: none;
 	}
 }
@@ -130,13 +172,27 @@ export default class Slider extends Vue {
 	}
 }
 
-@keyframes bounce-in {
+@keyframes slide-in-from-left {
 	0% {
-		transform: translateY(10rem) rotateZ(4deg);
+		transform: translateX(-10rem) rotateZ(4deg);
+		opacity: 0;
 	}
 
 	100% {
-		transform: translateY(0) rotateZ(0);
+		transform: translateX(0) rotateZ(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slide-in-from-right {
+	0% {
+		transform: translateX(10rem) rotateZ(4deg);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateX(0) rotateZ(0);
+		opacity: 1;
 	}
 }
 </style>
