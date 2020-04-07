@@ -10,8 +10,6 @@ import Kinet from 'kinet';
 
 @Component({})
 export default class CursorAlt extends Vue {
-	// links: NodeListOf<HTMLLinkElement>;
-
 	mounted() {
 		const kinet = new Kinet({
 			acceleration: 0.08,
@@ -44,9 +42,9 @@ export default class CursorAlt extends Vue {
 </script>
 
 <style lang="scss">
-// * {
-// 	cursor: none;
-// }
+* {
+	cursor: none;
+}
 
 .sphere {
 	display: block;
