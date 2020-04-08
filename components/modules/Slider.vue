@@ -4,7 +4,10 @@
 			<ul ref="group" class="slider--group">
 				<li ref="items" v-for="i in range" :key="i" class="slider--item" :data-id="i">
 					<transition :name="transitionName(i)">
-						<nuxt-link to="/" itemprop="url" v-if="inViewById[i]" :key="i">{{ i }}</nuxt-link>
+						<nuxt-link to="/" itemprop="url" v-if="inViewById[i]" :key="i"
+							>Marvin👨‍🎨<br />
+							make this Pretty👉</nuxt-link
+						>
 					</transition>
 				</li>
 			</ul>
@@ -152,7 +155,7 @@ export default class Slider extends Vue {
 }
 
 .slider--item {
-	width: 40rem;
+	width: 50rem;
 	height: 100%;
 	user-select: none;
 	padding: $spacing;
@@ -165,7 +168,11 @@ export default class Slider extends Vue {
 		height: 100%;
 		color: $white;
 		font-size: $font-title;
+		line-height: 1.2;
+		text-align: center;
+		text-decoration: none;
 		background-color: $green;
+		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
 	}
 }
 
