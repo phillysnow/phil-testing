@@ -1,6 +1,6 @@
 <template>
 	<main class="opinion-post">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>opinion-post</h1>
 	</main>
 </template>

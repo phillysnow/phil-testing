@@ -1,6 +1,6 @@
 <template>
 	<main class="default-post">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>default-post</h1>
 	</main>
 </template>

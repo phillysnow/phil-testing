@@ -1,6 +1,6 @@
 <template>
 	<main class="services">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>services</h1>
 	</main>
 </template>

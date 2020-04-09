@@ -1,26 +1,54 @@
 <template>
-	<nav class="navigation" :class="{ active }">
+	<nav class="nav" :class="{ active: menuActive }">
 		<button
-			@click="toggleMenu"
+			@click="toggle()"
 			ref="toggleMenu"
-			class="menu-button init"
+			class="nav--button"
 			aria-expanded="false"
 			aria-controls="menu"
 			@mouseover="cursorHover(true, 'menu')"
 			@mouseleave="cursorHover(false, 'menu')"
 		></button>
-
-		<ul id="menu" class="menu" hidden ref="menu" :style="menuStyling">
-			<li
-				v-for="menuLink in stateMenu.menu"
-				:key="menuLink.id"
-				@mouseover="cursorHover(true)"
-				@mouseleave="cursorHover(false)"
-				class="menu-item"
-			>
-				<prismic-link :field="menuLink.menu_link">{{ $prismic.asText(menuLink.menu_label) }}</prismic-link>
-			</li>
-		</ul>
+		<transition name="menu">
+			<div v-show="menuActive" class="nav--menu">
+				<ul v-if="stateMenu.top_menu" class="nav--top">
+					<li
+						v-for="item in stateMenu.top_menu"
+						:key="item.id"
+						@click="toggle()"
+						@mouseover="cursorHover(true)"
+						@mouseleave="cursorHover(false)"
+						class="nav--item"
+					>
+						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+					</li>
+				</ul>
+				<ul v-if="stateMenu.dynamic_menu" class="nav--dynamic">
+					<li
+						v-for="item in stateMenu.dynamic_menu"
+						:key="item.link.id"
+						@click="toggle()"
+						@mouseover="cursorHover(true)"
+						@mouseleave="cursorHover(false)"
+						class="nav--item"
+					>
+						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+					</li>
+				</ul>
+				<ul v-if="stateMenu.core_menu" class="nav--core">
+					<li
+						v-for="item in stateMenu.core_menu"
+						:key="item.link.id"
+						@click="toggle()"
+						@mouseover="cursorHover(true)"
+						@mouseleave="cursorHover(false)"
+						class="nav--item"
+					>
+						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+					</li>
+				</ul>
+			</div>
+		</transition>
 	</nav>
 </template>
 
@@ -30,38 +58,10 @@ import { Component, Vue, State } from 'nuxt-property-decorator';
 @Component
 export default class Navigation extends Vue {
 	@State('menu') stateMenu;
-	menuStyling = {};
-	active = false;
-
-	mounted() {
-		setTimeout(() => {
-			this.$refs.toggleMenu.classList.remove('init');
-		}, 300);
-	}
-
-	toggleMenu() {
-		if (!this.$refs.menu.hidden) {
-			this.toggle();
-			setTimeout(() => {
-				this.menuStyling = {
-					display: 'none',
-				};
-			}, 500);
-		} else {
-			this.menuStyling = {
-				display: 'flex',
-			};
-			setTimeout(() => {
-				this.toggle();
-			}, 100);
-		}
-	}
+	menuActive = false;
 
 	toggle() {
-		const open = this.$refs.toggleMenu.getAttribute('aria-expanded') === 'true';
-		this.$refs.toggleMenu.setAttribute('aria-expanded', `${!open}`);
-		this.$refs.menu.hidden = !this.$refs.menu.hidden;
-		this.active = !this.active;
+		this.menuActive = !this.menuActive;
 	}
 
 	cursorHover(value, extraClass = '') {
@@ -81,7 +81,11 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@mixin rotated-text($num-letters: 100, $angle-span: 180deg, $angle-offset: 0deg) {
+@mixin rotated-text(
+	$num-letters: 100,
+	$angle-span: 180deg,
+	$angle-offset: 0deg
+) {
 	$angle-per-char: $angle-span / $num-letters;
 
 	@for $i from 1 through $num-letters {
@@ -91,7 +95,7 @@ export default class Navigation extends Vue {
 	}
 }
 
-.navigation {
+.nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -100,28 +104,56 @@ export default class Navigation extends Vue {
 	bottom: $spacing * 3;
 }
 
-.menu-button {
+.nav--button {
 	background: $pink;
 	width: $spacing * 3.5;
 	height: $spacing * 3.5;
 	border: 0;
+	z-index: 2;
 	border-radius: 50%;
 	font-size: $font-m;
 	letter-spacing: 0.1rem;
 }
 
-.menu {
-	display: none;
-	position: absolute;
-	top: -5rem;
-	left: 22%;
+.nav--menu {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: $background;
+	padding: $spacing * 6 $spacing * 4;
+
+	> ul {
+		display: flex;
+		padding: $spacing 0;
+	}
 }
 
-.menu-item {
-	margin: 0 $spacing;
+.nav--item {
+	padding-left: $spacing;
 
 	a {
+		color: $color;
 		font-size: $font-xl;
+		text-decoration: none;
+		text-transform: capitalize;
 	}
+
+	&:first-child {
+		padding-left: 0;
+	}
+}
+
+// animations
+.menu-enter-active,
+.menu-leave-active {
+	transition: opacity 0.5s, transform 0.3s;
+}
+
+.menu-enter,
+.menu-leave-to {
+	opacity: 0;
+	transform: translateY(20rem);
 }
 </style>

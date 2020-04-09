@@ -1,6 +1,6 @@
 <template>
 	<main class="case-post">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>case-post</h1>
 	</main>
 </template>
@@ -28,3 +28,8 @@ export default class CasePost extends Vue {
 	}
 }
 </script>
+<style lang="scss" scoped>
+.case-post {
+	height: 100%;
+}
+</style>

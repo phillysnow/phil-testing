@@ -1,6 +1,6 @@
 <template>
 	<main class="actual">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>actual</h1>
 	</main>
 </template>

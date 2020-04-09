@@ -20,7 +20,6 @@ body {
 	margin: 0;
 	background-color: $background;
 	color: $color;
-	overflow: hidden;
 }
 
 ::selection {
@@ -32,12 +31,6 @@ svg {
 	vertical-align: middle;
 }
 
-img {
-	height: auto;
-	max-width: 100%;
-	vertical-align: middle;
-}
-
 iframe {
 	width: 100%;
 	border: 0;
@@ -45,4 +38,8 @@ iframe {
 
 .hide-from-layout {
 	@include sr-only();
+}
+
+#prismic-toolbar-v2 {
+	cursor: auto;
 }

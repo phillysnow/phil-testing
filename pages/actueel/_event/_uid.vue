@@ -1,6 +1,6 @@
 <template>
 	<main class="event-post">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>event-post</h1>
 	</main>
 </template>

@@ -1,27 +1,45 @@
 <template>
 	<section class="hero">
-		<div class="hero-content">
-			<h1 v-if="content.page_title">{{ $prismic.asText(content.page_title) }}</h1>
-			<prismic-rich-text v-if="content.description" class="hero-text" :field="content.description" />
+		<FigureImage v-if="data.page_image" classes="hero--image" :image="data.page_image" />
+		<div class="hero--content">
+			<h1 v-if="data.page_title">{{ $prismic.asText(data.page_title) }}</h1>
+			<prismic-rich-text v-if="data.description" class="hero--text" :field="data.description" />
 		</div>
 	</section>
 </template>
 
 <script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { FigureImage } from '@/components/elements';
 
-@Component
+@Component({
+	components: {
+		FigureImage
+	}
+})
 export default class Hero extends Vue {
-	@Prop() content;
+	@Prop() data;
+	
 }
 </script>
 
 <style lang="scss" scoped>
 .hero {
-	height: 20vh;
+	height: 40vh;
 }
 
-.hero-content {
+.hero--image {
+	display: block;
+	max-width: 90%;
+	height: 55rem;
+	margin: 20rem auto;
+
+	img {
+		height: 100%;
+	}
+}
+
+.hero--content {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -29,11 +47,15 @@ export default class Hero extends Vue {
 	height: 100%;
 	margin: 0 auto;
 	max-width: $max;
-	padding: $spacing * 2;
+	padding: $spacing;
 
 	h1 {
 		font-size: $font-title;
 		max-width: 50%;
+	}
+
+	@media all and (min-width: $s) {
+		padding: $spacing * 2;
 	}
 
 	@media all and (min-width: $m) {
@@ -41,7 +63,7 @@ export default class Hero extends Vue {
 	}
 }
 
-.hero-text {
+.hero--text {
 	display: block;
 }
 </style>

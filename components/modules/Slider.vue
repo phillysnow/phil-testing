@@ -4,17 +4,15 @@
 			<ul ref="group" class="slider--group">
 				<li ref="items" v-for="i in range" :key="i" class="slider--item" :data-id="i">
 					<transition :name="transitionName(i)">
-						<nuxt-link to="/" itemprop="url" v-if="inViewById[i]" :key="i"
-							>Marvin👨‍🎨<br />
-							make this Pretty👉</nuxt-link
-						>
+						<nuxt-link to="/" itemprop="url" v-if="inViewById[i]" :key="i">
+							Marvin👨‍🎨
+							<br />make this Pretty👉
+						</nuxt-link>
 					</transition>
 				</li>
 			</ul>
 			<transition name="scroll">
-				<span v-show="Vscroll" class="scroll--label">
-					scroll down
-				</span>
+				<span v-show="Vscroll" class="scroll--label">scroll down</span>
 			</transition>
 		</div>
 	</transition>
@@ -46,6 +44,8 @@ export default class Slider extends Vue {
 	}
 
 	beforeDestroy() {
+		console.log('got demounted');
+		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
 		this.observer.disconnect();
 	}
 
@@ -89,6 +89,8 @@ export default class Slider extends Vue {
 	}
 
 	slideList() {
+		console.log('got mounted');
+		
 		let index = 0;
 		const slidergroup = this.$refs.group;
 
@@ -98,23 +100,21 @@ export default class Slider extends Vue {
 			names: ['x'],
 		});
 
-		window.addEventListener(
-			'wheel',
-			(e) => {
-				e.preventDefault();
-				e = window.event || e;
-
-				index -= e.deltaY;
-				this.Vscroll = false;
-
-				kinet.animate('x', index);
-			},
-			false
-		);
+		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
 
 		kinet.on('tick', (inst) => {
 			slidergroup.style.transform = `translateX(${inst.x.current}px)`;
 		});
+	}
+
+	animateScroll(e) {
+		e.preventDefault();
+		e = window.event || e;
+
+		index -= e.deltaY;
+		this.Vscroll = false;
+
+		kinet.animate('x', index);
 	}
 
 	// test items generator

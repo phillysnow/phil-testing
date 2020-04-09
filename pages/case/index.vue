@@ -1,6 +1,6 @@
 <template>
 	<main class="case">
-		<Hero :content="document" />
+		<Hero :data="document" />
 		<h1>case</h1>
 	</main>
 </template>
