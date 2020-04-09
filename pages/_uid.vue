@@ -1,6 +1,7 @@
 <template>
-	<main class="expertise">
+	<main class="default-post">
 		<Hero :content="document" />
+		<h1>default-post</h1>
 	</main>
 </template>
 
@@ -13,10 +14,10 @@ import { Hero } from '@/components/modules';
 		Hero,
 	},
 })
-export default class Expertise extends Vue {
+export default class DefaultPost extends Vue {
 	async asyncData({ $prismic, error }) {
 		try {
-			const document = (await $prismic.api.getSingle('expertise')).data;
+			const document = (await $prismic.api.getSingle('home')).data;
 
 			return {
 				document,

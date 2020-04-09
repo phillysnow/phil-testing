@@ -4,45 +4,25 @@
  */
 
 export default function (doc) {
-	if (doc.isBroken) {
-		return '/not-found';
-	}
+	if (doc.isBroken) return '/not-found';
 
-	if (doc.type === 'home') {
-		return '/';
-	}
+	// custom pages
+	if (doc.type === 'home') return '/';
+	if (doc.type === 'contact') return '/contact';
+	if (doc.type === 'about_us') return '/over-ons';
+	if (doc.type === 'services') return '/services';
+	if (doc.type === 'default') return `/${doc.uid}`;
 
-	if (doc.type === 'story') {
-		return '/story';
-	}
+	// overview pages
+	if (doc.type === 'case') return '/case';
+	if (doc.type === 'opinion') return '/opinie';
+	if (doc.type === 'actual') return '/actueel';
 
-	if (doc.type === 'story_post') {
-		return '/story/' + doc.uid;
-	}
-
-	if (doc.type === 'expertise') {
-		return '/expertise';
-	}
-
-	if (doc.type === 'expertise_post') {
-		return '/expertise/' + doc.uid;
-	}
-
-	if (doc.type === 'work') {
-		return '/work';
-	}
-
-	if (doc.type === 'work_post') {
-		return '/work/' + doc.uid;
-	}
-
-	if (doc.type === 'world') {
-		return '/world';
-	}
-
-	if (doc.type === 'world_post') {
-		return '/world/' + doc.uid;
-	}
+	// detail pages
+	if (doc.type === 'case_post') return `/case/${doc.uid}`;
+	if (doc.type === 'opinion_post') return `/opinie/${doc.uid}`;
+	if (doc.type === 'news_post') return `/actueel/${doc.uid}`;
+	if (doc.type === 'event_post') return `/actueel/${doc.uid}`;
 
 	return '/not-found';
 }
