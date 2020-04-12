@@ -29,9 +29,9 @@ export default class Slider extends Vue {
 	observer = undefined;
 	Vscroll = false;
 	index = 0;
-	kinet = new Kinet({
-		acceleration: 0.08,
-		friction: 0.5,
+	sliderAnimation = new Kinet({
+		acceleration: 0.04,
+		friction: 0.3,
 		names: ['x'],
 	});
 
@@ -43,15 +43,11 @@ export default class Slider extends Vue {
 		this.observer = observer;
 
 		this.slideList();
-
-		setInterval(() => {
-			this.Vscroll = true;
-		}, 5000);
+		this.scrollIndicator();
 	}
 
 	beforeDestroy() {
 		this.observer.disconnect();
-
 		window.removeEventListener('wheel', (e) =>  this.slideListAnimate(e), false);
 	}
 
@@ -94,16 +90,22 @@ export default class Slider extends Vue {
 		}
 	}
 
+	scrollIndicator() {
+		setInterval(() => {
+			this.Vscroll = true;
+		}, 5000);
+	}
+
 	slideList() {
 		const slideGroup = this.$refs.group;
 		const margin = window.screen.availWidth * 0.4;
 		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
-		
-		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), false);
 
-		this.kinet.on('tick', (i) => {
+		this.sliderAnimation.on('tick', (i) => {
 			slideGroup.style.transform = `translateX(${i.x.current}px)`;
 		});
+		
+		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), false);
 	}
 
 	slideListAnimate(e, margin, maxWidth) {
@@ -116,7 +118,7 @@ export default class Slider extends Vue {
 		if(this.index >= margin && e.deltaY < 0) this.index = margin;
 		if(!(maxWidth <= this.index) && e.deltaY > 0) this.index = maxWidth;
 
-		this.kinet.animate('x', this.index);
+		this.sliderAnimation.animate('x', this.index);
 	}
 
 	// test items generator
@@ -161,6 +163,7 @@ export default class Slider extends Vue {
 	height: 100%;
 	user-select: none;
 	padding: $spacing;
+	transition: 0.5s transform;
 
 	a {
 		display: flex;
@@ -175,13 +178,22 @@ export default class Slider extends Vue {
 		text-decoration: none;
 		background-color: $green;
 		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
+		transition: 0.5s box-shadow;
+	}
+
+	&:hover {
+		transform: scale(1.1);
+
+		a {
+			box-shadow: 0 7rem 8rem -2rem rgba($black, 0.1);
+		}
 	}
 }
 
 .scroll--label {
 	display: block;
 	transition: 0.3s opacity, 0.5s transform;
-	font-size: $font-s;
+	font-size: $font-s * 0.8;
 	text-transform: uppercase;
 	opacity: 0.8;
 	padding-left: $spacing * 2;
@@ -201,30 +213,32 @@ export default class Slider extends Vue {
 
 // slide--item animation
 .before-enter-active {
-	animation: slide-in-from-left 0.7s ease-out;
+	animation: slide-in-from-left 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .after-enter-active {
-	animation: slide-in-from-right 0.7s ease-out;
+	animation: slide-in-from-right 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 @keyframes slide-in-from-left {
 	0% {
-		transform: translateX(-20rem) rotateZ(-4deg);
+		transform-origin: bottom;
+		transform: translate(-20rem, 3rem) rotateZ(-8deg);
 	}
 
 	100% {
-		transform: translateX(0) rotateZ(0);
+		transform: translate(0);
 	}
 }
 
 @keyframes slide-in-from-right {
 	0% {
-		transform: translateX(20rem) rotateZ(4deg);
+		transform-origin: top;
+		transform: translate(20rem, -3rem) rotateZ(8deg);
 	}
 
 	100% {
-		transform: translateX(0) rotateZ(0);
+		transform: translate(0);
 	}
 }
 
