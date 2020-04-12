@@ -23,16 +23,16 @@ export default class Hero extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .hero {
-	height: 40vh;
+	height: 100vh;
+	padding: 20vh $spacing * 8 0;
 }
 
 .hero--image {
 	display: block;
-	max-width: 90%;
-	height: 55rem;
-	margin: 20rem auto;
+	height: 55vh;
+	margin: 0 auto;
 
 	img {
 		height: 100%;
@@ -44,22 +44,10 @@ export default class Hero extends Vue {
 	justify-content: center;
 	flex-direction: column;
 	position: relative;
-	height: 100%;
-	margin: 0 auto;
-	max-width: $max;
-	padding: $spacing;
 
 	h1 {
 		font-size: $font-title;
 		max-width: 50%;
-	}
-
-	@media all and (min-width: $s) {
-		padding: $spacing * 2;
-	}
-
-	@media all and (min-width: $m) {
-		padding: $spacing * 2 $spacing * 4;
 	}
 }
 

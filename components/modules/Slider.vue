@@ -28,10 +28,16 @@ export default class Slider extends Vue {
 	inViewById = {};
 	observer = undefined;
 	Vscroll = false;
+	index = 0;
+	kinet = new Kinet({
+		acceleration: 0.08,
+		friction: 0.5,
+		names: ['x'],
+	});
 
 	mounted() {
 		let observer = new IntersectionObserver(this.handleIntersection);
-		for (let el of this.$refs.items) {
+		for (let el of this.$refs.items) {		
 			observer.observe(el);
 		}
 		this.observer = observer;
@@ -44,9 +50,9 @@ export default class Slider extends Vue {
 	}
 
 	beforeDestroy() {
-		console.log('got demounted');
-		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
 		this.observer.disconnect();
+
+		window.removeEventListener('wheel', (e) =>  this.slideListAnimate(e), false);
 	}
 
 	cloneInViewById() {
@@ -89,32 +95,28 @@ export default class Slider extends Vue {
 	}
 
 	slideList() {
-		console.log('got mounted');
+		const slideGroup = this.$refs.group;
+		const margin = window.screen.availWidth * 0.4;
+		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
 		
-		let index = 0;
-		const slidergroup = this.$refs.group;
+		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), false);
 
-		const kinet = new Kinet({
-			acceleration: 0.08,
-			friction: 0.5,
-			names: ['x'],
-		});
-
-		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
-
-		kinet.on('tick', (inst) => {
-			slidergroup.style.transform = `translateX(${inst.x.current}px)`;
+		this.kinet.on('tick', (i) => {
+			slideGroup.style.transform = `translateX(${i.x.current}px)`;
 		});
 	}
 
-	animateScroll(e) {
+	slideListAnimate(e, margin, maxWidth) {
 		e.preventDefault();
 		e = window.event || e;
-
-		index -= e.deltaY;
+	
+		this.index -= e.deltaY;
 		this.Vscroll = false;
+		
+		if(this.index >= margin && e.deltaY < 0) this.index = margin;
+		if(!(maxWidth <= this.index) && e.deltaY > 0) this.index = maxWidth;
 
-		kinet.animate('x', index);
+		this.kinet.animate('x', this.index);
 	}
 
 	// test items generator
@@ -131,7 +133,7 @@ export default class Slider extends Vue {
 	};
 
 	get range() {
-		return Array.from({ length: 20 }, (_, i) => i + 1);
+		return Array.from({ length: 8 }, (_, i) => i + 1);
 	}
 	// end test items generator
 }
@@ -186,8 +188,7 @@ export default class Slider extends Vue {
 	transform: translateY(-6rem);
 }
 
-// page transition
-
+// scroll--label animation
 .scroll-enter-active {
 	opacity: 0;
 	transform: translateY(-4rem);
@@ -198,50 +199,42 @@ export default class Slider extends Vue {
 	transform: translateY(-4rem);
 }
 
+// slide--item animation
 .before-enter-active {
-	animation: slide-in-from-left 1s ease-out;
+	animation: slide-in-from-left 0.7s ease-out;
 }
 
 .after-enter-active {
-	animation: slide-in-from-right 1s ease-out;
+	animation: slide-in-from-right 0.7s ease-out;
 }
 
+@keyframes slide-in-from-left {
+	0% {
+		transform: translateX(-20rem) rotateZ(-4deg);
+	}
+
+	100% {
+		transform: translateX(0) rotateZ(0);
+	}
+}
+
+@keyframes slide-in-from-right {
+	0% {
+		transform: translateX(20rem) rotateZ(4deg);
+	}
+
+	100% {
+		transform: translateX(0) rotateZ(0);
+	}
+}
+
+// page appear animation
 .appear-enter-active {
 	opacity: 0;
 
 	.before-enter-active,
 	.after-enter-active {
 		animation: none;
-	}
-}
-
-@keyframes slide-in-from-left {
-	0% {
-		transform: translate(-20rem, 10rem) rotateZ(4deg);
-		opacity: 0;
-	}
-
-	50% {
-		opacity: 1;
-	}
-
-	100% {
-		transform: translate(0) rotateZ(0);
-	}
-}
-
-@keyframes slide-in-from-right {
-	0% {
-		transform: translate(20rem, -10rem) rotateZ(4deg);
-		opacity: 0;
-	}
-
-	50% {
-		opacity: 1;
-	}
-
-	100% {
-		transform: translate(0) rotateZ(0);
 	}
 }
 </style>
