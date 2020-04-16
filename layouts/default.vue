@@ -25,7 +25,9 @@ export default class Default extends Vue {
 	window = global || window;
 	breakingPoint = '';
 
+
 	mounted() {
+		console.log('%c ', 'padding-left:100%;padding-top:50%;background-size:cover;background-image:url("https://i.giphy.com/media/MM0Jrc8BHKx3y/giphy.webp")');
 		const breakPoint = new BreakPoint();
 		breakPoint.init();
 
