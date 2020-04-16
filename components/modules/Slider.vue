@@ -1,6 +1,6 @@
 <template>
 	<transition name="appear" appear>
-		<div class="slider">
+		<div class="slider" :class="{active: hover}">
 			<ul ref="group" class="slider--group">
 				<li ref="items" v-for="i in range" :key="i" class="slider--item" :data-id="i">
 					<transition :name="transitionName(i)">
@@ -26,6 +26,7 @@ import Kinet from 'kinet';
 export default class Slider extends Vue {
 	@Prop() slides;
 	inViewById = {};
+	hover = false;
 	observer = undefined;
 	Vscroll = false;
 	index = 0;
@@ -103,9 +104,12 @@ export default class Slider extends Vue {
 
 		this.sliderAnimation.on('tick', (i) => {
 			slideGroup.style.transform = `translateX(${i.x.current}px)`;
+			this.hover = true;
+
+			if(i.x.current === i.x.target) this.hover = false;
 		});
 		
-		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), false);
+		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), { passive: false });
 	}
 
 	slideListAnimate(e, margin, maxWidth) {
@@ -118,7 +122,7 @@ export default class Slider extends Vue {
 		if(this.index >= margin && e.deltaY < 0) this.index = margin;
 		if(!(maxWidth <= this.index) && e.deltaY > 0) this.index = maxWidth;
 
-		this.sliderAnimation.animate('x', this.index);
+		return this.sliderAnimation.animate('x', this.index);
 	}
 
 	// test items generator
@@ -142,11 +146,6 @@ export default class Slider extends Vue {
 </script>
 
 <style scoped lang="scss">
-.slider {
-	transition: 0.5s opacity;
-	overflow: hidden;
-}
-
 .slider--group {
 	display: grid;
 	grid-gap: $spacing * 2;
@@ -156,6 +155,7 @@ export default class Slider extends Vue {
 	width: 100%;
 	height: 55rem;
 	margin: 20rem auto;
+	will-change: transform;
 }
 
 .slider--item {
@@ -164,6 +164,7 @@ export default class Slider extends Vue {
 	user-select: none;
 	padding: $spacing;
 	transition: 0.5s transform;
+	will-change: transform;
 
 	a {
 		display: flex;
@@ -178,14 +179,18 @@ export default class Slider extends Vue {
 		text-decoration: none;
 		background-color: $green;
 		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
-		transition: 0.5s box-shadow;
 	}
+}
 
-	&:hover {
-		transform: scale(1.1);
+.slider {
+	transition: 0.5s opacity;
+	overflow: hidden;
 
-		a {
-			box-shadow: 0 7rem 8rem -2rem rgba($black, 0.1);
+	&:not(.active) {
+		.slider--item {
+			&:hover {
+				transform: scale(1.1);
+			}
 		}
 	}
 }

@@ -22,15 +22,15 @@ export default class CursorAlt extends Vue {
 		document.addEventListener('mousemove', (event) => {
 			kinet.animate('x', event.clientX - window.innerWidth / 2);
 			kinet.animate('y', event.clientY - window.innerHeight / 2);
-		});
+		}, {passive: true});
 
 		document.addEventListener('mousedown', (event) => {
 			kinet.animate('z', 0.7);
-		});
+		}, {passive: true});
 
 		document.addEventListener('mouseup', (event) => {
 			kinet.animate('z', 1);
-		});
+		}, {passive: true});
 
 		kinet.on('tick', (instances) => {
 			this.$el.style.transform = `translate3d(${instances.x.current}px, ${instances.y.current}px, 0) scale(${
