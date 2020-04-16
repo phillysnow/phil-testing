@@ -28,25 +28,27 @@ export default class Slider extends Vue {
 	inViewById = {};
 	observer = undefined;
 	Vscroll = false;
+	index = 0;
+	sliderAnimation = new Kinet({
+		acceleration: 0.04,
+		friction: 0.3,
+		names: ['x'],
+	});
 
 	mounted() {
 		let observer = new IntersectionObserver(this.handleIntersection);
-		for (let el of this.$refs.items) {
+		for (let el of this.$refs.items) {		
 			observer.observe(el);
 		}
 		this.observer = observer;
 
 		this.slideList();
-
-		setInterval(() => {
-			this.Vscroll = true;
-		}, 5000);
+		this.scrollIndicator();
 	}
 
 	beforeDestroy() {
-		console.log('got demounted');
-		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
 		this.observer.disconnect();
+		window.removeEventListener('wheel', (e) =>  this.slideListAnimate(e), false);
 	}
 
 	cloneInViewById() {
@@ -88,33 +90,35 @@ export default class Slider extends Vue {
 		}
 	}
 
-	slideList() {
-		console.log('got mounted');
-		
-		let index = 0;
-		const slidergroup = this.$refs.group;
-
-		const kinet = new Kinet({
-			acceleration: 0.08,
-			friction: 0.5,
-			names: ['x'],
-		});
-
-		window.addEventListener('wheel', (e) => this.animateScroll(e), false);
-
-		kinet.on('tick', (inst) => {
-			slidergroup.style.transform = `translateX(${inst.x.current}px)`;
-		});
+	scrollIndicator() {
+		setInterval(() => {
+			this.Vscroll = true;
+		}, 5000);
 	}
 
-	animateScroll(e) {
+	slideList() {
+		const slideGroup = this.$refs.group;
+		const margin = window.screen.availWidth * 0.4;
+		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
+
+		this.sliderAnimation.on('tick', (i) => {
+			slideGroup.style.transform = `translateX(${i.x.current}px)`;
+		});
+		
+		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), false);
+	}
+
+	slideListAnimate(e, margin, maxWidth) {
 		e.preventDefault();
 		e = window.event || e;
-
-		index -= e.deltaY;
+	
+		this.index -= e.deltaY;
 		this.Vscroll = false;
+		
+		if(this.index >= margin && e.deltaY < 0) this.index = margin;
+		if(!(maxWidth <= this.index) && e.deltaY > 0) this.index = maxWidth;
 
-		kinet.animate('x', index);
+		this.sliderAnimation.animate('x', this.index);
 	}
 
 	// test items generator
@@ -131,7 +135,7 @@ export default class Slider extends Vue {
 	};
 
 	get range() {
-		return Array.from({ length: 20 }, (_, i) => i + 1);
+		return Array.from({ length: 8 }, (_, i) => i + 1);
 	}
 	// end test items generator
 }
@@ -159,6 +163,7 @@ export default class Slider extends Vue {
 	height: 100%;
 	user-select: none;
 	padding: $spacing;
+	transition: 0.5s transform;
 
 	a {
 		display: flex;
@@ -173,21 +178,29 @@ export default class Slider extends Vue {
 		text-decoration: none;
 		background-color: $green;
 		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
+		transition: 0.5s box-shadow;
+	}
+
+	&:hover {
+		transform: scale(1.1);
+
+		a {
+			box-shadow: 0 7rem 8rem -2rem rgba($black, 0.1);
+		}
 	}
 }
 
 .scroll--label {
 	display: block;
 	transition: 0.3s opacity, 0.5s transform;
-	font-size: $font-s;
+	font-size: $font-s * 0.8;
 	text-transform: uppercase;
 	opacity: 0.8;
 	padding-left: $spacing * 2;
 	transform: translateY(-6rem);
 }
 
-// page transition
-
+// scroll--label animation
 .scroll-enter-active {
 	opacity: 0;
 	transform: translateY(-4rem);
@@ -198,50 +211,44 @@ export default class Slider extends Vue {
 	transform: translateY(-4rem);
 }
 
+// slide--item animation
 .before-enter-active {
-	animation: slide-in-from-left 1s ease-out;
+	animation: slide-in-from-left 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .after-enter-active {
-	animation: slide-in-from-right 1s ease-out;
+	animation: slide-in-from-right 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+@keyframes slide-in-from-left {
+	0% {
+		transform-origin: bottom;
+		transform: translate(-20rem, 3rem) rotateZ(-8deg);
+	}
+
+	100% {
+		transform: translate(0);
+	}
+}
+
+@keyframes slide-in-from-right {
+	0% {
+		transform-origin: top;
+		transform: translate(20rem, -3rem) rotateZ(8deg);
+	}
+
+	100% {
+		transform: translate(0);
+	}
+}
+
+// page appear animation
 .appear-enter-active {
 	opacity: 0;
 
 	.before-enter-active,
 	.after-enter-active {
 		animation: none;
-	}
-}
-
-@keyframes slide-in-from-left {
-	0% {
-		transform: translate(-20rem, 10rem) rotateZ(4deg);
-		opacity: 0;
-	}
-
-	50% {
-		opacity: 1;
-	}
-
-	100% {
-		transform: translate(0) rotateZ(0);
-	}
-}
-
-@keyframes slide-in-from-right {
-	0% {
-		transform: translate(20rem, -10rem) rotateZ(4deg);
-		opacity: 0;
-	}
-
-	50% {
-		opacity: 1;
-	}
-
-	100% {
-		transform: translate(0) rotateZ(0);
 	}
 }
 </style>

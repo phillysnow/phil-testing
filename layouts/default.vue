@@ -21,8 +21,6 @@ import BreakPoint from '@/plugins/breakpoint';
 	},
 })
 export default class Default extends Vue {
-	// window is undefined in node.js
-	window = global || window;
 	breakingPoint = '';
 
 
