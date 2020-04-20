@@ -2,17 +2,27 @@
 	<transition name="appear" appear>
 		<div class="slider" :class="{active: hover}">
 			<ul ref="group" class="slider--group">
-				<li ref="items" v-for="i in range" :key="i" class="slider--item" :data-id="i">
-					<transition :name="transitionName(i)">
-						<nuxt-link to="/" itemprop="url" v-if="inViewById[i]" :key="i">
-							Marvin👨‍🎨
+				<li
+					ref="items"
+					v-for="(slide, index) in slides"
+					:key="index"
+					class="slider--item"
+					:data-id="index"
+				>
+					<transition :name="transitionName(index)">
+						<nuxt-link to="/" itemprop="url" v-if="inViewById[index]" :key="index">
+							<FigureImage
+								v-if="slide.data.page_image"
+								classes="hero--image"
+								:image="slide.data.page_image"
+							/>Marvin👨‍🎨
 							<br />make this Pretty👉
 						</nuxt-link>
 					</transition>
 				</li>
 			</ul>
 			<transition name="scroll">
-				<span v-show="Vscroll" class="scroll--label">scroll down</span>
+				<span v-show="Vscroll" class="scroll--label">scroll down 🖱</span>
 			</transition>
 		</div>
 	</transition>
@@ -20,11 +30,17 @@
 
 <script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { FigureImage } from '@/components/elements';
 import Kinet from 'kinet';
 
-@Component({})
+@Component({
+	components: {
+		FigureImage
+	}
+})
 export default class Slider extends Vue {
-	@Prop() slides;
+	@Prop() data;
+	slides = [];
 	inViewById = {};
 	hover = false;
 	observer = undefined;
@@ -36,9 +52,17 @@ export default class Slider extends Vue {
 		names: ['x'],
 	});
 
-	mounted() {
+	beforeMount() {
+		for (let index = 0; index < this.data.length; index++) {
+			const element = this.data[index];
+			this.slides[index] = element.highlight;
+		}
+	}
+
+	mounted() {	
 		let observer = new IntersectionObserver(this.handleIntersection);
-		for (let el of this.$refs.items) {		
+	
+		for (let el of this.$refs.items) {					
 			observer.observe(el);
 		}
 		this.observer = observer;

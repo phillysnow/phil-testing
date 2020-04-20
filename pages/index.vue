@@ -1,6 +1,6 @@
 <template>
 	<main class="home">
-		<Slider />
+		<Slider :data="slides" />
 	</main>
 </template>
 
@@ -21,10 +21,11 @@ import { Hero, Slider } from '@/components/modules';
 export default class Index extends Vue {
 	async asyncData({ $prismic, error }) {
 		try {
-			const document = (await $prismic.api.getSingle('home')).data;
-
+			const document = (await $prismic.api.getSingle('home', {fetchLinks: 'case_post.page_image' })).data;
+			
 			return {
 				document,
+				slides: document.highlights
 			};
 		} catch (e) {
 			error({ statusCode: 404, message: 'Page not found' });
