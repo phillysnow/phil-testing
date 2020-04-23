@@ -21,7 +21,7 @@ import { Hero, Slider } from '@/components/modules';
 export default class Index extends Vue {
 	async asyncData({ $prismic, error }) {
 		try {
-			const document = (await $prismic.api.getSingle('home', {fetchLinks: 'case_post.page_image' })).data;
+			const document = (await $prismic.api.getSingle('home', {fetchLinks: ['case_post.page_image', 'case_post.page_title'] })).data;
 			
 			return {
 				document,

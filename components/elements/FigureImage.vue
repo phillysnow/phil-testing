@@ -1,48 +1,74 @@
-<template functional>
-	<figure :class="props.classes">
+<template>
+	<figure :class="[{ loading }, classes]">
 		<picture>
 			<source
-				v-if="props.image.max"
+				v-if="image.max"
 				type="image/webp"
-				:media="`(min-width: ${props.image.max.dimensions.width}px)`"
-				:srcset="props.image.max.url"
+				:media="`(min-width: ${image.max.dimensions.width}px)`"
+				:srcset="image.max.url"
 			/>
 			<source
-				v-if="props.image.xl"
+				v-if="image.xl"
 				type="image/webp"
-				:media="`(min-width: ${props.image.xl.dimensions.width}px)`"
-				:srcset="props.image.xl.url"
+				:media="`(min-width: ${image.xl.dimensions.width}px)`"
+				:srcset="image.xl.url"
 			/>
 			<source
-				v-if="props.image.l"
+				v-if="image.l"
 				type="image/webp"
-				:media="`(min-width: ${props.image.l.dimensions.width}px)`"
-				:srcset="props.image.l.url"
+				:media="`(min-width: ${image.l.dimensions.width}px)`"
+				:srcset="image.l.url"
 			/>
 			<source
-				v-if="props.image.m"
+				v-if="image.m"
 				type="image/webp"
-				:media="`(min-width: ${props.image.m.dimensions.width}px)`"
-				:srcset="props.image.m.url"
+				:media="`(min-width: ${image.m.dimensions.width}px)`"
+				:srcset="image.m.url"
 			/>
 			<img
-				v-if="props.image"
-				:src="props.image.url"
-				:width="props.image.dimensions.width"
-				:height="props.image.dimensions.height"
-				:alt="props.image.alt"
+				v-if="image"
+				:src="image.url"
+				:width="image.dimensions.width"
+				:height="image.dimensions.height"
+				:alt="image.alt"
+				loading="lazy"
+				@load="onLoaded"
 			/>
 		</picture>
 	</figure>
 </template>
 
-<style scoped lang="scss">
-figure {
-	background-color: aquamarine;
+<script>
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
+
+@Component
+export default class FigureImage extends Vue {
+	@Prop() image;
+	@Prop() classes;
+	loading = true;
+
+	onLoaded() {
+		// this.$emit('loaded', true);
+		this.loading = false;
+	}
+}
+</script>
+
+<style lang="scss">
+img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	object-fit: cover;
+	transition: 0.5s ease-in-out opacity;
 }
 
-img {
-	width: 100%;
-	object-fit: cover;
+figure {
+	&.loading {
+		img {
+			opacity: 0;
+		}
+	}
 }
 </style>

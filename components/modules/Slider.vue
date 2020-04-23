@@ -10,14 +10,14 @@
 					:data-id="index"
 				>
 					<transition :name="transitionName(index)">
-						<nuxt-link to="/" itemprop="url" v-if="inViewById[index]" :key="index">
+						<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
+							<h2>{{ $prismic.asText(slide.data.page_title) }}</h2>
 							<FigureImage
 								v-if="slide.data.page_image"
-								classes="hero--image"
+								classes="slider--image"
 								:image="slide.data.page_image"
-							/>Marvin👨‍🎨
-							<br />make this Pretty👉
-						</nuxt-link>
+							/>
+						</prismic-link>
 					</transition>
 				</li>
 			</ul>
@@ -52,10 +52,13 @@ export default class Slider extends Vue {
 		names: ['x'],
 	});
 
+
 	beforeMount() {
 		for (let index = 0; index < this.data.length; index++) {
 			const element = this.data[index];
 			this.slides[index] = element.highlight;
+			console.log(element);
+			
 		}
 	}
 
@@ -72,8 +75,15 @@ export default class Slider extends Vue {
 	}
 
 	beforeDestroy() {
+		const slideGroup = this.$refs.group;
+		const margin = window.screen.availWidth * 0.4;
+		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
+		const scroll = (e) => {
+			this.slideListAnimate(e, margin, maxWidth);
+		};
+
 		this.observer.disconnect();
-		window.removeEventListener('wheel', (e) =>  this.slideListAnimate(e), false);
+		window.removeEventListener('wheel', scroll, { passive: false });	
 	}
 
 	cloneInViewById() {
@@ -125,6 +135,9 @@ export default class Slider extends Vue {
 		const slideGroup = this.$refs.group;
 		const margin = window.screen.availWidth * 0.4;
 		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
+		const scroll = (e) => {
+			this.slideListAnimate(e, margin, maxWidth);
+		};
 
 		this.sliderAnimation.on('tick', (i) => {
 			slideGroup.style.transform = `translateX(${i.x.current}px)`;
@@ -133,7 +146,7 @@ export default class Slider extends Vue {
 			if(i.x.current === i.x.target) this.hover = false;
 		});
 		
-		window.addEventListener('wheel', (e) =>  this.slideListAnimate(e, margin, maxWidth), { passive: false });
+		window.addEventListener('wheel', scroll, { passive: false });
 	}
 
 	slideListAnimate(e, margin, maxWidth) {
@@ -148,24 +161,6 @@ export default class Slider extends Vue {
 
 		return this.sliderAnimation.animate('x', this.index);
 	}
-
-	// test items generator
-	identity = (x) => x;
-
-	Array = {
-		from(iterable, transform = identity) {
-			let list = [];
-			for (let i = 0; i < iterable.length; i++) {
-				list.push(transform(iterable[i], i));
-			}
-			return list;
-		},
-	};
-
-	get range() {
-		return Array.from({ length: 8 }, (_, i) => i + 1);
-	}
-	// end test items generator
 }
 </script>
 
@@ -194,16 +189,32 @@ export default class Slider extends Vue {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: relative;
+		z-index: 0;
 		width: 100%;
 		height: 100%;
+		text-decoration: none;
+		background-color: $green;
+		border-radius: 0.3rem;
+		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
+		overflow: hidden;
+	}
+
+	h2 {
 		color: $white;
 		font-size: $font-title;
 		line-height: 1.2;
 		text-align: center;
-		text-decoration: none;
-		background-color: $green;
-		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
 	}
+}
+
+.slider--image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
 }
 
 .slider {
@@ -273,8 +284,6 @@ export default class Slider extends Vue {
 
 // page appear animation
 .appear-enter-active {
-	opacity: 0;
-
 	.before-enter-active,
 	.after-enter-active {
 		animation: none;
