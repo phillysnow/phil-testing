@@ -51,20 +51,25 @@ export default class Slider extends Vue {
 		friction: 0.3,
 		names: ['x'],
 	});
-
+	slideGroup = null;
+	margin = 0;
+	maxWidth = 0;
+	scroll = (e) => this.slideListAnimate(e);
 
 	beforeMount() {
 		for (let index = 0; index < this.data.length; index++) {
 			const element = this.data[index];
-			this.slides[index] = element.highlight;
-			console.log(element);
-			
+			this.slides[index] = element.highlight;		
 		}
 	}
 
 	mounted() {	
+		this.slideGroup = this.$refs.group;
+		this.margin = window.screen.availWidth * 0.4;
+		this.maxWidth = -this.slideGroup.scrollWidth + (this.margin * 1.5);		
+
 		let observer = new IntersectionObserver(this.handleIntersection);
-	
+
 		for (let el of this.$refs.items) {					
 			observer.observe(el);
 		}
@@ -75,15 +80,8 @@ export default class Slider extends Vue {
 	}
 
 	beforeDestroy() {
-		const slideGroup = this.$refs.group;
-		const margin = window.screen.availWidth * 0.4;
-		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
-		const scroll = (e) => {
-			this.slideListAnimate(e, margin, maxWidth);
-		};
-
 		this.observer.disconnect();
-		window.removeEventListener('wheel', scroll, { passive: false });	
+		window.removeEventListener('wheel', this.scroll, { passive: false });	
 	}
 
 	cloneInViewById() {
@@ -132,32 +130,25 @@ export default class Slider extends Vue {
 	}
 
 	slideList() {
-		const slideGroup = this.$refs.group;
-		const margin = window.screen.availWidth * 0.4;
-		const maxWidth = -slideGroup.scrollWidth + (margin * 1.5);
-		const scroll = (e) => {
-			this.slideListAnimate(e, margin, maxWidth);
-		};
-
 		this.sliderAnimation.on('tick', (i) => {
-			slideGroup.style.transform = `translateX(${i.x.current}px)`;
+			this.slideGroup.style.transform = `translateX(${i.x.current}px)`;
 			this.hover = true;
 
 			if(i.x.current === i.x.target) this.hover = false;
 		});
 		
-		window.addEventListener('wheel', scroll, { passive: false });
+		window.addEventListener('wheel', this.scroll, { passive: false });
 	}
 
-	slideListAnimate(e, margin, maxWidth) {
+	slideListAnimate(e) {	
 		e.preventDefault();
 		e = window.event || e;
 	
 		this.index -= e.deltaY;
 		this.Vscroll = false;
 		
-		if(this.index >= margin && e.deltaY < 0) this.index = margin;
-		if(!(maxWidth <= this.index) && e.deltaY > 0) this.index = maxWidth;
+		if(this.index >= this.margin && e.deltaY < 0) this.index = this.margin;
+		if(!(this.maxWidth <= this.index) && e.deltaY > 0) this.index = this.maxWidth;
 
 		return this.sliderAnimation.animate('x', this.index);
 	}
