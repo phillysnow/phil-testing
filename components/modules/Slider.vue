@@ -1,12 +1,12 @@
 <template>
 	<transition name="appear" appear>
 		<div class="slider" :class="{active: hover}">
-			<ul ref="group" class="slider--group">
+			<ul ref="group" class="slider-group">
 				<li
 					ref="items"
 					v-for="(slide, index) in slides"
 					:key="index"
-					class="slider--item"
+					class="slider-item"
 					:data-id="index"
 				>
 					<transition :name="transitionName(index)">
@@ -14,7 +14,7 @@
 							<h2>{{ $prismic.asText(slide.data.page_title) }}</h2>
 							<FigureImage
 								v-if="slide.data.page_image"
-								classes="slider--image"
+								classes="slider-image"
 								:image="slide.data.page_image"
 							/>
 						</prismic-link>
@@ -22,7 +22,7 @@
 				</li>
 			</ul>
 			<transition name="scroll">
-				<span v-show="Vscroll" class="scroll--label">scroll down 🖱</span>
+				<span v-show="Vscroll" class="scroll-label">scroll down 🖱</span>
 			</transition>
 		</div>
 	</transition>
@@ -165,7 +165,7 @@ export default class Slider extends Vue {
 </script>
 
 <style scoped lang="scss">
-.slider--group {
+.slider-group {
 	display: grid;
 	grid-gap: $spacing * 2;
 	grid-template-rows: 1fr;
@@ -177,7 +177,7 @@ export default class Slider extends Vue {
 	will-change: transform;
 }
 
-.slider--item {
+.slider-item {
 	width: 50rem;
 	height: 100%;
 	user-select: none;
@@ -208,7 +208,7 @@ export default class Slider extends Vue {
 	}
 }
 
-.slider--image {
+.slider-image {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -222,7 +222,7 @@ export default class Slider extends Vue {
 	overflow: hidden;
 
 	&:not(.active) {
-		.slider--item {
+		.slider-item {
 			&:hover {
 				transform: scale(1.1);
 			}
@@ -230,7 +230,7 @@ export default class Slider extends Vue {
 	}
 }
 
-.scroll--label {
+.scroll-label {
 	display: block;
 	transition: 0.3s opacity, 0.5s transform;
 	font-size: $font-s * 0.8;
@@ -240,7 +240,7 @@ export default class Slider extends Vue {
 	transform: translateY(-6rem);
 }
 
-// scroll--label animation
+// scroll-label animation
 .scroll-enter-active {
 	opacity: 0;
 	transform: translateY(-4rem);
@@ -251,7 +251,7 @@ export default class Slider extends Vue {
 	transform: translateY(-4rem);
 }
 
-// slide--item animation
+// slide-item animation
 .before-enter-active {
 	animation: slide-in-from-left 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

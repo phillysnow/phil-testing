@@ -1,9 +1,9 @@
 <template>
 	<section class="hero">
-		<FigureImage v-if="data.page_image" classes="hero--image" :image="data.page_image" />
-		<div class="hero--content">
+		<FigureImage v-if="data.page_image" classes="hero-image" :image="data.page_image" />
+		<div class="hero-content">
 			<h1 v-if="data.page_title">{{ $prismic.asText(data.page_title) }}</h1>
-			<prismic-rich-text v-if="data.description" class="hero--text" :field="data.description" />
+			<prismic-rich-text v-if="data.description" class="hero-text" :field="data.description" />
 		</div>
 	</section>
 </template>
@@ -29,7 +29,7 @@ export default class Hero extends Vue {
 	padding: 20vh $spacing * 8 0;
 }
 
-.hero--image {
+.hero-image {
 	display: block;
 	height: 55vh;
 	margin: 0 auto;
@@ -39,7 +39,7 @@ export default class Hero extends Vue {
 	}
 }
 
-.hero--content {
+.hero-content {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -51,7 +51,7 @@ export default class Hero extends Vue {
 	}
 }
 
-.hero--text {
+.hero-text {
 	display: block;
 }
 </style>

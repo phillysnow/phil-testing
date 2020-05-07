@@ -3,46 +3,46 @@
 		<button
 			@click="toggle()"
 			ref="toggleMenu"
-			class="nav--button"
+			class="nav-button"
 			aria-expanded="false"
 			aria-controls="menu"
 			@mouseover="cursorHover(true, 'menu')"
 			@mouseleave="cursorHover(false, 'menu')"
 		></button>
 		<transition name="menu">
-			<div v-show="menuActive" class="nav--menu">
-				<ul v-if="stateMenu.top_menu" class="nav--top">
+			<div v-show="menuActive" class="nav-menu">
+				<ul v-if="stateMenu.top_menu" class="nav-top">
 					<li
 						v-for="item in stateMenu.top_menu"
 						:key="item.id"
 						@click="toggle()"
 						@mouseover="cursorHover(true)"
 						@mouseleave="cursorHover(false)"
-						class="nav--item"
+						class="nav-item"
 					>
 						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
 					</li>
 				</ul>
-				<ul v-if="stateMenu.dynamic_menu" class="nav--dynamic">
+				<ul v-if="stateMenu.dynamic_menu" class="nav-dynamic">
 					<li
 						v-for="item in stateMenu.dynamic_menu"
 						:key="item.link.id"
 						@click="toggle()"
 						@mouseover="cursorHover(true)"
 						@mouseleave="cursorHover(false)"
-						class="nav--item"
+						class="nav-item"
 					>
 						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
 					</li>
 				</ul>
-				<ul v-if="stateMenu.core_menu" class="nav--core">
+				<ul v-if="stateMenu.core_menu" class="nav-core">
 					<li
 						v-for="item in stateMenu.core_menu"
 						:key="item.link.id"
 						@click="toggle()"
 						@mouseover="cursorHover(true)"
 						@mouseleave="cursorHover(false)"
-						class="nav--item"
+						class="nav-item"
 					>
 						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
 					</li>
@@ -104,7 +104,7 @@ export default class Navigation extends Vue {
 	bottom: $spacing * 3;
 }
 
-.nav--button {
+.nav-button {
 	background: $pink;
 	width: $spacing * 3.5;
 	height: $spacing * 3.5;
@@ -115,7 +115,7 @@ export default class Navigation extends Vue {
 	letter-spacing: 0.1rem;
 }
 
-.nav--menu {
+.nav-menu {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -130,7 +130,7 @@ export default class Navigation extends Vue {
 	}
 }
 
-.nav--item {
+.nav-item {
 	padding-left: $spacing;
 
 	a {
