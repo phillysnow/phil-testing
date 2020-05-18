@@ -1,6 +1,10 @@
 <template>
 	<main class="home">
-		<Slider :data="slides" />
+		<span class="scroll-label">
+			there is more
+			<span>☞</span>
+		</span>
+		<Slider :data="slides" local="false" start="0" />
 	</main>
 </template>
 
@@ -13,19 +17,18 @@ import { Hero, Slider } from '@/components/modules';
 		Hero,
 		Slider,
 	},
-	transition: {
-		name: 'test',
-		mode: 'in-out',
-	},
 })
 export default class Index extends Vue {
+
 	async asyncData({ $prismic, error }) {
 		try {
-			const document = (await $prismic.api.getSingle('home', {fetchLinks: ['case_post.page_image', 'case_post.page_title'] })).data;
-			
+			const document = (
+				await $prismic.api.getSingle('home', { fetchLinks: ['case_post.page_image', 'case_post.title', 'case_post.subtitle'] })
+			).data;
+
 			return {
 				document,
-				slides: document.highlights
+				slides: document.highlights,
 			};
 		} catch (e) {
 			error({ statusCode: 404, message: 'Page not found' });
@@ -40,19 +43,20 @@ export default class Index extends Vue {
 	overflow: hidden;
 }
 
-// .test-enter-active {
-// 	animation: slide-in-from-right 5s ease-out;
-// }
+.scroll-label {
+	display: block;
+	position: absolute;
+	top: $spacing * 2;
+	right: 0;
+	color: $black;
+	font-size: $font-s;
+	padding-right: $spacing * 2;
 
-@keyframes slide-in-from-right {
-	0% {
-		transform: translateX(10rem) rotateZ(4deg);
-		opacity: 0;
-	}
-
-	100% {
-		transform: translateX(0) rotateZ(0);
-		opacity: 1;
+	> span {
+		display: inline-block;
+		margin-left: $spacing * 0.5;
+		font-size: $font-title;
+		transform: translateY(1.3rem);
 	}
 }
 </style>

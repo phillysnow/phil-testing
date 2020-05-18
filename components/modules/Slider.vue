@@ -1,6 +1,6 @@
 <template>
 	<transition name="appear" appear>
-		<div class="slider" :class="{active: hover}">
+		<div class="slider" :class="{ active: hover }">
 			<ul ref="group" class="slider-group">
 				<li
 					ref="items"
@@ -11,19 +11,18 @@
 				>
 					<transition :name="transitionName(index)">
 						<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
-							<h2>{{ $prismic.asText(slide.data.page_title) }}</h2>
-							<FigureImage
+							<p>{{ type(slide.type) }}</p>
+							<h2>{{ $prismic.asText(slide.data.title) }}</h2>
+							<p>{{ $prismic.asText(slide.data.subtitle) }}</p>
+							<!-- <FigureImage
 								v-if="slide.data.page_image"
 								classes="slider-image"
 								:image="slide.data.page_image"
-							/>
+							/>-->
 						</prismic-link>
 					</transition>
 				</li>
 			</ul>
-			<transition name="scroll">
-				<span v-show="Vscroll" class="scroll-label">scroll down 🖱</span>
-			</transition>
 		</div>
 	</transition>
 </template>
@@ -35,16 +34,19 @@ import Kinet from 'kinet';
 
 @Component({
 	components: {
-		FigureImage
-	}
+		FigureImage,
+	},
 })
 export default class Slider extends Vue {
 	@Prop() data;
+	@Prop({ default: false }) local;
+	@Prop({ default: 0 }) start;
+
 	slides = [];
 	inViewById = {};
 	hover = false;
+	track = undefined;
 	observer = undefined;
-	Vscroll = false;
 	index = 0;
 	sliderAnimation = new Kinet({
 		acceleration: 0.04,
@@ -59,29 +61,29 @@ export default class Slider extends Vue {
 	beforeMount() {
 		for (let index = 0; index < this.data.length; index++) {
 			const element = this.data[index];
-			this.slides[index] = element.highlight;		
+			this.slides[index] = element.highlight;
 		}
 	}
 
-	mounted() {	
+	mounted() {
+		this.track = this.local ? this.$el : window;
 		this.slideGroup = this.$refs.group;
 		this.margin = window.screen.availWidth * 0.4;
-		this.maxWidth = -this.slideGroup.scrollWidth + (this.margin * 1.5);		
+		this.maxWidth = -this.slideGroup.scrollWidth + this.margin * 1.5;
 
 		let observer = new IntersectionObserver(this.handleIntersection);
 
-		for (let el of this.$refs.items) {					
+		for (let el of this.$refs.items) {
 			observer.observe(el);
 		}
 		this.observer = observer;
 
 		this.slideList();
-		this.scrollIndicator();
 	}
 
 	beforeDestroy() {
 		this.observer.disconnect();
-		window.removeEventListener('wheel', this.scroll, { passive: false });	
+		this.track.removeEventListener('wheel', this.scroll, { passive: false });
 	}
 
 	cloneInViewById() {
@@ -111,6 +113,12 @@ export default class Slider extends Vue {
 		this.inViewById = inViewById;
 	}
 
+	type(value) {
+		const type = value.split('_');
+		
+		return type[0] ? `${type[0]}/` : 'Oeps I broke it';
+	}
+
 	transitionName(i) {
 		const inViewById = this.cloneInViewById();
 		const IDArray = Object.keys(inViewById);
@@ -123,32 +131,25 @@ export default class Slider extends Vue {
 		}
 	}
 
-	scrollIndicator() {
-		setInterval(() => {
-			this.Vscroll = true;
-		}, 5000);
-	}
-
 	slideList() {
 		this.sliderAnimation.on('tick', (i) => {
 			this.slideGroup.style.transform = `translateX(${i.x.current}px)`;
 			this.hover = true;
 
-			if(i.x.current === i.x.target) this.hover = false;
+			if (i.x.current === i.x.target) this.hover = false;
 		});
-		
-		window.addEventListener('wheel', this.scroll, { passive: false });
+
+		this.track.addEventListener('wheel', this.scroll, { passive: false });
 	}
 
-	slideListAnimate(e) {	
+	slideListAnimate(e) {
 		e.preventDefault();
 		e = window.event || e;
-	
+
 		this.index -= e.deltaY;
-		this.Vscroll = false;
-		
-		if(this.index >= this.margin && e.deltaY < 0) this.index = this.margin;
-		if(!(this.maxWidth <= this.index) && e.deltaY > 0) this.index = this.maxWidth;
+
+		if (this.index >= this.margin && e.deltaY < 0) this.index = this.margin;
+		if (!(this.maxWidth <= this.index) && e.deltaY > 0) this.index = this.maxWidth;
 
 		return this.sliderAnimation.animate('x', this.index);
 	}
@@ -219,27 +220,6 @@ export default class Slider extends Vue {
 			}
 		}
 	}
-}
-
-.scroll-label {
-	display: block;
-	transition: 0.3s opacity, 0.5s transform;
-	font-size: $font-s * 0.8;
-	text-transform: uppercase;
-	opacity: 0.8;
-	padding-left: $spacing * 2;
-	transform: translateY(-6rem);
-}
-
-// scroll-label animation
-.scroll-enter-active {
-	opacity: 0;
-	transform: translateY(-4rem);
-}
-
-.scroll-leave-active {
-	opacity: 0;
-	transform: translateY(-4rem);
 }
 
 // slide-item animation

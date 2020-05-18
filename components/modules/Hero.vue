@@ -1,10 +1,12 @@
 <template>
 	<section class="hero">
-		<FigureImage v-if="data.page_image" classes="hero-image" :image="data.page_image" />
 		<div class="hero-content">
-			<h1 v-if="data.page_title">{{ $prismic.asText(data.page_title) }}</h1>
+			<p>{{ type(data.type) }}</p>
+			<h1 v-if="data.title">{{ $prismic.asText(data.title) }}</h1>
+			<p>{{$prismic.asText(data.subtitle)}}</p>
 			<prismic-rich-text v-if="data.description" class="hero-text" :field="data.description" />
 		</div>
+		<FigureImage v-if="data.page_image" classes="hero-image" :image="data.page_image" />
 	</section>
 </template>
 
@@ -19,14 +21,18 @@ import { FigureImage } from '@/components/elements';
 })
 export default class Hero extends Vue {
 	@Prop() data;
-	
+
+	type(value) {
+		const type = value.split('_');
+		
+		return type[0] ? `${type[0]}/` : 'Oeps I broke it';
+	}
 }
 </script>
 
 <style lang="scss">
 .hero {
-	height: 100vh;
-	padding: 20vh $spacing * 8 0;
+	padding: 20vh 0 0;
 }
 
 .hero-image {

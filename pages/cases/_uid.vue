@@ -1,7 +1,6 @@
 <template>
 	<main class="case-post">
 		<Hero :data="document" />
-		<h1>case-post</h1>
 	</main>
 </template>
 
@@ -17,11 +16,15 @@ import { Hero } from '@/components/modules';
 export default class CasePost extends Vue {
 	async asyncData({ $prismic, params, error }) {
 		try {
-			const document = (await $prismic.api.getByUID('case_post', params.uid)).data;
-
+			const doc = (await $prismic.api.getByUID('case_post', params.uid));
+			
 			return {
-				document,
+				document: {
+					type: doc.type,
+					...doc.data
+				}
 			};
+
 		} catch (e) {
 			error({ statusCode: 404, message: 'Page not found' });
 		}

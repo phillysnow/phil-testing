@@ -8,7 +8,21 @@
 			aria-controls="menu"
 			@mouseover="cursorHover(true, 'menu')"
 			@mouseleave="cursorHover(false, 'menu')"
-		></button>
+		>
+			<svg
+				aria-label="Menu"
+				viewBox="0 0 32 32"
+				width="16"
+				height="16"
+				fill="none"
+				stroke-linejoin="round"
+				stroke-width="9.5%"
+			>
+				<path d="M1 8 L32 8" />
+				<path d="M1 17 L32 17" />
+				<path d="M1 26 L32 26" />
+			</svg>
+		</button>
 		<transition name="menu">
 			<div v-show="menuActive" class="nav-menu">
 				<ul v-if="stateMenu.top_menu" class="nav-top">
@@ -81,17 +95,29 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@mixin rotated-text(
-	$num-letters: 100,
-	$angle-span: 180deg,
-	$angle-offset: 0deg
-) {
-	$angle-per-char: $angle-span / $num-letters;
+.nav-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: $white;
+	width: $spacing * 3.5;
+	height: $spacing * 3.5;
+	border-radius: 50%;
+	border: 0;
+	z-index: 2;
 
-	@for $i from 1 through $num-letters {
-		.char#{$i} {
-			@include transform(rotate($angle-offset + $angle-per-char * $i));
-		}
+	& svg {
+		display: block;
+		pointer-events: none;
+		stroke: $black;
+		height: 32px;
+		width: 32px;
+	}
+
+	& path {
+		transition: 0.3s ease-in-out all;
+		stroke-dasharray: 32;
+		stroke-dashoffset: 0;
 	}
 }
 
@@ -101,28 +127,42 @@ export default class Navigation extends Vue {
 	align-items: center;
 	position: fixed;
 	width: 100%;
+	z-index: 3;
 	bottom: $spacing * 3;
-}
 
-.nav-button {
-	background: $pink;
-	width: $spacing * 3.5;
-	height: $spacing * 3.5;
-	border: 0;
-	z-index: 2;
-	border-radius: 50%;
-	font-size: $font-m;
-	letter-spacing: 0.1rem;
+	&.active {
+		path {
+			stroke-dashoffset: 0;
+
+			&:nth-child(1) {
+				transform: rotate(-45deg) translateY(8px);
+				transform-origin: center;
+			}
+
+			&:nth-child(3) {
+				transform: rotate(45deg) translateY(-10px);
+				transform-origin: center;
+			}
+		}
+
+		path:nth-child(2) {
+			opacity: 0;
+			stroke-dashoffset: 32;
+		}
+	}
 }
 
 .nav-menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: $background;
-	padding: $spacing * 6 $spacing * 4;
+	background-color: var(--color);
+	padding: $spacing $spacing * 4 $spacing * 6;
 
 	> ul {
 		display: flex;
@@ -134,8 +174,9 @@ export default class Navigation extends Vue {
 	padding-left: $spacing;
 
 	a {
-		color: $color;
-		font-size: $font-xl;
+		color: var(--background);
+		font-size: $font-title;
+		font-weight: 800;
 		text-decoration: none;
 		text-transform: capitalize;
 	}
@@ -145,15 +186,47 @@ export default class Navigation extends Vue {
 	}
 }
 
+.nav-top {
+	position: absolute;
+	top: 0;
+
+	a {
+		font-size: $font-s;
+		font-weight: 400;
+	}
+}
+
+.nav-core,
+.nav-dynamic {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
 // animations
-.menu-enter-active,
+.menu-enter-active {
+	transition: opacity 0.5s;
+
+	ul {
+		transition: transform 0.3s 0.5s, opacity 0.3s 0.5s;
+	}
+}
+
 .menu-leave-active {
-	transition: opacity 0.5s, transform 0.3s;
+	transition: opacity 0.5s 0.5s;
+
+	ul {
+		transition: transform 0.3s, opacity 0.3s;
+	}
 }
 
 .menu-enter,
 .menu-leave-to {
 	opacity: 0;
-	transform: translateY(20rem);
+
+	ul {
+		opacity: 0;
+		transform: translateY(4rem);
+	}
 }
 </style>

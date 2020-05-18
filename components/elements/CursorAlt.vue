@@ -71,6 +71,7 @@ export default class CursorAlt extends Vue {
 	position: fixed;
 	top: 50%;
 	left: 50%;
+	z-index: 4;
 
 	&.hover {
 		.sphere {

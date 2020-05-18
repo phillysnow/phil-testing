@@ -1,14 +1,29 @@
+/* eslint-disable no-console */
 'use strict';
 
 export default class BreakPoint {
 	init() {
+		const debounce = (func, wait, immediate) => {
+			let timeout;
+			return () => {
+				const context = this;
+				const args = arguments;
+				const later = function () {
+					timeout = null;
+					if (!immediate) func.apply(context, args);
+				};
+				const callNow = immediate && !timeout;
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+				if (callNow) func.apply(context, args);
+			};
+		};
+
 		if (typeof window !== 'undefined') {
 			this.setBreakPoint();
 			window.addEventListener(
 				'resize',
-				() => {
-					this.setBreakPoint();
-				},
+				debounce(() => this.setBreakPoint(), 100, false),
 				{ passive: true }
 			);
 		}

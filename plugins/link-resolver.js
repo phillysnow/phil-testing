@@ -14,13 +14,13 @@ export default function (doc) {
 	if (doc.type === 'default') return `/${doc.uid}`;
 
 	// overview pages
-	if (doc.type === 'case') return '/case';
-	if (doc.type === 'opinion') return '/opinie';
+	if (doc.type === 'case') return '/cases';
+	if (doc.type === 'opinion') return '/opinies';
 	if (doc.type === 'actual') return '/actueel';
 
 	// detail pages
-	if (doc.type === 'case_post') return `/case/${doc.uid}`;
-	if (doc.type === 'opinion_post') return `/opinie/${doc.uid}`;
+	if (doc.type === 'case_post') return `/cases/${doc.uid}`;
+	if (doc.type === 'opinion_post') return `/opinies/${doc.uid}`;
 	if (doc.type === 'news_post') return `/actueel/${doc.uid}`;
 	if (doc.type === 'event_post') return `/actueel/${doc.uid}`;
 
