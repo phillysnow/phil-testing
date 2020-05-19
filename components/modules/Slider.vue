@@ -1,30 +1,22 @@
 <template>
-	<transition name="appear" appear>
-		<div class="slider" :class="{ active: hover }">
-			<ul ref="group" class="slider-group">
-				<li
-					ref="items"
-					v-for="(slide, index) in slides"
-					:key="index"
-					class="slider-item"
-					:data-id="index"
-				>
-					<transition :name="transitionName(index)">
-						<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
-							<p>{{ type(slide.type) }}</p>
-							<h2>{{ $prismic.asText(slide.data.title) }}</h2>
-							<p>{{ $prismic.asText(slide.data.subtitle) }}</p>
-							<!-- <FigureImage
-								v-if="slide.data.page_image"
-								classes="slider-image"
-								:image="slide.data.page_image"
-							/>-->
-						</prismic-link>
-					</transition>
-				</li>
-			</ul>
-		</div>
-	</transition>
+	<div class="slider" :class="{ active: hover }">
+		<ul ref="group" class="slider-group">
+			<li ref="items" v-for="(slide, index) in slides" :key="index" class="slider-item" :data-id="index">
+				<transition :name="transitionName(index)">
+					<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
+						<p v-if="slide.type">{{ type(slide.type) }}</p>
+						<h2 v-if="slide.data.title">{{ $prismic.asText(slide.data.title) }}</h2>
+						<p v-if="slide.data.subtitle">{{ $prismic.asText(slide.data.subtitle) }}</p>
+						<FigureImage
+							v-if="slide.data.page_image"
+							classes="slider-image"
+							:image="slide.data.page_image"
+						/>
+					</prismic-link>
+				</transition>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
@@ -115,7 +107,7 @@ export default class Slider extends Vue {
 
 	type(value) {
 		const type = value.split('_');
-		
+
 		return type[0] ? `${type[0]}/` : 'Oeps I broke it';
 	}
 
@@ -179,24 +171,33 @@ export default class Slider extends Vue {
 
 	a {
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		flex-direction: column;
+		justify-content: flex-end;
 		position: relative;
 		z-index: 0;
+		padding: $spacing * 2;
 		width: 100%;
 		height: 100%;
 		text-decoration: none;
-		background-color: $green;
+		background-color: $white;
+		color: $black;
 		border-radius: 0.3rem;
 		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
 		overflow: hidden;
+		transition: 0.5s background-color;
 	}
 
 	h2 {
-		color: $white;
-		font-size: $font-title;
-		line-height: 1.2;
-		text-align: center;
+		color: $black;
+		line-height: 1.4;
+	}
+
+	p {
+		margin: $spacing 0;
+		text-transform: capitalize;
+		font-weight: 500;
+		font-size: $font;
+		letter-spacing: 0.05em;
 	}
 }
 
@@ -217,6 +218,10 @@ export default class Slider extends Vue {
 		.slider-item {
 			&:hover {
 				transform: scale(1.1);
+
+				a {
+					background-color: $green;
+				}
 			}
 		}
 	}
@@ -250,14 +255,6 @@ export default class Slider extends Vue {
 
 	100% {
 		transform: translate(0);
-	}
-}
-
-// page appear animation
-.appear-enter-active {
-	.before-enter-active,
-	.after-enter-active {
-		animation: none;
 	}
 }
 </style>

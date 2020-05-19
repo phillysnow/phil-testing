@@ -27,6 +27,7 @@
 	}
 
 	h3 {
+		font-family: sans-serif;
 		font-size: $font-s * 0.75;
 		width: 2rem;
 		margin-left: $spacing * 2;

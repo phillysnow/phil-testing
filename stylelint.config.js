@@ -3,7 +3,7 @@ module.exports = {
 	rules: {
 		indentation: 'tab',
 		'declaration-colon-newline-after': null,
-		'value-list-comma-newline-after': 'never-multi-line',
+		'value-list-comma-newline-after': null,
 		'at-rule-no-unknown': [
 			true,
 			{
@@ -25,4 +25,4 @@ module.exports = {
 		'number-leading-zero': null,
 		'unit-whitelist': ['rem', 'deg', 'em', 'vh', 'fr', 'vw', 'px', 'ms', '%', 's'],
 	},
-}
+};

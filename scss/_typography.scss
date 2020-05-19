@@ -11,18 +11,19 @@ h6 {
 	font-family: $font-head;
 	font-weight: 700;
 	color: $color-head;
+	letter-spacing: 0.02em;
 }
 
 h1 {
-	font-size: $font-xxl;
+	font-size: $font-title;
 }
 
 h2 {
-	font-size: $font-xl;
+	font-size: $font-xxl;
 }
 
 h3 {
-	font-size: $font-l;
+	font-size: $font-xl;
 }
 
 h4,

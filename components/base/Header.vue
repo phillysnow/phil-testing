@@ -20,8 +20,7 @@ export default class Header extends Vue {}
 .header {
 	width: 100%;
 	position: absolute;
-	padding-left: $spacing * 4;
-	padding-top: $spacing * 3;
 	z-index: 2;
+	padding: $spacing * 2 $spacing * 2 0;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<main class="home">
 		<span class="scroll-label">
-			there is more
+			There is more
 			<span>☞</span>
 		</span>
 		<Slider :data="slides" local="false" start="0" />
@@ -10,20 +10,18 @@
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero, Slider } from '@/components/modules';
+import { Slider } from '@/components/modules';
 
 @Component({
 	components: {
-		Hero,
 		Slider,
 	},
 })
 export default class Index extends Vue {
-
 	async asyncData({ $prismic, error }) {
 		try {
 			const document = (
-				await $prismic.api.getSingle('home', { fetchLinks: ['case_post.page_image', 'case_post.title', 'case_post.subtitle'] })
+				await $prismic.api.getSingle('home', { fetchLinks: ['case_post.title', 'case_post.subtitle'] })
 			).data;
 
 			return {
@@ -41,6 +39,7 @@ export default class Index extends Vue {
 	height: 100vh;
 	position: relative;
 	overflow: hidden;
+	background-color: $background;
 }
 
 .scroll-label {
@@ -55,8 +54,9 @@ export default class Index extends Vue {
 	> span {
 		display: inline-block;
 		margin-left: $spacing * 0.5;
-		font-size: $font-title;
-		transform: translateY(1.3rem);
+		line-height: 1.6rem;
+		font-size: 4em;
+		transform: translateY(0.3em);
 	}
 }
 </style>
