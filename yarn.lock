@@ -1375,6 +1375,11 @@
     consola "^2.11.3"
     defu "^1.0.0"
 
+"@nuxtjs/gtm@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/gtm/-/gtm-2.2.3.tgz#c5e861e9988e69c6e69e11808fcd0af27d3571fd"
+  integrity sha512-YRvxCo2rpe61kR49LmepK0lCjrrb3hvb89X7/AO5IFPzPU6hxUDpi4V3rnahUTwHcDdYknVqtjAn8ZFMp+HE2Q==
+
 "@nuxtjs/prismic@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@nuxtjs/prismic/-/prismic-1.1.1.tgz#c1fe32004266e5b58be7e0420c4542aa55d92afd"

@@ -30,7 +30,11 @@ export default {
 	buildModules: [
 		// Doc: https://github.com/nuxt-community/stylelint-module
 		'@nuxtjs/stylelint-module',
+		'@nuxtjs/gtm',
 	],
+	gtm: {
+		id: 'GTM-XXXXXX',
+	},
 	/*
 	 ** Nuxt.js modules
 	 */

@@ -28,6 +28,7 @@
 	},
 	"dependencies": {
 		"@nuxtjs/axios": "^5.9.6",
+		"@nuxtjs/gtm": "^2.2.3",
 		"@nuxtjs/prismic": "^1.1.1",
 		"@nuxtjs/style-resources": "^1.0.0",
 		"kinet": "^2.2.1",
