@@ -27,7 +27,7 @@ export default class Hero extends Vue {
 	type(value) {
 		const type = value.split('_');
 
-		return type[0] ? `${type[0]}/` : 'Oeps I broke it';
+		return type[0] ? `${type[0]}/` : '';
 	}
 }
 </script>
@@ -73,6 +73,7 @@ export default class Hero extends Vue {
 		height: 100%;
 		opacity: 0.25;
 		object-fit: cover;
+		filter: grayscale(100%);
 	}
 
 	@supports (mix-blend-mode: multiply) {

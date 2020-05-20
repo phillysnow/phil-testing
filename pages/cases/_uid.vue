@@ -2,17 +2,25 @@
 	<main class="case-post">
 		<Hero :data="hero" />
 		<Intro :data="intro" />
+		<Emphatize :data="emphatize" />
+		<LiveQuote :data="livequote" />
+		<Harmonize :data="harmonize" />
+		<Nurture :data="nurture" />
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero, Intro } from '@/components/modules';
+import { Hero, Intro, Emphatize, Harmonize, LiveQuote, Nurture } from '@/components/modules';
 
 @Component({
 	components: {
 		Hero,
 		Intro,
+		Emphatize,
+		Harmonize,
+		LiveQuote,
+		Nurture,
 	},
 })
 export default class CasePost extends Vue {
@@ -30,6 +38,25 @@ export default class CasePost extends Vue {
 				},
 				intro: {
 					intro_image: doc.data.intro_image,
+				},
+				emphatize: {
+					emphatize_title: doc.data.emphatize_title,
+					emphatize_list: doc.data.emphatize_list,
+				},
+				livequote: {
+					livequote_title: doc.data.livequote_title,
+					livequote_video: doc.data.livequote_video,
+				},
+				harmonize: {
+					harmonize_title: doc.data.harmonize_title,
+					harmonize_list: doc.data.harmonize_list,
+				},
+				nurture: {
+					nurture_title: doc.data.nurture_title,
+					nurture_image: doc.data.nurture_image,
+					nurture_headline: doc.data.nurture_headline,
+					nurture_text: doc.data.nurture_text,
+					nurture_list: doc.data.nurture_list,
 				},
 			};
 		} catch (e) {

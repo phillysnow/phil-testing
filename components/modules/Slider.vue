@@ -5,7 +5,7 @@
 				<transition :name="transitionName(index)">
 					<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
 						<p v-if="slide.type">{{ type(slide.type) }}</p>
-						<h2 v-if="slide.data.title">{{ $prismic.asText(slide.data.title) }}</h2>
+						<h3 v-if="slide.data.title">{{ $prismic.asText(slide.data.title) }}</h3>
 						<p v-if="slide.data.subtitle">{{ $prismic.asText(slide.data.subtitle) }}</p>
 						<FigureImage
 							v-if="slide.data.page_image"
@@ -51,26 +51,30 @@ export default class Slider extends Vue {
 	scroll = (e) => this.slideListAnimate(e);
 
 	beforeMount() {
-		for (let index = 0; index < this.data.length; index++) {
-			const element = this.data[index];
-			this.slides[index] = element.highlight;
+		if (this.data) {
+			for (let index = 0; index < this.data.length; index++) {
+				const element = this.data[index];
+				this.slides[index] = element.highlight;
+			}
 		}
 	}
 
 	mounted() {
-		this.track = this.local ? this.$el : window;
-		this.slideGroup = this.$refs.group;
-		this.margin = window.screen.availWidth * 0.4;
-		this.maxWidth = -this.slideGroup.scrollWidth + this.margin * 1.5;
+		if (this.data) {
+			this.track = this.local ? this.$el : window;
+			this.slideGroup = this.$refs.group;
+			this.margin = window.screen.availWidth * 0.4;
+			this.maxWidth = -this.slideGroup.scrollWidth + this.margin * 1.5;
 
-		let observer = new IntersectionObserver(this.handleIntersection);
+			let observer = new IntersectionObserver(this.handleIntersection);
 
-		for (let el of this.$refs.items) {
-			observer.observe(el);
+			for (let el of this.$refs.items) {
+				observer.observe(el);
+			}
+			this.observer = observer;
+
+			this.slideList();
 		}
-		this.observer = observer;
-
-		this.slideList();
 	}
 
 	beforeDestroy() {
@@ -108,7 +112,7 @@ export default class Slider extends Vue {
 	type(value) {
 		const type = value.split('_');
 
-		return type[0] ? `${type[0]}/` : 'Oeps I broke it';
+		return type[0] ? `${type[0]}/` : '';
 	}
 
 	transitionName(i) {
@@ -187,7 +191,7 @@ export default class Slider extends Vue {
 		transition: 0.5s background-color;
 	}
 
-	h2 {
+	h3 {
 		color: $black;
 		line-height: 1.4;
 	}

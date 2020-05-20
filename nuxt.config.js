@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
 	mode: 'universal',
 	/*
@@ -47,7 +49,7 @@ export default {
 		'@nuxtjs/prismic',
 	],
 	prismic: {
-		endpoint: 'https://tfe-test.cdn.prismic.io/api/v2',
+		endpoint: process.env.endpoint || 'https://tfe-test.cdn.prismic.io/api/v2',
 		preview: '/preview',
 		linkResolver: '@/plugins/link-resolver',
 		htmlSerializer: '@/plugins/html-serializer',
