@@ -27,7 +27,7 @@ export default class Intro extends Vue {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: $spacing * 7 $spacing * 6 $spacing * 4;
+	padding: $spacing * 7 $spacing * 6 $spacing;
 	position: relative;
 
 	.scroll-label {
@@ -39,6 +39,8 @@ export default class Intro extends Vue {
 .intro-image {
 	position: relative;
 	overflow: hidden;
+	width: 100%;
+	height: 60rem;
 
 	&::after {
 		content: '';
@@ -59,6 +61,9 @@ export default class Intro extends Vue {
 	}
 
 	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 		filter: grayscale(100%);
 	}
 }

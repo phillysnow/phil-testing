@@ -28,8 +28,8 @@ export default class Emphatize extends Vue {
 <style lang="scss">
 .emphatize-content {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
-	padding: $spacing * 2 $spacing * 6 $spacing * 2;
+	grid-template-columns: 40rem auto;
+	padding: $spacing * 6 $spacing * 6 $spacing;
 }
 
 .emphatize-header {

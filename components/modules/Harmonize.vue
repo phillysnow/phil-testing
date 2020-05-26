@@ -28,8 +28,8 @@ export default class Harmonize extends Vue {
 <style lang="scss">
 .harmonize-content {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
-	padding: $spacing * 2 $spacing * 6 $spacing * 2;
+	grid-template-columns: 40rem auto;
+	padding: $spacing * 6 $spacing * 6 $spacing;
 }
 
 .harmonize-header {
@@ -61,6 +61,12 @@ export default class Harmonize extends Vue {
 			font-size: $font;
 			font-weight: 100;
 			line-height: 1.8;
+		}
+	}
+
+	li:last-of-type {
+		.text {
+			padding-bottom: 0;
 		}
 	}
 }

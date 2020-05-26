@@ -1,9 +1,12 @@
 <template>
 	<section class="livequote">
 		<div class="livequote-content">
-			<figure></figure>
-			<article>
-				<h2>{{ $prismic.asText(data.livequote_title) }}</h2>
+			<EmbedYoutube :embed="data.livequote_video" />
+			<article class="livequote-article">
+				<div>
+					<h2>{{ $prismic.asText(data.livequote_title) }}</h2>
+					<p><span>_Marvin Reingoud</span> Concept & Design</p>
+				</div>
 			</article>
 		</div>
 	</section>
@@ -11,12 +14,13 @@
 
 <script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
-import { FigureImage, ScrollIndicator } from '@/components/elements';
+import { FigureImage, ScrollIndicator, EmbedYoutube } from '@/components/elements';
 
 @Component({
 	components: {
 		FigureImage,
 		ScrollIndicator,
+		EmbedYoutube,
 	},
 })
 export default class LiveQuote extends Vue {
@@ -25,11 +29,39 @@ export default class LiveQuote extends Vue {
 </script>
 
 <style lang="scss">
+.livequote {
+	padding: $spacing * 6 $spacing * 6 $spacing;
+}
+
 .livequote-content {
+	display: grid;
+	grid-template-columns: 40rem auto;
+	position: relative;
+	background-color: $white;
+	box-shadow: 0 10rem 6rem -6rem rgba($grey, 0.2);
+
+	@include stripes();
+}
+
+.livequote-article {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: $spacing $spacing * 6 $spacing;
-	position: relative;
+	padding: $spacing * 2;
+
+	> div {
+		max-width: 60rem;
+	}
+
+	p {
+		margin-top: $spacing * 2;
+		font-weight: lighter;
+
+		> span {
+			color: $pink;
+			font-weight: bold;
+		}
+	}
 }
 </style>

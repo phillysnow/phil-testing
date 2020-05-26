@@ -3,7 +3,7 @@
 		<Header />
 		<Nuxt />
 		<Navigation />
-		<CursorAlt v-if="breakingPoint !== 's'" />
+		<!-- <CursorAlt v-if="breakingPoint !== 's'" /> -->
 	</div>
 </template>
 

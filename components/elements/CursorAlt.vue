@@ -19,18 +19,30 @@ export default class CursorAlt extends Vue {
 
 		kinet.animate('z', 1);
 
-		document.addEventListener('mousemove', (event) => {
-			kinet.animate('x', event.clientX - window.innerWidth / 2);
-			kinet.animate('y', event.clientY - window.innerHeight / 2);
-		}, {passive: true});
+		document.addEventListener(
+			'mousemove',
+			(event) => {
+				kinet.animate('x', event.clientX - window.innerWidth / 2);
+				kinet.animate('y', event.clientY - window.innerHeight / 2);
+			},
+			{ passive: true }
+		);
 
-		document.addEventListener('mousedown', (event) => {
-			kinet.animate('z', 0.7);
-		}, {passive: true});
+		document.addEventListener(
+			'mousedown',
+			(event) => {
+				kinet.animate('z', 0.7);
+			},
+			{ passive: true }
+		);
 
-		document.addEventListener('mouseup', (event) => {
-			kinet.animate('z', 1);
-		}, {passive: true});
+		document.addEventListener(
+			'mouseup',
+			(event) => {
+				kinet.animate('z', 1);
+			},
+			{ passive: true }
+		);
 
 		kinet.on('tick', (instances) => {
 			this.$el.style.transform = `translate3d(${instances.x.current}px, ${instances.y.current}px, 0) scale(${
@@ -42,11 +54,11 @@ export default class CursorAlt extends Vue {
 </script>
 
 <style lang="scss">
-@media all and (min-width: $m) {
-	* {
-		cursor: none;
-	}
-}
+// @media all and (min-width: $m) {
+// 	* {
+// 		cursor: none;
+// 	}
+// }
 
 .sphere {
 	display: block;
