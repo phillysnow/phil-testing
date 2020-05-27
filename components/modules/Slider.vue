@@ -110,8 +110,8 @@ export default class Slider extends Vue {
 	}
 
 	type(value) {
+		if (!value) return '';
 		const type = value.split('_');
-
 		return type[0] ? `${type[0]}/` : '';
 	}
 

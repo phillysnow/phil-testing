@@ -4,13 +4,12 @@
 		<Nuxt />
 		<Navigation />
 		<!-- <CursorAlt v-if="breakingPoint !== 's'" /> -->
-		<Footer />
 	</div>
 </template>
 
 <script>
 import { Component, Vue, Action } from 'nuxt-property-decorator';
-import { Header, Navigation, Footer } from '@/components/base';
+import { Header, Navigation } from '@/components/base';
 import { CursorAlt } from '@/components/elements';
 import BreakPoint from '@/plugins/breakpoint';
 
@@ -19,7 +18,6 @@ import BreakPoint from '@/plugins/breakpoint';
 		Header,
 		Navigation,
 		CursorAlt,
-		Footer,
 	},
 })
 export default class Default extends Vue {

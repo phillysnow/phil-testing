@@ -33,8 +33,7 @@ export default class Emphatize extends Vue {
 }
 
 .emphatize-header {
-	display: block;
-	padding-right: $spacing;
+	padding-right: $spacing * 2;
 
 	p {
 		color: $pink;
@@ -59,12 +58,6 @@ export default class Emphatize extends Vue {
 
 	.text {
 		padding-top: $spacing * 0.5;
-
-		p {
-			font-size: $font;
-			font-weight: 100;
-			line-height: 1.8;
-		}
 	}
 }
 </style>

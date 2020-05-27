@@ -7,7 +7,7 @@
 		</div>
 		<div v-if="data.description || data.page_image" class="hero-description">
 			<prismic-rich-text v-if="data.description" class="hero-text" :field="data.description" />
-			<FigureImage v-if="data.page_image" classes="hero-image" :image="data.page_image" />
+			<FigureImage v-if="data.page_image" classes="overlay--green" :image="data.page_image" />
 		</div>
 	</section>
 </template>
@@ -63,27 +63,6 @@ export default class Hero extends Vue {
 	position: relative;
 }
 
-.hero-image {
-	height: 100%;
-	background-color: $green;
-	overflow: hidden;
-
-	img {
-		width: 100%;
-		height: 100%;
-		opacity: 0.25;
-		object-fit: cover;
-		filter: grayscale(100%);
-	}
-
-	@supports (mix-blend-mode: multiply) {
-		img {
-			mix-blend-mode: multiply;
-			opacity: 0.7;
-		}
-	}
-}
-
 .hero-text {
 	width: 60rem;
 	bottom: 0;
@@ -92,11 +71,5 @@ export default class Hero extends Vue {
 	padding: $spacing * 4 $spacing * 6;
 	background-color: $white;
 	z-index: 2;
-
-	p {
-		font-size: $font;
-		font-weight: 100;
-		line-height: 1.8;
-	}
 }
 </style>

@@ -56,7 +56,6 @@ export default class LiveQuote extends Vue {
 
 	p {
 		margin-top: $spacing * 2;
-		font-weight: lighter;
 
 		> span {
 			color: $pink;

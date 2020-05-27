@@ -65,9 +65,28 @@ img {
 }
 
 figure {
+	height: 100%;
+	overflow: hidden;
+
 	&.loading {
 		img {
 			opacity: 0;
+		}
+	}
+
+	&.overlay--green {
+		background-color: $green;
+
+		img {
+			opacity: 0.25;
+			filter: grayscale(100%);
+		}
+
+		@supports (mix-blend-mode: multiply) {
+			img {
+				mix-blend-mode: multiply;
+				opacity: 0.7;
+			}
 		}
 	}
 }

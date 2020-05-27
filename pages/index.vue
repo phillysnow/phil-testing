@@ -12,6 +12,7 @@ import { ScrollIndicator } from '@/components/elements';
 import { Slider } from '@/components/modules';
 
 @Component({
+	layout: 'home',
 	components: {
 		Slider,
 		ScrollIndicator,

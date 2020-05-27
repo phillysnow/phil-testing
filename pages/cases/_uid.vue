@@ -6,12 +6,13 @@
 		<LiveQuote :data="livequote" />
 		<Harmonize :data="harmonize" />
 		<Nurture :data="nurture" />
+		<UpNext :data="upnext" />
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero, Intro, Emphatize, Harmonize, LiveQuote, Nurture } from '@/components/modules';
+import { Hero, Intro, Emphatize, Harmonize, LiveQuote, Nurture, UpNext } from '@/components/modules';
 
 @Component({
 	components: {
@@ -21,12 +22,15 @@ import { Hero, Intro, Emphatize, Harmonize, LiveQuote, Nurture } from '@/compone
 		Harmonize,
 		LiveQuote,
 		Nurture,
+		UpNext,
 	},
 })
 export default class CasePost extends Vue {
 	async asyncData({ $prismic, params, error }) {
 		try {
-			const doc = await $prismic.api.getByUID('case_post', params.uid);
+			const doc = await $prismic.api.getByUID('case_post', params.uid, {
+				fetchLinks: ['case_post.title', 'case_post.subtitle'],
+			});
 
 			return {
 				hero: {
@@ -57,6 +61,11 @@ export default class CasePost extends Vue {
 					nurture_headline: doc.data.nurture_headline,
 					nurture_text: doc.data.nurture_text,
 					nurture_list: doc.data.nurture_list,
+				},
+				upnext: {
+					...doc.data.upnext,
+					title: doc.data.upnext.data.title,
+					subtitle: doc.data.upnext.data.subtitle,
 				},
 			};
 		} catch (e) {

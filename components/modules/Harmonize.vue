@@ -33,8 +33,7 @@ export default class Harmonize extends Vue {
 }
 
 .harmonize-header {
-	display: block;
-	padding-right: $spacing;
+	padding-right: $spacing * 2;
 
 	p {
 		color: $pink;
@@ -56,12 +55,6 @@ export default class Harmonize extends Vue {
 
 	.text {
 		padding: $spacing * 0.5 0 $spacing * 2;
-
-		p {
-			font-size: $font;
-			font-weight: 100;
-			line-height: 1.8;
-		}
 	}
 
 	li:last-of-type {
