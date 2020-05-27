@@ -4,14 +4,14 @@
  */
 
 export default function (doc) {
-	if (doc.isBroken) return '/not-found';
+	if (doc.isBroken) return '/404';
 
 	// custom pages
 	if (doc.type === 'home') return '/';
 	if (doc.type === 'contact') return '/contact';
 	if (doc.type === 'about_us') return '/over-ons';
 	if (doc.type === 'services') return '/services';
-	if (doc.type === 'default') return `/${doc.uid}`;
+	// if (doc.type === 'default') return `/${doc.uid}`;
 
 	// overview pages
 	if (doc.type === 'case') return '/cases';
@@ -24,5 +24,5 @@ export default function (doc) {
 	if (doc.type === 'news_post') return `/actueel/${doc.uid}`;
 	if (doc.type === 'event_post') return `/actueel/${doc.uid}`;
 
-	return '/not-found';
+	return '/404';
 }

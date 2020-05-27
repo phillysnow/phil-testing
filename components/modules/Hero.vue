@@ -1,9 +1,9 @@
 <template>
 	<section class="hero">
 		<div class="hero-content">
-			<p>{{ type(data.type) }}</p>
+			<p v-if="data.type">{{ type(data.type) }}</p>
 			<h1 v-if="data.title">{{ $prismic.asText(data.title) }}</h1>
-			<p>{{ $prismic.asText(data.subtitle) }}</p>
+			<p v-if="data.subtitle">{{ $prismic.asText(data.subtitle) }}</p>
 		</div>
 		<div v-if="data.description || data.page_image" class="hero-description">
 			<prismic-rich-text v-if="data.description" class="hero-text" :field="data.description" />
@@ -32,7 +32,7 @@ export default class Hero extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .hero {
 	background-color: $green;
 }

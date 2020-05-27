@@ -49,7 +49,7 @@ export default {
 		'@nuxtjs/prismic',
 	],
 	prismic: {
-		endpoint: process.env.endpoint || 'https://tfe-test.cdn.prismic.io/api/v2',
+		endpoint: process.env.endpoint,
 		preview: '/preview',
 		linkResolver: '@/plugins/link-resolver',
 		htmlSerializer: '@/plugins/html-serializer',

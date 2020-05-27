@@ -1,25 +1,25 @@
 <template>
 	<main class="case">
-		<h1>case</h1>
+		<section class="hero">
+			<div class="hero-content">
+				<h1 v-if="doc.page_title">{{ $prismic.asText(doc.page_title) }}</h1>
+				<prismic-rich-text v-if="doc.description" class="hero-text" :field="doc.description" />
+			</div>
+		</section>
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero } from '@/components/modules';
 
-@Component({
-	components: {
-		Hero,
-	},
-})
+@Component({})
 export default class Case extends Vue {
 	async asyncData({ $prismic, error }) {
 		try {
-			const document = (await $prismic.api.getSingle('case')).data;
+			const doc = (await $prismic.api.getSingle('case')).data;
 
 			return {
-				document,
+				doc,
 			};
 		} catch (e) {
 			error({ statusCode: 404, message: 'Page not found' });
@@ -27,3 +27,25 @@ export default class Case extends Vue {
 	}
 }
 </script>
+<style lang="scss" scoped>
+.hero-content {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: $spacing * 7 $spacing * 6 $spacing * 4;
+	position: relative;
+
+	p {
+		font-size: $font-l;
+		font-weight: bold;
+		margin-top: $spacing * 1.5;
+	}
+
+	h1 {
+		line-height: 1.1;
+		letter-spacing: 0.03em;
+		max-width: 90rem;
+		margin-top: $spacing;
+	}
+}
+</style>
