@@ -5,9 +5,9 @@
 			<h1 v-if="data.title">{{ $prismic.asText(data.title) }}</h1>
 			<p v-if="data.subtitle">{{ $prismic.asText(data.subtitle) }}</p>
 		</div>
-		<div v-if="data.description || data.page_image" class="hero-description">
+		<div v-if="data.description || data.image" class="hero-description">
 			<prismic-rich-text v-if="data.description" class="hero-text" :field="data.description" />
-			<FigureImage v-if="data.page_image" classes="overlay--green" :image="data.page_image" />
+			<FigureImage v-if="data.image" classes="overlay--green" :image="data.image" />
 		</div>
 	</section>
 </template>

@@ -28,8 +28,8 @@
 			<img
 				v-if="image"
 				:src="image.url"
-				:width="image.dimensions.width"
-				:height="image.dimensions.height"
+				:width="width(image.dimensions)"
+				:height="height(image.dimensions)"
 				:alt="image.alt"
 				loading="lazy"
 				@load="onLoaded"
@@ -50,6 +50,16 @@ export default class FigureImage extends Vue {
 	onLoaded() {
 		// this.$emit('loaded', true);
 		this.loading = false;
+	}
+
+	width(dim) {
+		if (!dim) return '0';
+		return dim.width;
+	}
+
+	height(dim) {
+		if (!dim) return '0';
+		return dim.height;
 	}
 }
 </script>

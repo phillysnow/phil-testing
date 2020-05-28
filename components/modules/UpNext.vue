@@ -1,9 +1,9 @@
 <template>
 	<section class="upnext">
 		<prismic-link v-if="data" class="upnext-content" :field="data">
-			<p>volgende {{ type(data.type) }}</p>
-			<h3 v-if="data.title">{{ $prismic.asText(data.title) }}</h3>
-			<p v-if="data.subtitle">{{ $prismic.asText(data.subtitle) }}</p>
+			<p v-if="data.type">volgende {{ type(data.type) }}</p>
+			<h3 v-if="data.data && data.data.title">{{ $prismic.asText(data.data.title) }}</h3>
+			<p v-if="data.data && data.data.subtitle">{{ $prismic.asText(data.data.subtitle) }}</p>
 		</prismic-link>
 
 		<h3>Up next</h3>

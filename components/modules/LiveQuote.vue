@@ -1,10 +1,10 @@
 <template>
 	<section class="livequote">
 		<div class="livequote-content">
-			<EmbedYoutube :embed="data.livequote_video" />
+			<EmbedYoutube :embed="data.video" />
 			<article class="livequote-article">
 				<div>
-					<h2>{{ $prismic.asText(data.livequote_title) }}</h2>
+					<h2>{{ $prismic.asText(data.title) }}</h2>
 					<p><span>_Marvin Reingoud</span> Concept & Design</p>
 				</div>
 			</article>

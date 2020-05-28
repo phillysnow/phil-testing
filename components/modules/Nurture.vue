@@ -3,18 +3,18 @@
 		<div class="nurture-content">
 			<article>
 				<p class="bold">3. Nurture</p>
-				<h2>{{ $prismic.asText(data.nurture_title) }}</h2>
-				<p class="headline"><span>3.1</span> {{ $prismic.asText(data.nurture_headline) }}</p>
-				<prismic-rich-text v-if="data.nurture_text" :field="data.nurture_text" />
+				<h2>{{ $prismic.asText(data.title) }}</h2>
+				<p class="headline"><span>3.1</span> {{ $prismic.asText(data.headline) }}</p>
+				<prismic-rich-text v-if="data.text" :field="data.text" />
 				<ul class="nurture-group">
-					<li v-for="(item, index) in data.nurture_list" :key="index">
+					<li v-for="(item, index) in data.list" :key="index">
 						<prismic-link v-if="item.link" :field="item.link"
 							>{{ $prismic.asText(item.label) }} >></prismic-link
 						>
 					</li>
 				</ul>
 			</article>
-			<FigureImage v-if="data.nurture_image" :image="data.nurture_image" />
+			<FigureImage v-if="data.image" :image="data.image" />
 		</div>
 	</section>
 </template>

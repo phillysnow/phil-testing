@@ -1,12 +1,12 @@
 <template>
 	<main class="case-post">
-		<Hero :data="hero" />
-		<Intro :data="intro" />
-		<Emphatize :data="emphatize" />
-		<LiveQuote :data="livequote" />
-		<Harmonize :data="harmonize" />
-		<Nurture :data="nurture" />
-		<UpNext :data="upnext" />
+		<Hero v-if="hero.title.length > 0" :data="hero" />
+		<Intro v-if="intro.image" :data="intro" />
+		<Emphatize v-if="emphatize.title.length > 0" :data="emphatize" />
+		<LiveQuote v-if="livequote.title.length > 0" :data="livequote" />
+		<Harmonize v-if="harmonize.title.length > 0" :data="harmonize" />
+		<Nurture v-if="nurture.title.length > 0" :data="nurture" />
+		<UpNext v-if="upnext.type" :data="upnext" />
 	</main>
 </template>
 
@@ -32,42 +32,51 @@ export default class CasePost extends Vue {
 				fetchLinks: ['case_post.title', 'case_post.subtitle'],
 			});
 
-			return {
+			const data = {
 				hero: {
+					//title required
 					type: doc.type,
 					title: doc.data.title,
 					subtitle: doc.data.subtitle,
-					page_image: doc.data.page_image,
+					image: doc.data.page_image,
 					description: doc.data.description,
 				},
 				intro: {
-					intro_image: doc.data.intro_image,
+					//title image
+					image: doc.data.intro_image,
 				},
 				emphatize: {
-					emphatize_title: doc.data.emphatize_title,
-					emphatize_list: doc.data.emphatize_list,
+					//title required
+					title: doc.data.emphatize_title,
+					list: doc.data.emphatize_list,
 				},
 				livequote: {
-					livequote_title: doc.data.livequote_title,
-					livequote_video: doc.data.livequote_video,
+					//title required
+					title: doc.data.livequote_title,
+					video: doc.data.livequote_video,
 				},
 				harmonize: {
-					harmonize_title: doc.data.harmonize_title,
-					harmonize_list: doc.data.harmonize_list,
+					//title required
+					title: doc.data.harmonize_title,
+					list: doc.data.harmonize_list,
 				},
 				nurture: {
-					nurture_title: doc.data.nurture_title,
-					nurture_image: doc.data.nurture_image,
-					nurture_headline: doc.data.nurture_headline,
-					nurture_text: doc.data.nurture_text,
-					nurture_list: doc.data.nurture_list,
+					//title required
+					title: doc.data.nurture_title,
+					image: doc.data.nurture_image,
+					headline: doc.data.nurture_headline,
+					text: doc.data.nurture_text,
+					list: doc.data.nurture_list,
 				},
 				upnext: {
+					//type required
 					...doc.data.upnext,
-					title: doc.data.upnext.data.title,
-					subtitle: doc.data.upnext.data.subtitle,
 				},
 			};
+
+			console.log(data);
+
+			return data;
 		} catch (e) {
 			error({ statusCode: 404, message: 'Page not found' });
 		}

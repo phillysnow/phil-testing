@@ -3,10 +3,10 @@
 		<article class="harmonize-content">
 			<div class="harmonize-header">
 				<p>2. Harmonize</p>
-				<h2>{{ $prismic.asText(data.harmonize_title) }}</h2>
+				<h2>{{ $prismic.asText(data.title) }}</h2>
 			</div>
 			<ul class="harmonize-group">
-				<li v-for="(item, index) in data.harmonize_list" :key="index">
+				<li v-for="(item, index) in data.list" :key="index">
 					<h4 class="headline">
 						<span>{{ `2.${index + 1} ` }}</span
 						>{{ $prismic.asText(item.headline) }}

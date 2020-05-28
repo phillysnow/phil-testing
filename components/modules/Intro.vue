@@ -1,7 +1,7 @@
 <template>
 	<section class="intro">
 		<div class="intro-content">
-			<FigureImage v-if="data.intro_image" classes="intro-image" :image="data.intro_image" />
+			<FigureImage v-if="data.image" classes="intro-image" :image="data.image" />
 			<ScrollIndicator :sideway="true" />
 		</div>
 	</section>

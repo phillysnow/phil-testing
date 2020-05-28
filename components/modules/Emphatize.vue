@@ -3,10 +3,10 @@
 		<article class="emphatize-content">
 			<div class="emphatize-header">
 				<p>1. Emphatize</p>
-				<h2>{{ $prismic.asText(data.emphatize_title) }}</h2>
+				<h2>{{ $prismic.asText(data.title) }}</h2>
 			</div>
 			<ul class="emphatize-group">
-				<li v-for="(item, index) in data.emphatize_list" :key="index">
+				<li v-for="(item, index) in data.list" :key="index">
 					<h4 class="headline">
 						<span>{{ `1.${index + 1} ` }}</span
 						>{{ $prismic.asText(item.headline) }}
