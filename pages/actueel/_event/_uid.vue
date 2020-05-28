@@ -23,6 +23,7 @@ export default class EventPost extends Vue {
 				document,
 			};
 		} catch (e) {
+			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}

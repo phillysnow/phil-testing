@@ -22,6 +22,7 @@ export default class Case extends Vue {
 				doc,
 			};
 		} catch (e) {
+			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}

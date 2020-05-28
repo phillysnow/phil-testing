@@ -1,11 +1,11 @@
 <template>
 	<main class="case-post">
-		<Hero v-if="hero.title.length > 0" :data="hero" />
-		<Intro v-if="intro.image" :data="intro" />
-		<Emphatize v-if="emphatize.title.length > 0" :data="emphatize" />
-		<LiveQuote v-if="livequote.title.length > 0" :data="livequote" />
-		<Harmonize v-if="harmonize.title.length > 0" :data="harmonize" />
-		<Nurture v-if="nurture.title.length > 0" :data="nurture" />
+		<Hero v-if="hero.title.length > 0 && hero.title[0].text" :data="hero" />
+		<Intro v-if="intro.image && intro.image.url" :data="intro" />
+		<Emphatize v-if="emphatize.title.length > 0 && emphatize.title[0].text" :data="emphatize" />
+		<LiveQuote v-if="livequote.title.length > 0 && livequote.title[0].text" :data="livequote" />
+		<Harmonize v-if="harmonize.title.length > 0 && harmonize.title[0].text" :data="harmonize" />
+		<Nurture v-if="nurture.title.length > 0 && nurture.title[0].text" :data="nurture" />
 		<UpNext v-if="upnext.type" :data="upnext" />
 	</main>
 </template>
@@ -73,18 +73,20 @@ export default class CasePost extends Vue {
 					...doc.data.upnext,
 				},
 			};
-
-			console.log(data);
-
 			return data;
 		} catch (e) {
+			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .case-post {
 	height: 100%;
+
+	section:last-of-type > div {
+		padding-bottom: $spacing * 3;
+	}
 }
 </style>

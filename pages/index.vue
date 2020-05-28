@@ -30,6 +30,7 @@ export default class Index extends Vue {
 				slides: document.highlights,
 			};
 		} catch (e) {
+			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}
