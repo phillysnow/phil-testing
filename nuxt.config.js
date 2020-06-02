@@ -44,15 +44,35 @@ export default {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/style-resources',
-		'@/modules/static',
-		'@/modules/crawler',
 		'@nuxtjs/prismic',
 	],
 	prismic: {
-		endpoint: process.env.endpoint,
-		preview: '/preview',
-		linkResolver: '@/plugins/link-resolver',
-		htmlSerializer: '@/plugins/html-serializer',
+		endpoint: process.env.endpoint || 'https://tfe-test.cdn.prismic.io/api/v2',
+		linkResolver: '@/prismic/link-resolver.js',
+		apiOptions: {
+			routes: [
+				{
+					type: 'default',
+					path: '/:uid',
+				},
+				{
+					type: 'case_post',
+					path: '/cases/:uid',
+				},
+				{
+					type: 'opinion_post',
+					path: '/opinies/:uid',
+				},
+				{
+					type: 'news_post',
+					path: '/actueel/:uid',
+				},
+				{
+					type: 'event_post',
+					path: '/actueel/:uid',
+				},
+			],
+		},
 	},
 	/*
 	 ** Style resources module configuration
@@ -80,8 +100,5 @@ export default {
 				['@babel/plugin-proposal-class-properties', { loose: true }],
 			],
 		},
-	},
-	generate: {
-		fallback: '404.html',
 	},
 };
