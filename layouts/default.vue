@@ -1,39 +1,35 @@
 <template>
 	<div class="container">
+		<Sprite />
 		<Header />
 		<Nuxt />
+		<Cookie />
 		<Navigation />
-		<!-- <CursorAlt v-if="breakingPoint !== 's'" /> -->
+		<CursorAlt v-if="point !== 's'" />
 		<Footer />
 	</div>
 </template>
 
 <script>
-import { Component, Vue, Action } from 'nuxt-property-decorator';
-import { Header, Navigation, Footer } from '@/components/base';
+import { Component, Vue } from 'nuxt-property-decorator';
+import { Header, Navigation, Footer, Sprite, Cookie } from '@/components/base';
 import { CursorAlt } from '@/components/elements';
-import BreakPoint from '@/plugins/breakpoint';
 
 @Component({
 	components: {
 		Header,
 		Navigation,
 		CursorAlt,
+		Sprite,
+		Cookie,
 		Footer,
 	},
 })
 export default class Default extends Vue {
-	breakingPoint = '';
+	point = '';
 
 	mounted() {
-		console.log(
-			'%c ',
-			'padding-left:100%;padding-top:50%;background-size:cover;background-image:url("https://i.giphy.com/media/MM0Jrc8BHKx3y/giphy.webp")'
-		);
-		const breakPoint = new BreakPoint();
-		breakPoint.init();
-
-		this.breakingPoint = window.breakPoint;
+		this.point = window.breakPoint;
 	}
 
 	// set navigation for all routes
@@ -44,12 +40,6 @@ export default class Default extends Vue {
 </script>
 
 <style lang="scss">
-/* playfair-display-800 - latin */
-@font-face {
-	font-family: 'Playfair Display';
-	font-style: normal;
-	font-weight: 800;
-	src: local('Playfair Display'), url('../assets/fonts/playfair-display-v20-latin-800.woff2') format('woff2'),
-		url('../assets/fonts/playfair-display-v20-latin-800.woff') format('woff');
-}
+@include font-family();
+@include transition();
 </style>

@@ -1,7 +1,9 @@
 <template>
 	<section class="footer">
 		<div class="footer-content">
-			<p>© theFactor.e</p>
+			<nuxt-link to="/" itemprop="url">
+				© theFactor.e
+			</nuxt-link>
 			<p>
 				We ontwikkelen digitale toepassingen die een verschil maken voor mensen.
 			</p>
@@ -10,7 +12,7 @@
 </template>
 
 <script>
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, Vue } from 'nuxt-property-decorator';
 
 @Component({})
 export default class Footer extends Vue {}
@@ -18,20 +20,31 @@ export default class Footer extends Vue {}
 
 <style lang="scss">
 .footer {
-	background-color: $black;
+	background-color: $background-dark;
 }
 
 .footer-content {
 	display: flex;
+	flex-direction: column-reverse;
 	justify-content: space-between;
-	align-items: center;
-	height: 40rem;
-	padding: $spacing $spacing * 6 $spacing;
+	height: 34rem;
+	padding: $spacing * 2 $spacing $spacing * 6;
 
-	p {
-		font-size: $font-s * 0.9;
+	p,
+	a {
+		font-size: $font * 0.8;
 		color: $white;
-		max-width: 30rem;
+		font-family: $font-highlight-light;
+		max-width: 40rem;
+		text-decoration: none;
+	}
+}
+
+@media all and (min-width: $m) {
+	.footer-content {
+		flex-direction: row;
+		align-items: center;
+		padding: $spacing $spacing * 6 $spacing;
 	}
 }
 </style>

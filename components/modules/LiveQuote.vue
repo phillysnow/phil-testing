@@ -1,26 +1,25 @@
 <template>
 	<section class="livequote">
 		<div class="livequote-content">
-			<EmbedYoutube :embed="data.video" />
-			<article class="livequote-article">
+			<figureVideo v-if="data.primary.video" :video="data.primary.video" :poster="data.primary.poster" />
+			<article>
 				<div>
-					<h2>{{ $prismic.asText(data.title) }}</h2>
-					<p><span>_Marvin Reingoud</span> Concept & Design</p>
+					<h2>{{ $prismic.asText(data.primary.quote) }}</h2>
+					<p>
+						<span>{{ `_${data.primary.name}` }}</span> {{ data.primary.position }}
+					</p>
 				</div>
 			</article>
 		</div>
 	</section>
 </template>
-
 <script>
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
-import { FigureImage, ScrollIndicator, EmbedYoutube } from '@/components/elements';
+import { FigureVideo } from '@/components/elements';
 
 @Component({
 	components: {
-		FigureImage,
-		ScrollIndicator,
-		EmbedYoutube,
+		FigureVideo,
 	},
 })
 export default class LiveQuote extends Vue {
@@ -28,30 +27,38 @@ export default class LiveQuote extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .livequote {
-	padding: $spacing * 6 $spacing * 6 $spacing;
+	padding: $spacing * 6 0 $spacing;
 }
 
 .livequote-content {
-	display: grid;
-	grid-template-columns: 40rem auto;
 	position: relative;
 	background-color: $white;
 	box-shadow: 0 10rem 6rem -6rem rgba($grey, 0.2);
 
 	@include stripes();
+
+	> figure {
+		max-height: 71rem;
+	}
 }
 
-.livequote-article {
+article {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: $spacing * 2;
+	padding: $spacing * 2 $spacing;
 
 	> div {
-		max-width: 60rem;
+		max-width: 70rem;
+	}
+
+	h2 {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		max-height: 7.7em;
 	}
 
 	p {
@@ -61,6 +68,29 @@ export default class LiveQuote extends Vue {
 			color: $pink;
 			font-weight: bold;
 		}
+	}
+}
+
+section.livequote .livequote-content {
+	padding-bottom: 0;
+}
+
+@media all and (min-width: $m) {
+	.livequote {
+		padding: $spacing * 6 $spacing * 6 $spacing;
+	}
+
+	.livequote-content {
+		display: grid;
+		grid-template: 60rem / 40rem auto;
+
+		> figure {
+			max-height: auto;
+		}
+	}
+
+	article {
+		padding: $spacing * 2;
 	}
 }
 </style>

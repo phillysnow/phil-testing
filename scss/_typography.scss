@@ -35,6 +35,100 @@ h6 {
 p,
 li {
 	font-size: $font;
-	line-height: 1.8;
-	font-weight: 100;
+	line-height: 2.2;
+	font-weight: 400;
+	letter-spacing: 0.01em;
+}
+
+.rich-text {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin-top: 0.6em;
+	}
+
+	ul {
+		list-style: none;
+		padding-bottom: 0.6em;
+
+		li {
+			position: relative;
+			padding-bottom: 0.3em;
+
+			&::before {
+				content: '-';
+				position: absolute;
+				display: inline-block;
+				color: $pink;
+				font-weight: 900;
+				transform: translateX(-2em);
+			}
+		}
+	}
+
+	ol {
+		list-style: none;
+		padding-bottom: 0.6em;
+
+		li {
+			position: relative;
+			padding-bottom: 0.3em;
+			counter-increment: counter;
+
+			&::before {
+				content: counter(counter) '.';
+				position: absolute;
+				display: inline-block;
+				color: $pink;
+				font-weight: 900;
+				transform: translateX(-2em);
+			}
+		}
+	}
+
+	pre {
+		font-size: $font * 1.5;
+		font-family: $font-highlight-light;
+		color: lighten($color, 20%);
+		white-space: pre-wrap;
+		margin: 0;
+		padding: 0.6em 0 0.6em 1em;
+	}
+
+	a {
+		display: inline;
+		color: $color;
+		font-size: $font;
+		font-weight: 400;
+		letter-spacing: 0.07em;
+		text-decoration: none;
+		position: relative;
+		transition: 0.4s;
+
+		&::after {
+			content: ' ';
+			position: absolute;
+			top: 104%;
+			left: 0%;
+			width: 100%;
+			height: 1px;
+			border-bottom: 2px solid $pink;
+			transition: 0.4s;
+		}
+
+		&:hover {
+			color: $pink;
+
+			&::after {
+				width: 1em;
+			}
+		}
+	}
+
+	iframe {
+		min-height: 60rem;
+	}
 }

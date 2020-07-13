@@ -1,64 +1,72 @@
 <template>
 	<nav class="nav" :class="{ active: menuActive }">
-		<button
-			@click="toggle()"
-			ref="toggleMenu"
-			class="nav-button"
-			aria-expanded="false"
-			aria-controls="menu"
-			@mouseover="cursorHover(true, 'menu')"
-			@mouseleave="cursorHover(false, 'menu')"
-		>
-			<svg
-				aria-label="Menu"
-				viewBox="0 0 32 32"
-				width="16"
-				height="16"
-				fill="none"
-				stroke-linejoin="round"
-				stroke-width="9.5%"
+		<transition name="button">
+			<button
+				v-if="!hidden"
+				ref="toggleMenu"
+				v-cursor-focus="'scale'"
+				class="nav-button"
+				:aria-expanded="menuActive"
+				aria-controls="menu"
+				@click="toggle()"
 			>
-				<path d="M1 8 L32 8" />
-				<path d="M1 17 L32 17" />
-				<path d="M1 26 L32 26" />
-			</svg>
-		</button>
+				<svg
+					aria-label="Menu"
+					viewBox="0 0 32 32"
+					width="16"
+					height="16"
+					fill="none"
+					stroke-linejoin="round"
+					stroke-width="9.5%"
+				>
+					<path d="M1 8 L32 8" />
+					<path d="M1 17 L32 17" />
+					<path d="M1 26 L32 26" />
+				</svg>
+			</button>
+		</transition>
 		<transition name="menu">
 			<div v-show="menuActive" class="nav-menu">
 				<ul v-if="stateMenu.top_menu" class="nav-top">
 					<li
 						v-for="item in stateMenu.top_menu"
 						:key="item.id"
-						@click="toggle()"
-						@mouseover="cursorHover(true)"
-						@mouseleave="cursorHover(false)"
+						v-cursor-focus="'scale'"
 						class="nav-item"
+						:style="delay(10)"
+						@click="toggle()"
 					>
-						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+						<prismic-link v-if="item.link" :field="item.link">{{
+							$prismic.asText(item.label)
+						}}</prismic-link>
 					</li>
 				</ul>
 				<ul v-if="stateMenu.dynamic_menu" class="nav-dynamic">
 					<li
-						v-for="item in stateMenu.dynamic_menu"
+						v-for="(item, index) in stateMenu.dynamic_menu"
 						:key="item.link.id"
-						@click="toggle()"
-						@mouseover="cursorHover(true)"
-						@mouseleave="cursorHover(false)"
+						v-cursor-focus="'scale'"
 						class="nav-item"
+						:style="delay(index)"
+						@click="toggle()"
 					>
-						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+						<prismic-link v-if="item.link" :field="item.link">{{
+							$prismic.asText(item.label)
+						}}</prismic-link>
 					</li>
 				</ul>
 				<ul v-if="stateMenu.core_menu" class="nav-core">
 					<li
-						v-for="item in stateMenu.core_menu"
+						v-for="(item, index) in stateMenu.core_menu"
 						:key="item.link.id"
-						@click="toggle()"
-						@mouseover="cursorHover(true)"
-						@mouseleave="cursorHover(false)"
+						v-cursor-focus="'scale'"
 						class="nav-item"
+						:style="delay(index + 3)"
+						@click="toggle()"
 					>
-						<prismic-link v-if="item.link" :field="item.link">{{ $prismic.asText(item.label) }}</prismic-link>
+						<prismic-link v-if="item.link" :field="item.link">{{
+							$prismic.asText(item.label)
+						}}</prismic-link>
 					</li>
 				</ul>
 			</div>
@@ -73,23 +81,19 @@ import { Component, Vue, State } from 'nuxt-property-decorator';
 export default class Navigation extends Vue {
 	@State('menu') stateMenu;
 	menuActive = false;
+	hidden = true;
 
 	toggle() {
 		this.menuActive = !this.menuActive;
+		document.body.style.overflow = this.menuActive ? 'hidden' : '';
 	}
 
-	cursorHover(value, extraClass = '') {
-		const cursor = document.querySelector('.cursor');
-		if (!cursor) return;
+	delay(i) {
+		return { transitionDelay: `${i * 100 + 400}ms` };
+	}
 
-		const classListItems = ['hover'];
-		if (extraClass) classListItems.push(extraClass);
-
-		if (value) {
-			cursor.classList.add(...classListItems);
-		} else {
-			cursor.classList.remove(...classListItems);
-		}
+	mounted() {
+		this.hidden = false;
 	}
 }
 </script>
@@ -103,13 +107,16 @@ export default class Navigation extends Vue {
 	width: $spacing * 3.5;
 	height: $spacing * 3.5;
 	border-radius: 50%;
-	border: 0;
+	border: 2px solid $white;
+	box-shadow: 0 0 4rem 0 rgba($black, 0.2);
+	transition: 0.3s box-shadow;
 	z-index: 2;
+	outline: none;
 
 	& svg {
 		display: block;
 		pointer-events: none;
-		stroke: $black;
+		stroke: $background-dark;
 		height: 32px;
 		width: 32px;
 	}
@@ -118,6 +125,10 @@ export default class Navigation extends Vue {
 		transition: 0.3s ease-in-out all;
 		stroke-dasharray: 32;
 		stroke-dashoffset: 0;
+	}
+
+	&:hover {
+		box-shadow: 0 1rem 4rem 1rem rgba($black, 0.2);
 	}
 }
 
@@ -128,9 +139,17 @@ export default class Navigation extends Vue {
 	position: fixed;
 	width: 100%;
 	z-index: 3;
-	bottom: $spacing * 3;
+	bottom: $spacing * 1.5;
 
 	&.active {
+		.nav-button {
+			background-color: $background-dark;
+		}
+
+		svg {
+			stroke: $white;
+		}
+
 		path {
 			stroke-dashoffset: 0;
 
@@ -155,14 +174,14 @@ export default class Navigation extends Vue {
 .nav-menu {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	position: fixed;
 	width: 100%;
 	height: 100%;
+	overflow-y: auto;
 	top: 0;
 	left: 0;
-	background-color: var(--color);
-	padding: $spacing $spacing * 4 $spacing * 6;
+	background-color: $background-dark;
+	padding: $spacing;
 
 	> ul {
 		display: flex;
@@ -171,52 +190,125 @@ export default class Navigation extends Vue {
 }
 
 .nav-item {
-	padding-left: $spacing;
+	text-align: center;
 
 	a {
-		color: var(--background);
-		font-size: $font-title;
-		font-weight: 800;
+		color: $color-light;
+		font-size: $font-xxl;
+		font-family: $font-highlight;
 		text-decoration: none;
-		text-transform: capitalize;
-	}
-
-	&:first-child {
-		padding-left: 0;
+		padding: 1rem;
 	}
 }
 
-.nav-top {
-	position: absolute;
-	top: 0;
+ul.nav-top {
+	flex-direction: column;
+	order: 2;
+	padding-bottom: $spacing * 6;
+
+	.nav-item {
+		padding-top: $spacing;
+	}
 
 	a {
-		font-size: $font-s;
-		font-weight: 400;
+		font-size: $font;
 	}
 }
 
-.nav-core,
-.nav-dynamic {
+ul.nav-core,
+ul.nav-dynamic {
 	display: flex;
+	flex-direction: column;
 	width: 100%;
-	justify-content: space-between;
+	order: 1;
+
+	@supports (display: grid) {
+		display: grid;
+		grid-template: repeat(3, 1fr) / 1fr;
+		gap: $spacing;
+	}
+}
+
+@media all and (min-width: $m) {
+	.nav {
+		bottom: $spacing * 3;
+	}
+
+	.nav-menu {
+		justify-content: space-around;
+		padding: $spacing * 6 $spacing * 4;
+
+		> ul {
+			margin: 0 auto;
+			max-width: $max-widht;
+			padding: $spacing 0;
+		}
+	}
+
+	ul.nav-core,
+	ul.nav-dynamic {
+		flex-direction: row;
+
+		@supports (display: grid) {
+			grid-template: 1fr / repeat(3, 1fr);
+			gap: $spacing * 1.5;
+		}
+	}
+
+	.nav-item {
+		text-align: left;
+
+		a {
+			font-size: $font-xxl * 1.15;
+		}
+
+		&:nth-child(2) {
+			text-align: center;
+		}
+
+		&:nth-child(3) {
+			text-align: right;
+		}
+	}
+
+	ul.nav-top {
+		flex-wrap: wrap;
+		flex-direction: row;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+
+		.nav-item {
+			padding-top: 0;
+			padding-bottom: $spacing;
+			padding-right: $spacing * 2;
+
+			a {
+				font-size: $font;
+			}
+
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+	}
 }
 
 // animations
 .menu-enter-active {
 	transition: opacity 0.5s;
 
-	ul {
-		transition: transform 0.3s 0.5s, opacity 0.3s 0.5s;
+	li {
+		transition: transform 0.2s, opacity 0.3s;
 	}
 }
 
 .menu-leave-active {
 	transition: opacity 0.5s 0.5s;
 
-	ul {
-		transition: transform 0.3s, opacity 0.3s;
+	li {
+		transition: transform 0.3s 0s, opacity 0.3s 0s !important;
 	}
 }
 
@@ -224,9 +316,18 @@ export default class Navigation extends Vue {
 .menu-leave-to {
 	opacity: 0;
 
-	ul {
+	li {
 		opacity: 0;
-		transform: translateY(4rem);
+		transform: translateY(1em);
 	}
+}
+
+.button-enter-active {
+	transition: opacity 0.5s 0.6s, transform 0.5s 0.6s $gom;
+}
+
+.button-enter {
+	opacity: 0;
+	transform: scale(0);
 }
 </style>

@@ -35,8 +35,60 @@
 	background-image: repeating-linear-gradient(
 		45deg,
 		rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, 0.15) 0.4px,
+		rgba(0, 0, 0, 0.15) 0.5px,
 		rgba(0, 0, 0, 0) 2px,
-		rgba(0, 0, 0, 0) 5px
+		rgba(0, 0, 0, 0) 7px
 	);
+}
+
+@mixin max-width() {
+	margin: 0 auto;
+	max-width: $max-widht;
+}
+
+@mixin font-family {
+	/* playfair-display-800 - latin */
+	@font-face {
+		font-family: 'Playfair Display';
+		font-style: normal;
+		font-display: swap;
+		font-weight: 800;
+		src: local('Playfair Display'), url('../assets/fonts/playfair-display-v20-latin-800.woff2') format('woff2'),
+			url('../assets/fonts/playfair-display-v20-latin-800.woff') format('woff');
+	}
+
+	/* dm-sans-regular - latin */
+	@font-face {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-display: swap;
+		font-weight: 400;
+		src: local('DM Sans Regular'), local('DMSans-Regular'),
+			url('../assets/fonts/dm-sans-v4-latin-regular.woff2') format('woff2'),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/fonts/dm-sans-v4-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+
+	/* dm-sans-500 - latin */
+	@font-face {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-display: swap;
+		font-weight: 500;
+		src: local('DM Sans Medium'), local('DMSans-Medium'),
+			url('../assets/fonts/dm-sans-v4-latin-500.woff2') format('woff2'),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/fonts/dm-sans-v4-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+}
+
+@mixin transition {
+	// animations
+	.layout-enter-active,
+	.layout-leave-active {
+		transition: all 0s;
+	}
+
+	.layout-enter,
+	.layout-leave-to {
+		opacity: 0;
+	}
 }

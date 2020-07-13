@@ -52,3 +52,26 @@ iframe {
 #prismic-toolbar-v2 {
 	cursor: auto;
 }
+
+.button--reset {
+	border: none;
+	background-color: transparent;
+	outline: none;
+}
+
+.button {
+	padding: $spacing * 0.3 $spacing * 0.5;
+	font-size: $font-s * 0.9;
+	border-radius: 0.3rem;
+	background-color: $white;
+	color: $black;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	transition: 0.2s background-color;
+
+	&:hover,
+	&:focus {
+		background-color: $pink;
+	}
+}

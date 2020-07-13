@@ -1,5 +1,5 @@
 <template>
-	<div class="cursor">
+	<div class="cursor" :class="{ disable: this.$device.isMobileOrTablet }">
 		<span class="sphere"></span>
 	</div>
 </template>
@@ -12,8 +12,8 @@ import Kinet from 'kinet';
 export default class CursorAlt extends Vue {
 	mounted() {
 		const kinet = new Kinet({
-			acceleration: 0.08,
-			friction: 0.3,
+			acceleration: 0.2,
+			friction: 0.4,
 			names: ['x', 'y', 'z'],
 		});
 
@@ -54,40 +54,50 @@ export default class CursorAlt extends Vue {
 </script>
 
 <style lang="scss">
-// @media all and (min-width: $m) {
-// 	* {
-// 		cursor: none;
-// 	}
-// }
-
-.sphere {
-	display: block;
-	position: absolute;
-	width: 1.8rem;
-	height: 1.8rem;
-	top: -0.2rem;
-	left: -0.15rem;
-	background: linear-gradient(to top left, #be0000, #fe0000);
-	border-radius: 50%;
-	margin: -0.9rem 0 0 -0.9rem;
-	pointer-events: none;
-	transform: scale(1);
-	z-index: 10;
-	transition: 0.3s $gom transform;
+.cursor {
+	display: none;
 }
 
-.cursor {
-	display: block;
-	width: 1px;
-	height: 1px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	z-index: 4;
+@media all and (min-width: $m) {
+	* {
+		cursor: none;
+	}
 
-	&.hover {
-		.sphere {
-			transform: scale(2);
+	.sphere {
+		display: block;
+		position: absolute;
+		width: 1.8rem;
+		height: 1.8rem;
+		top: -0.2rem;
+		left: -0.15rem;
+		background: $pink;
+		border-radius: 50%;
+		margin: -0.9rem 0 0 -0.9rem;
+		pointer-events: none;
+		transform: scale(1);
+		z-index: 10;
+		transition: 0.3s $gom transform;
+	}
+
+	.cursor {
+		display: block;
+		width: 1px;
+		height: 1px;
+		position: fixed;
+		pointer-events: none;
+		top: 50%;
+		left: 50%;
+		z-index: 5;
+		will-change: transform;
+
+		&.scale {
+			.sphere {
+				transform: scale(2);
+			}
+		}
+
+		&.disable {
+			display: none;
 		}
 	}
 }

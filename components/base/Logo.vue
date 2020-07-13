@@ -1,9 +1,7 @@
 <template>
-	<nuxt-link to="/" itemprop="url" class="logo">
-		<svg version="1" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 310 310">
-			<path
-				d="M0 155v155h310V0H0v155zm283-95v33l-94.7.2-94.8.3-.3 94.8L93 283H27V27h256v33zm0 95v33l-47.2.2-47.3.3-.3 47.2-.2 47.3h-66V122h161v33zm0 95v33h-66v-66h66v33z"
-			/>
+	<nuxt-link to="/" itemprop="url" class="logo" :class="{ dark }">
+		<svg>
+			<use xlink:href="#logo" />
 		</svg>
 		<h3>
 			the
@@ -11,25 +9,46 @@
 			<br />
 			<span>.</span>e
 		</h3>
+		<p :class="{ hide }">
+			human first <br />
+			digital agency
+		</p>
 	</nuxt-link>
 </template>
+
+<script>
+import { Component, Vue, State } from 'nuxt-property-decorator';
+@Component({})
+export default class Logo extends Vue {
+	@State dark;
+	hide = false;
+
+	mounted() {
+		setTimeout(() => {
+			this.hide = true;
+		}, 500);
+	}
+}
+</script>
 
 <style lang="scss" scoped>
 .logo {
 	display: flex;
 	align-items: center;
 	text-decoration: none;
-	width: 18rem;
+	width: 25rem;
+	position: relative;
 
 	svg {
-		height: $spacing * 2;
-		width: $spacing * 2;
+		height: $spacing * 1.9;
+		width: $spacing * 1.9;
 	}
 
 	h3 {
 		font-family: sans-serif;
-		font-size: $font-s * 0.75;
+		font-size: 1.14rem;
 		width: 2rem;
+		color: $color;
 		margin-left: $spacing * 2;
 		text-transform: uppercase;
 		line-height: 1.5;
@@ -37,7 +56,7 @@
 		opacity: 0;
 		text-overflow: '';
 		overflow: hidden;
-		transition: 0.3s linear opacity, 0.3s $gom width;
+		transition: 0.3s 0.3s linear opacity, 0.3s 0.3s $gom width;
 
 		> span {
 			display: inline-block;
@@ -46,10 +65,43 @@
 		}
 	}
 
+	p {
+		position: absolute;
+		left: $spacing * 3.9;
+		line-height: 1.4;
+		color: $color;
+		font-size: 1.5rem;
+		font-family: $font-highlight;
+		transition: 0.3s 0.6s linear opacity;
+
+		&.hide {
+			opacity: 0;
+		}
+	}
+
 	&:hover {
+		p {
+			opacity: 0;
+			transition: 0.3s linear opacity;
+		}
+
 		h3 {
 			opacity: 1;
 			width: 8rem;
+		}
+	}
+
+	&.dark {
+		h3 {
+			color: $white;
+		}
+
+		p {
+			color: $white;
+		}
+
+		svg {
+			fill: $white;
 		}
 	}
 }

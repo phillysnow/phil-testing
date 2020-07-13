@@ -1,88 +1,72 @@
 <template>
-	<main class="case-post">
-		<Hero v-if="hero.title.length > 0 && hero.title[0].text" :data="hero" />
-		<Intro v-if="intro.image && intro.image.url" :data="intro" />
-		<Emphatize v-if="emphatize.title.length > 0 && emphatize.title[0].text" :data="emphatize" />
-		<LiveQuote v-if="livequote.title.length > 0 && livequote.title[0].text" :data="livequote" />
-		<Harmonize v-if="harmonize.title.length > 0 && harmonize.title[0].text" :data="harmonize" />
-		<Nurture v-if="nurture.title.length > 0 && nurture.title[0].text" :data="nurture" />
-		<UpNext v-if="upnext.type" :data="upnext" />
+	<main class="case">
+		<HeroFigure v-if="hero.title && hero.title.length > 0 && hero.title[0].text" :data="hero" />
+		<Slices v-if="slices.body && slices.body.length" :slices="slices.body" />
+		<UpNext v-if="upnext.id" :data="upnext" text="Volgende" />
+		<More :sideway="true" @click="$scroll()" />
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
-import { Hero, Intro, Emphatize, Harmonize, LiveQuote, Nurture, UpNext } from '@/components/modules';
+import { More } from '@/components/elements';
+import { HeroFigure, Slices, UpNext } from '@/components/modules';
 
 @Component({
 	components: {
-		Hero,
-		Intro,
-		Emphatize,
-		Harmonize,
-		LiveQuote,
-		Nurture,
+		HeroFigure,
+		Slices,
 		UpNext,
+		More,
 	},
 })
-export default class CasePost extends Vue {
+export default class Case extends Vue {
 	async asyncData({ $prismic, params, error }) {
 		try {
-			const doc = await $prismic.api.getByUID('case_post', params.uid, {
-				fetchLinks: ['case_post.title', 'case_post.subtitle'],
+			const data = await $prismic.api.getByUID('case', params.uid, {
+				fetchLinks: ['case.page_title', 'case.page_subtitle'],
 			});
 
-			const data = {
+			const doc = data.data;
+
+			return {
 				hero: {
-					//title required
-					type: doc.type,
-					title: doc.data.title,
-					subtitle: doc.data.subtitle,
-					image: doc.data.page_image,
-					description: doc.data.description,
+					// title required
+					type: data.type,
+					title: doc.page_title,
+					subtitle: doc.page_subtitle,
+					image: doc.page_image,
+					description: doc.page_text,
 				},
-				intro: {
-					//title image
-					image: doc.data.intro_image,
+				slices: {
+					body: doc.body,
 				},
-				emphatize: {
-					//title required
-					title: doc.data.emphatize_title,
-					list: doc.data.emphatize_list,
-				},
-				livequote: {
-					//title required
-					title: doc.data.livequote_title,
-					video: doc.data.livequote_video,
-				},
-				harmonize: {
-					//title required
-					title: doc.data.harmonize_title,
-					list: doc.data.harmonize_list,
-				},
-				nurture: {
-					//title required
-					title: doc.data.nurture_title,
-					image: doc.data.nurture_image,
-					headline: doc.data.nurture_headline,
-					text: doc.data.nurture_text,
-					list: doc.data.nurture_list,
-				},
-				upnext: {
-					//type required
-					...doc.data.upnext,
+				upnext: doc.upnext,
+				meta: {
+					title: doc.meta_title ? doc.meta_title : $prismic.asText(doc.page_title),
+					description: doc.meta_description ? doc.meta_description : undefined,
+					image: doc.meta_image,
+					fallback: doc,
 				},
 			};
-			return data;
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}
+
+	mounted() {
+		this.$store.commit('SET_THEME', false);
+	}
+
+	head() {
+		return this.$metaHead(this.meta, this.$prismic);
+	}
 }
 </script>
 <style lang="scss">
-.case-post {
+.case {
 	height: 100%;
 
 	section:last-of-type > div {

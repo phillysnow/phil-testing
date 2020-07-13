@@ -2,12 +2,13 @@
 
 ![](https://media.giphy.com/media/xHMIDAy1qkzNS/giphy.gif)
 
-## **TFE website build with [Nuxt.js](https://nuxtjs.org)**
+## **Headless TFE website build with [Nuxt.js](https://nuxtjs.org)**
 
 # 📦 Requirments
 
 -   [Node.js v10 or higher](https://nodejs.org/en/)
 -   [Yarn v1.16 or higher](https://yarnpkg.com/lang/en/) or NPM v6.7
+-   Login at [Prismic.io CMS](https://thefactore.prismic.io/) (password manager > website-tfe)
 -   ☕ Coffee
 
 # 🐎 QuickStart
@@ -20,23 +21,32 @@
     # install dependencies
     $ yarn
 
-    # serve with hot reload at localhost:3000
+    # served at localhost:3000
     $ yarn dev
     ```
 
 2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
 
+### Extra plugins
+
+-   https://github.com/nuxt-community/device-module
+
 ## Production
 
-When merged to `staging` an CI build will be triggered and build a new version for you.
-For production you need to merge to `master` and an other CI build will be triggerd.
+Because there is no backend integration all deploys are automated with a `CI build` and pushed to `AWS`.
+
+Build can be triggerd in 3 ways:
+
+-   Merge requests (`master` needs aproval from Maintainer)
+-   Webhook trigger from CMS
+-   Manual CI build
 
 # 🌎 Browser support
 
 -   Chrome
--   Edge
--   Firefox (not officially supported, functional)
--   IE11
+-   Edge (Chrome)
+-   Firefox (not officially supported but because of ❤️)
+-   IE11 (🤮)
 -   Safari
 
 # 🔗 Url's

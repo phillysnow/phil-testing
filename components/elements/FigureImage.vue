@@ -1,30 +1,10 @@
 <template>
-	<figure :class="[{ loading }, classes]">
+	<figure class="image" :class="{ loading }">
 		<picture>
-			<source
-				v-if="image.max"
-				type="image/webp"
-				:media="`(min-width: ${image.max.dimensions.width}px)`"
-				:srcset="image.max.url"
-			/>
-			<source
-				v-if="image.xl"
-				type="image/webp"
-				:media="`(min-width: ${image.xl.dimensions.width}px)`"
-				:srcset="image.xl.url"
-			/>
-			<source
-				v-if="image.l"
-				type="image/webp"
-				:media="`(min-width: ${image.l.dimensions.width}px)`"
-				:srcset="image.l.url"
-			/>
-			<source
-				v-if="image.m"
-				type="image/webp"
-				:media="`(min-width: ${image.m.dimensions.width}px)`"
-				:srcset="image.m.url"
-			/>
+			<source v-if="image.max" type="image/webp" media="(min-width: 1670px)" :srcset="image.max.url" />
+			<source v-if="image.xl" type="image/webp" media="(min-width: 1200px)" :srcset="image.xl.url" />
+			<source v-if="image.l" type="image/webp" media="(min-width: 992px)" :srcset="image.l.url" />
+			<source v-if="image.m" type="image/webp" media="(min-width: 768px)" :srcset="image.m.url" />
 			<img
 				v-if="image"
 				:src="image.url"
@@ -32,7 +12,8 @@
 				:height="height(image.dimensions)"
 				:alt="image.alt"
 				loading="lazy"
-				@load="onLoaded"
+				:copyright="`${image.copyright || ''}`"
+				@load="onLoaded()"
 			/>
 		</picture>
 	</figure>
@@ -44,11 +25,9 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator';
 @Component
 export default class FigureImage extends Vue {
 	@Prop() image;
-	@Prop() classes;
 	loading = true;
 
 	onLoaded() {
-		// this.$emit('loaded', true);
 		this.loading = false;
 	}
 
@@ -74,17 +53,11 @@ img {
 	transition: 0.5s ease-in-out opacity;
 }
 
-figure {
+.image {
 	height: 100%;
 	overflow: hidden;
 
-	&.loading {
-		img {
-			opacity: 0;
-		}
-	}
-
-	&.overlay--green {
+	&--overlay-green {
 		background-color: $green;
 
 		img {
@@ -96,6 +69,24 @@ figure {
 			img {
 				mix-blend-mode: multiply;
 				opacity: 0.7;
+			}
+		}
+	}
+
+	&.loading {
+		img {
+			opacity: 0;
+		}
+	}
+}
+
+@media all and (min-width: $l) {
+	.image {
+		&--align-right {
+			img {
+				width: 60%;
+				margin-left: 40%;
+				object-position: 0% 50%;
 			}
 		}
 	}

@@ -1,52 +1,55 @@
 <template>
 	<main class="contact">
-		<section class="hero">
-			<div class="hero-content">
-				<h1 v-if="doc.page_title">{{ $prismic.asText(doc.page_title) }}</h1>
-				<prismic-rich-text v-if="doc.description" class="hero-text" :field="doc.description" />
-			</div>
-		</section>
+		<Hero v-if="hero.title.length > 0 && hero.title[0].text" :data="hero" />
+		<More :sideway="true" @click="$scroll()" />
 	</main>
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator';
+import { More } from '@/components/elements';
+import { Hero } from '@/components/modules';
 
-@Component({})
-export default class Case extends Vue {
+@Component({
+	components: {
+		Hero,
+		More,
+	},
+})
+export default class About extends Vue {
+	mounted() {
+		this.$store.commit('SET_THEME', true);
+	}
+
 	async asyncData({ $prismic, error }) {
 		try {
-			const doc = (await $prismic.api.getSingle('contact')).data;
+			const data = await $prismic.api.getSingle('contact');
+
+			const doc = data.data;
 
 			return {
-				doc,
+				hero: {
+					// title required
+					type: data.type,
+					title: doc.page_title,
+					subtitle: doc.page_subtitle,
+				},
+				meta: {
+					title: doc.meta_title ? doc.meta_title : $prismic.asText(doc.page_title),
+					description: doc.meta_description ? doc.meta_description : undefined,
+					image: doc.meta_image,
+					fallback: doc,
+				},
 			};
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 			error({ statusCode: 404, message: 'Page not found' });
 		}
 	}
+
+	head() {
+		return this.$metaHead(this.meta, this.$prismic);
+	}
 }
 </script>
-<style lang="scss" scoped>
-.hero-content {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	padding: $spacing * 7 $spacing * 6 $spacing * 4;
-	position: relative;
-
-	p {
-		font-size: $font-l;
-		font-weight: bold;
-		margin-top: $spacing * 1.5;
-	}
-
-	h1 {
-		line-height: 1.1;
-		letter-spacing: 0.03em;
-		max-width: 90rem;
-		margin-top: $spacing;
-	}
-}
-</style>

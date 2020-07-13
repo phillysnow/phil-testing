@@ -1,5 +1,6 @@
 export const state = () => ({
 	menu: {},
+	dark: false,
 });
 
 export const mutations = {
@@ -8,6 +9,9 @@ export const mutations = {
 	},
 	SET_ERROR(state, error) {
 		state.menu = error;
+	},
+	SET_THEME(state, value) {
+		state.dark = value;
 	},
 };
 

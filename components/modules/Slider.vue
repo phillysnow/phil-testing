@@ -1,28 +1,35 @@
 <template>
-	<div class="slider" :class="{ active: hover }">
+	<section class="slider" :class="{ active: hover }">
 		<ul ref="group" class="slider-group">
-			<li ref="items" v-for="(slide, index) in slides" :key="index" class="slider-item" :data-id="index">
+			<li
+				v-for="(slide, index) in slides"
+				ref="items"
+				:key="index"
+				class="slider-item"
+				:class="{ dark: darken(slide.type) }"
+				:data-id="index"
+			>
 				<transition :name="transitionName(index)">
-					<prismic-link v-if="inViewById[index]" :field="slide" itemprop="url" :key="index">
-						<p v-if="slide.type">{{ type(slide.type) }}</p>
-						<h3 v-if="slide.data.title">{{ $prismic.asText(slide.data.title) }}</h3>
-						<p v-if="slide.data.subtitle">{{ $prismic.asText(slide.data.subtitle) }}</p>
-						<FigureImage
-							v-if="slide.data.page_image"
-							classes="slider-image"
-							:image="slide.data.page_image"
-						/>
+					<prismic-link v-if="inViewById[index] && slide.data" :key="index" :field="slide" itemprop="url">
+						<article>
+							<p v-if="slide.type">{{ $type(slide.type) }}</p>
+							<h3 v-if="slide.data.page_title">{{ $prismic.asText(slide.data.page_title) }}</h3>
+							<p v-if="slide.data.page_subtitle">
+								{{ `${slide.type === 'opinie' ? '_' : ''}${slide.data.page_subtitle}` }}
+							</p>
+						</article>
+						<FigureImage v-if="slide.data.page_image" class="slider-image" :image="slide.data.page_image" />
 					</prismic-link>
 				</transition>
 			</li>
 		</ul>
-	</div>
+	</section>
 </template>
 
 <script>
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
-import { FigureImage } from '@/components/elements';
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
 import Kinet from 'kinet';
+import { FigureImage } from '@/components/elements';
 
 @Component({
 	components: {
@@ -31,6 +38,7 @@ import Kinet from 'kinet';
 })
 export default class Slider extends Vue {
 	@Prop() data;
+	@Prop() hint;
 	@Prop({ default: false }) local;
 	@Prop({ default: 0 }) start;
 
@@ -39,17 +47,24 @@ export default class Slider extends Vue {
 	hover = false;
 	track = undefined;
 	observer = undefined;
+	mounted = true;
 	index = 0;
+	slideGroup = null;
+	margin = 0;
+	maxWidth = 0;
+	touchstartX = 0;
+	touchendX = 0;
 	sliderAnimation = new Kinet({
 		acceleration: 0.04,
 		friction: 0.3,
 		names: ['x'],
 	});
-	slideGroup = null;
-	margin = 0;
-	maxWidth = 0;
-	scroll = (e) => this.slideListAnimate(e);
 
+	scroll = (e) => this.slideListAnimate(e);
+	touchStart = (e) => this.swipeStart(e);
+	touchEnd = (e) => this.swipeEnd(e);
+
+	// lifecycles
 	beforeMount() {
 		if (this.data) {
 			for (let index = 0; index < this.data.length; index++) {
@@ -66,25 +81,32 @@ export default class Slider extends Vue {
 			this.margin = window.screen.availWidth * 0.4;
 			this.maxWidth = -this.slideGroup.scrollWidth + this.margin * 1.5;
 
-			let observer = new IntersectionObserver(this.handleIntersection);
+			const observer = new IntersectionObserver(this.handleIntersection);
 
-			for (let el of this.$refs.items) {
+			for (const el of this.$refs.items) {
 				observer.observe(el);
 			}
 			this.observer = observer;
 
 			this.slideList();
+
+			setTimeout(() => {
+				this.mounted = false;
+			}, 300);
 		}
 	}
 
 	beforeDestroy() {
+		this.sliderAnimation.off();
 		this.observer.disconnect();
 		this.track.removeEventListener('wheel', this.scroll, { passive: false });
+		this.track.addEventListener('touchstart', this.touchStart, { passive: false });
+		this.track.addEventListener('touchend', this.touchEnd, { passive: false });
 	}
 
 	cloneInViewById() {
-		let inViewById = {};
-		for (let [id, inView] of Object.entries(this.inViewById)) {
+		const inViewById = {};
+		for (const [id, inView] of Object.entries(this.inViewById)) {
 			if (inView) {
 				inViewById[id] = true;
 			}
@@ -93,10 +115,10 @@ export default class Slider extends Vue {
 	}
 
 	handleIntersection(entries, observer) {
-		let inViewById = this.cloneInViewById();
+		const inViewById = this.cloneInViewById();
 
-		for (let entry of entries) {
-			let id = entry.target.dataset.id;
+		for (const entry of entries) {
+			const id = entry.target.dataset.id;
 
 			if (entry.isIntersecting) {
 				inViewById[id] = entry.isIntersecting;
@@ -109,16 +131,12 @@ export default class Slider extends Vue {
 		this.inViewById = inViewById;
 	}
 
-	type(value) {
-		if (!value) return '';
-		const type = value.split('_');
-		return type[0] ? `${type[0]}/` : '';
-	}
-
 	transitionName(i) {
 		const inViewById = this.cloneInViewById();
 		const IDArray = Object.keys(inViewById);
 		const index = IDArray.length - 1;
+
+		if (this.mounted) return 'intro';
 
 		if (i < IDArray[index]) {
 			return 'before';
@@ -136,6 +154,18 @@ export default class Slider extends Vue {
 		});
 
 		this.track.addEventListener('wheel', this.scroll, { passive: false });
+
+		this.track.addEventListener('touchstart', this.touchStart, { passive: false });
+		this.track.addEventListener('touchend', this.touchEnd, { passive: false });
+	}
+
+	swipeStart(e) {
+		this.touchstartX = e.changedTouches[0].screenX;
+	}
+
+	swipeEnd(e) {
+		this.touchendX = e.changedTouches[0].screenX;
+		this.swipeListAnimate();
 	}
 
 	slideListAnimate(e) {
@@ -149,29 +179,51 @@ export default class Slider extends Vue {
 
 		return this.sliderAnimation.animate('x', this.index);
 	}
+
+	swipeListAnimate() {
+		this.index -= (this.touchstartX - this.touchendX) * 2;
+
+		if (this.index >= this.margin && this.index > 0) this.index = this.margin;
+		if (!(this.maxWidth <= this.index) && this.index < 0) this.index = this.maxWidth;
+
+		return this.sliderAnimation.animate('x', this.index);
+	}
+
+	@Watch('hint')
+	slideRight() {
+		this.index -= 600;
+
+		if (!(this.maxWidth <= this.index) && this.index < 0) this.index = this.maxWidth;
+
+		this.sliderAnimation.animate('x', this.index);
+	}
+
+	darken(type) {
+		if (type === 'services') return true;
+		if (type === 'contact') return true;
+		if (type === 'over_ons') return true;
+		if (type === 'expertise') return true;
+		if (type === 'sectore') return true;
+		return false;
+	}
 }
 </script>
 
 <style scoped lang="scss">
 .slider-group {
 	display: grid;
-	grid-gap: $spacing * 2;
-	grid-template-rows: 1fr;
-	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
+	gap: $spacing * 2;
+	grid-template: 50rem / repeat(25, 1fr);
 	width: 100%;
-	height: 55rem;
-	margin: 20rem auto;
+	margin: 0 auto 16rem;
 	will-change: transform;
 }
 
 .slider-item {
-	width: 50rem;
+	width: 44rem;
 	height: 100%;
 	user-select: none;
 	padding: $spacing;
-	transition: 0.5s transform;
-	will-change: transform;
 
 	a {
 		display: flex;
@@ -184,24 +236,32 @@ export default class Slider extends Vue {
 		height: 100%;
 		text-decoration: none;
 		background-color: $white;
-		color: $black;
-		border-radius: 0.3rem;
+		color: $color;
 		box-shadow: 0 5rem 8rem -2rem rgba($black, 0.1);
 		overflow: hidden;
-		transition: 0.5s background-color;
+		transition: 0.5s background-color, 0.8s box-shadow;
 	}
 
 	h3 {
-		color: $black;
+		color: $color-head;
 		line-height: 1.4;
 	}
 
 	p {
 		margin: $spacing 0;
-		text-transform: capitalize;
-		font-weight: 500;
-		font-size: $font;
+		font-family: $font-highlight;
 		letter-spacing: 0.05em;
+	}
+
+	&.dark {
+		a {
+			background-color: $background-dark;
+			color: $white;
+		}
+
+		h3 {
+			color: $white;
+		}
 	}
 }
 
@@ -212,6 +272,7 @@ export default class Slider extends Vue {
 	width: 100%;
 	height: 100%;
 	z-index: -1;
+	opacity: 0.5;
 }
 
 .slider {
@@ -221,13 +282,32 @@ export default class Slider extends Vue {
 	&:not(.active) {
 		.slider-item {
 			&:hover {
-				transform: scale(1.1);
-
 				a {
 					background-color: $green;
+					box-shadow: 0 8rem 4rem -2rem rgba($black, 0.25);
+				}
+
+				&.dark a {
+					background-color: $pink;
 				}
 			}
 		}
+	}
+
+	&--full {
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+}
+
+@media all and (min-width: $m) {
+	.slider-group {
+		grid-template: 55rem / repeat(25, 1fr);
+	}
+
+	.slider-item {
+		width: 50rem;
 	}
 }
 
@@ -240,9 +320,12 @@ export default class Slider extends Vue {
 	animation: slide-in-from-right 1.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.intro-enter-active {
+	animation: intro 0.6s ease-in-out;
+}
+
 @keyframes slide-in-from-left {
 	0% {
-		transform-origin: bottom;
 		transform: translate(-20rem, 3rem) rotateZ(-8deg);
 	}
 
@@ -253,12 +336,26 @@ export default class Slider extends Vue {
 
 @keyframes slide-in-from-right {
 	0% {
-		transform-origin: top;
 		transform: translate(20rem, -3rem) rotateZ(8deg);
 	}
 
 	100% {
 		transform: translate(0);
+	}
+}
+
+@keyframes intro {
+	0% {
+		transform: translateX(40rem) rotateZ(2deg);
+		opacity: 0;
+	}
+
+	30% {
+		opacity: 1;
+	}
+
+	100% {
+		transform: translateX(0);
 	}
 }
 </style>
