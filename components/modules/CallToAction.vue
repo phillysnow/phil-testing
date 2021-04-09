@@ -41,7 +41,7 @@ export default class CallToAction extends Vue {
 
 .cta-header {
 	position: relative;
-	padding-top: $spacing * 2;
+	padding: $spacing * 2 0 $spacing * 4;
 
 	h2 {
 		color: $pink;
@@ -55,26 +55,24 @@ export default class CallToAction extends Vue {
 	}
 
 	a {
-		display: block;
+		display: inline-block;
 		margin-top: $spacing;
 		background-color: $white;
 		padding: $spacing * 1.5 $spacing * 2;
-		text-decoration: none;
 		font-weight: bold;
 		font-size: $font;
 		color: $pink;
 		box-shadow: 0 1rem 4rem -2rem rgba($black, 0.25);
-		transform: translateX(-4.6rem);
 	}
 
 	&::before {
 		position: absolute;
 		content: '';
 		display: block;
-		width: 125%;
 		height: 85%;
 		top: 0;
-		right: $spacing * 2;
+		right: -$spacing;
+		left: -$spacing;
 		z-index: -1;
 
 		@include stripes();
@@ -109,7 +107,18 @@ export default class CallToAction extends Vue {
 	// 	}
 
 	.cta-header {
-		padding-right: $spacing * 2;
+		padding: $spacing * 2 $spacing * 2 0 0;
+
+		&::before {
+			right: $spacing * 2;
+			width: 125%;
+			left: auto;
+		}
+
+		a {
+			display: block;
+			transform: translateX(-4.6rem);
+		}
 	}
 }
 </style>

@@ -22,7 +22,7 @@ export default class FigureModule extends Vue {
 
 <style lang="scss">
 .figure {
-	padding: $spacing * 7 0 $spacing;
+	padding: $spacing * 2 0 $spacing;
 	position: relative;
 }
 
@@ -63,11 +63,17 @@ export default class FigureModule extends Vue {
 
 @media all and (min-width: $m) {
 	.figure {
-		padding: $spacing * 7 $spacing * 6 $spacing;
+		padding: $spacing * 6 $spacing * 3 $spacing;
 	}
 
 	.figure-image {
 		height: 52rem;
+	}
+}
+
+@media all and (min-width: $l) {
+	.figure {
+		padding: $spacing * 6 $spacing * 6 $spacing;
 	}
 }
 

@@ -10,7 +10,12 @@
 			</li>
 		</ul>
 		<div>
-			<figureVideo v-if="data.primary.video" :video="data.primary.video" :poster="data.primary.poster" />
+			<figureVideo
+				v-if="data.primary.video"
+				:video="data.primary.video"
+				:poster="data.primary.poster"
+				parent="values"
+			/>
 		</div>
 	</section>
 </template>

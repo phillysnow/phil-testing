@@ -1,0 +1,747 @@
+{
+	"uri": {
+		"/hogescholenbenchmark/index.html": {
+			"location": "https://docsend.com/view/5suhg6w",
+			"statusCode": 301
+		},
+		"/ziekenhuisbenchmark/index.html": {
+			"location": "https://docsend.com/view/tmn8fqp",
+			"statusCode": 301
+		},
+		"/benchmark/avans/index.html": {
+			"location": "https://docsend.com/view/2c9zpj2",
+			"statusCode": 301
+		},
+		"/benchmark/NHLStenden/index.html": {
+			"location": "https://docsend.com/view/bjami9z",
+			"statusCode": 301
+		},
+		"/benchmark/nhlstenden/index.html": {
+			"location": "https://docsend.com/view/bjami9z",
+			"statusCode": 301
+		},
+		"/benchmark/han/index.html": {
+			"location": "https://docsend.com/view/bfax2m9",
+			"statusCode": 301
+		},
+		"/benchmark/hanze/index.html": {
+			"location": "https://docsend.com/view/fudgeeh",
+			"statusCode": 301
+		},
+		"/benchmark/inholland/index.html": {
+			"location": "https://docsend.com/view/z7zhp4h",
+			"statusCode": 301
+		},
+		"/benchmark/leiden/index.html": {
+			"location": "https://docsend.com/view/gjc8m5k",
+			"statusCode": 301
+		},
+		"/benchmark/viecuri/index.html": {
+			"location": "https://docsend.com/view/iijvmew",
+			"statusCode": 301
+		},
+		"/benchmark/haagse/index.html": {
+			"location": "https://docsend.com/view/t4iqup7",
+			"statusCode": 301
+		},
+		"/benchmark/rotterdam/index.html": {
+			"location": "https://docsend.com/view/jf25y83",
+			"statusCode": 301
+		},
+		"/benchmark/saxion/index.html": {
+			"location": "https://docsend.com/view/df8iwa3",
+			"statusCode": 301
+		},
+		"/benchmark/hvu/index.html": {
+			"location": "https://docsend.com/view/x33tebn",
+			"statusCode": 301
+		},
+		"/benchmark/zuyd/index.html": {
+			"location": "https://docsend.com/view/379dn6j",
+			"statusCode": 301
+		},
+		"/benchmark/fontys/index.html": {
+			"location": "https://docsend.com/view/fik32us",
+			"statusCode": 301
+		},
+		"/benchmark/windesheim/index.html": {
+			"location": "https://docsend.com/view/7bdhtix",
+			"statusCode": 301
+		},
+		"/benchmark/umcg/index.html": {
+			"location": "https://docsend.com/view/58rsuux",
+			"statusCode": 301
+		},
+		"/benchmark/haaglanden/index.html": {
+			"location": "https://docsend.com/view/22x6s67",
+			"statusCode": 301
+		},
+		"/benchmark/fontysuitgebreid/index.html": {
+			"location": "https://docsend.com/view/7e95ixd",
+			"statusCode": 301
+		},
+		"/benchmark/umcu/index.html": {
+			"location": "https://docsend.com/view/v5gxgra",
+			"statusCode": 301
+		},
+		"/benchmark/haga/index.html": {
+			"location": "https://docsend.com/view/ycq87md",
+			"statusCode": 301
+		},
+		"/benchmark/franciscus/index.html": {
+			"location": "https://docsend.com/view/7ps2d2r",
+			"statusCode": 301
+		},
+		"/benchmark/hva/index.html": {
+			"location": "https://docsend.com/view/4zj3ypi",
+			"statusCode": 301
+		},
+		"/benchmark/spaarne/index.html": {
+			"location": "https://docsend.com/view/8cqv2ep",
+			"statusCode": 301
+		},
+		"/benchmark/meander/index.html": {
+			"location": "https://docsend.com/view/63u6d9m",
+			"statusCode": 301
+		},
+		"/benchmark/stantonius/index.html": {
+			"location": "https://docsend.com/view/t8d2b2a",
+			"statusCode": 301
+		},
+		"/benchmark/rijnstate/index.html": {
+			"location": "https://docsend.com/view/ceddegu",
+			"statusCode": 301
+		},
+		"/benchmark/mst/index.html": {
+			"location": "https://docsend.com/view/436mgg8",
+			"statusCode": 301
+		},
+		"/benchmark/cwz/index.html": {
+			"location": "https://docsend.com/view/rmwhvj3",
+			"statusCode": 301
+		},
+		"/benchmark/AmsterdamUMC/index.html": {
+			"location": "https://docsend.com/view/8gih749",
+			"statusCode": 301
+		},
+		"/benchmark/nhlStenden/index.html": {
+			"location": "https://docsend.com/view/bjami9z",
+			"statusCode": 301
+		},
+		"/benchmark/radboud/index.html": {
+			"location": "https://docsend.com/view/hwh8hwr",
+			"statusCode": 301
+		},
+		"/benchmark/olvg/index.html": {
+			"location": "https://docsend.com/view/dn5muqt",
+			"statusCode": 301
+		},
+		"/benchmark/maximaMC/index.html": {
+			"location": "https://docsend.com/view/m53fqxc",
+			"statusCode": 301
+		},
+		"/benchmark/JeroenBosch/index.html": {
+			"location": "https://docsend.com/view/fk4agzc",
+			"statusCode": 301
+		},
+		"/beter-beeld-per-device/index.html": {
+			"location": "https://www.focuspoints.io",
+			"statusCode": 301
+		},
+		"/artikelen/projectleiding-debbie-dechesne/index.html": {
+			"location": "https://werkenbij.tfe.nl/",
+			"statusCode": 301
+		},
+		"/artikelen/stagelopen/index.html": {
+			"location": "https://werkenbij.tfe.nl/",
+			"statusCode": 301
+		},
+		"/artikelen/hoe-ik-usability-nerd-werd-bij-thefactor-e/index.html": {
+			"location": "https://werkenbij.tfe.nl/",
+			"statusCode": 301
+		},
+		"/2016/promens-care-zorgverleners-zelf-aan-basis-van-nieuw-platform/index.html": {
+			"location": "/services/sectoren/zorg",
+			"statusCode": 301
+		},
+		"/2016/case-umc-utrecht/index.html": {
+			"location": "/services/sectoren/zorg",
+			"statusCode": 301
+		},
+		"/2016/website-umc-utrecht-van-de-grond-opgebouwd/index.html": {
+			"location": "/cases/patienten-in-de-lead-bij-nieuwe-website-umcg",
+			"statusCode": 301
+		},
+		"/2014/e-health-is-mensenwerk/index.html": {
+			"location": "/services/sectoren/zorg",
+			"statusCode": 301
+		},
+		"/strategie-getstarted/index.html": {
+			"location": "/services/expertises/strategy-by-design",
+			"statusCode": 301
+		},
+		"/artikelen/professionalsinhuren/index.html": {
+			"location": "/services/expertises/mensen-en-teams",
+			"statusCode": 301
+		},
+		"/artikelen/specalisten-inhuren/index.html": {
+			"location": "/services/expertises/mensen-en-teams",
+			"statusCode": 301
+		},
+		"/website-testen-met-billy/index.html": {
+			"location": "/services/expertises/customer-intelligence",
+			"statusCode": 301
+		},
+		"/artikelen/ervaringen-billy-oktober-2017/index.html": {
+			"location": "/services/expertises/customer-intelligence",
+			"statusCode": 301
+		},
+		"/usability-in-heel-europa/index.html": {
+			"location": "/services/expertises/customer-intelligence",
+			"statusCode": 301
+		},
+		"/werkwijze/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/ontmoet-partners-sitecore/index.html": {
+			"location": "/services",
+			"statusCode": 301
+		},
+		"/ontmoet-partners-hippo/index.html": {
+			"location": "/services",
+			"statusCode": 301
+		},
+		"/2016/nieuw-hippo-11-vier-belangrijkste-wijzigingen-toegelicht/index.html": {
+			"location": "/services",
+			"statusCode": 301
+		},
+		"/umbraco/index.html": {
+			"location": "/services",
+			"statusCode": 301
+		},
+		"/thefactore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/intervisie-contentstrategie/index.html": {
+			"location": "/opinies/content-clean-up",
+			"statusCode": 301
+		},
+		"/get-started/index.html": {
+			"location": "/contact",
+			"statusCode": 301
+		},
+		"/2017/in-het-kort/index.html": {
+			"location": "/contact",
+			"statusCode": 301
+		},
+		"/2016/case-zwitserleven/index.html": {
+			"location": "/cases/zwitserleven",
+			"statusCode": 301
+		},
+		"/2016/de-achterkant-van-zwitserlevengevoel/index.html": {
+			"location": "/cases/zwitserleven",
+			"statusCode": 301
+		},
+		"/artikelen/saxion-websites/index.html": {
+			"location": "/cases/saxion",
+			"statusCode": 301
+		},
+		"/2016/myler-het-antwoord-op-de-veranderende-arbeidsmarkt/index.html": {
+			"location": "/cases/myler",
+			"statusCode": 301
+		},
+		"/2016/een-interactieve-reis-door-het-lichaam/index.html": {
+			"location": "/cases/eriba",
+			"statusCode": 301
+		},
+		"/artikelen/het-eneco-windlab-een-duik-in-de-denkwereld-van-kinderen": {
+			"location": "/cases/eneco",
+			"statusCode": 301
+		},
+		"/2016/het-eneco-windlab-een-duik-in-de-denkwereld-van-kinderen/index.html": {
+			"location": "/cases/eneco",
+			"statusCode": 301
+		},
+		"/2016/winnaar-dutch-interactive-award-2016-cnv-vakmensen/index.html": {
+			"location": "/cases/cnv-vakmensen",
+			"statusCode": 301
+		},
+		"/2015/community-voor-cnv-vakmensen/index.html": {
+			"location": "/cases/cnv-vakmensen",
+			"statusCode": 301
+		},
+		"/2016/cnv-vakmensen-2/index.html": {
+			"location": "/cases/cnv-vakmensen",
+			"statusCode": 301
+		},
+		"/2015/alfa-college-strategisch-partner/index.html": {
+			"location": "/cases/alfa-college",
+			"statusCode": 301
+		},
+		"https://tfe.nl/verhalen/klanten/index.html": {
+			"location": "/cases",
+			"statusCode": 301
+		},
+		"/op-safari-met-school-of-werk/index.html": {
+			"location": "/actueel/",
+			"statusCode": 301
+		},
+		"/verhalen/kennisenervaring/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/verhalen/kennis-en-actueel/index.html": {
+			"location": "/actueel",
+			"statusCode": 301
+		},
+		"/impressie-eerste-2-dagen-van-een-design-sprint/index.html": {
+			"location": "/ ",
+			"statusCode": 301
+		},
+		"/thefactore/notendop/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/ontmoet-partners-rackspace/index.html": {
+			"location": "/ ",
+			"statusCode": 301
+		},
+		"/bigdayting/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/awards/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/cultuurboek/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/het-roer-om-bij-thefactore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/avebe-app-kwaliteit-aardappels-inzichtelijk/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/house-of-developers-opleiding-baangarantie/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/hoe-bedien-je-optimaal-je-doelgroepen-whitepaper/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/nominatie-dutch-interactive-awards/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/product-owner/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/gefeliciteerd-werken-bij-amerpoort/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/hoe-digitaal-is-azie-deel1/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/het-belangrijkste-platform-voor-europese-muziek-eurosonic-noorderslag/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/eurosonic-noorderslag/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/eurosonic-noorderslag-2016-van-start/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/sanquin-bloed-is-leven/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2017/zo-gaan-we-het-doen-in-2017/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/sanquin-van-oudste-naar-beste-intranet-van-nederland/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/sanquin-oudste-naar-beste-intranet/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/delta-lloyd-life/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/thefactore-awards/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/tt-app/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/girlsday/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2017/4043/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/events/ineens-ben-je-product-owner-en-dan-4/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/projectleiding-debbie-dechesne/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/thefactore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/hippo-11-belangrijkste-wijzigingen-toegelicht/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/hippo-overgenomen-bloomreach/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/innoveren/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2017/op-tijd-in-beeld-bij-je-klant/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/nieuwe-samenwerking-thefactore-en-augeo/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/2016/studenten-invloed-geven-op-werving/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/chatbot/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/intervisie-contentstrategie/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/agile-mindset-gaat-verder-dan-je-project-het-is-a-way-of-life/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/ios10-first-impressions/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/product-owner/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/rackspace/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/bigdayting/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/cultuur-en-gezond-bedrijf/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/tips-vanuit-het-hart-van-de-digitale-zaak/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/eyetracking-en-eyeliner/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/tt-app/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/programmeren-voor-girls/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/op-tijd-in-beeld-bij-je-klant/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/adaptive-brand-merk-mij-begrijpt/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/chatbot/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/sanquin-oudste-naar-beste-intranet/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/eurosonic-noorderslag/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/het-roer-om-bij-thefactore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/op-safari-met-school-of-werk/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/helpdeskhorror/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/case-umc-utrecht/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/hippo-overgenomen-bloomreach/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/genomineerd-dutch-interactive-award-2017/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/we-believe-that-outsourcing-is-a-serious-opportunity-to-consider/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/samenwerken-met-prowareness/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/big-dayting-app-is-vandaag-1-april/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/waarom-slack-gebruiken-met-klanten/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/kunstmatige-intelligentie-webinar/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/genomineerd-groninger-ondernemingsprijs-2017/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/whitepaper-op-reis-klant/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/meerdere-accounts-instagram/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/delta-lloyd-life-brengt-simpel-wat-ingewikkeld-is/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/open-dag-binnenkijken-bij-thefactore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/studenten-invloed-geven-op-werving/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/team/debbie-dechesne/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/e-health-is-mensenwerk/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/veranderingen-wet-bescherming-persoonsgegevens/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/thefactore/teamleden/bart-wesdorp/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/girlsday/feed/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/a-galaxy-far-far-away/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/brein-de-baas-de-app-tegen-alcoholisme/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/promens-care-zorg-digitaal-clientendossier-interactief/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/harald-op-e-health/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/sanquin-bloed-is-leven/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/strategie-getstarted/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/waarom-scrum-wij-vertellen-het-je-graag/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/diensten/professionals/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/billy-usability-lab-op-wielen/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/website-testen-met-billy/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/usability-in-heel-europa/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/summertime-met-billy/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/diensten/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/sitecore/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/umbraco/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/telligent/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/microsoft/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/hippo/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/diensten/techniek/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/cultuur-thefactor-e/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/werkt-design-thinking/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/contentstrategie-minder-moeilijk-en-agile/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/in-het-kort/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"artikelen/usability-testen-e-health-applicatie/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/lets-get-closer/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/myler-het-antwoord-op-de-veranderende-arbeidsmarkt/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/case-eriba/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/een-interactieve-reis-door-het-lichaam/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/cnv-vakmensen-2/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/alfa-college-hoe-bereik-en-bind-je-toekomstige-studenten/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/verhalen/werkenvoor/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/emerce-top-100-beste-full-service-internetbureau-middelgroot/index.html": {
+			"location": "/",
+			"statusCode": 301
+		},
+		"/artikelen/yes-tfe-is-iso27001-gecertificeerd/index.html": {
+			"location": "/actueel/nieuws/iso-certificering-27001-tfe",
+			"statusCode": 301
+		},
+		"/actueel/nieuws/danny-at-work/index.html": {
+			"location": "/actueel/at-work/danny-at-work",
+			"statusCode": 301
+		},
+		"/max-at-work/index.html": {
+			"location": "/actueel/at-work/max-at-work",
+			"statusCode": 301
+		}
+	},
+	"regex": [
+		{
+			"regex": "^/team/.*",
+			"location": "/",
+			"statusCode": 301
+		}
+	]
+}

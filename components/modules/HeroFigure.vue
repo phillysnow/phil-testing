@@ -14,12 +14,19 @@
 		<div v-if="data.description">
 			<prismic-rich-text v-if="data.description" :field="data.description" />
 			<FigureImage
-				v-if="data.image && data.image.url"
+				v-if="data.image && data.image.url && !alignRight"
 				class="image--overlay-green"
 				:class="{ 'image--align-right': alignRight }"
 				:image="data.image"
 			/>
 		</div>
+
+		<FigureImage
+			v-if="data.image && data.image.url && alignRight"
+			class="image--overlay-green"
+			:class="{ 'image--align-right': alignRight }"
+			:image="data.image"
+		/>
 	</section>
 </template>
 
@@ -46,12 +53,6 @@ export default class HeroFigure extends Vue {
 	mounted() {
 		if (this.data.description) {
 			window.addEventListener('scroll', this.scroll, { passive: true });
-
-			setTimeout(() => {
-				if (window.scrollY <= 2) {
-					window.scrollTo(0, 1);
-				}
-			}, 600);
 		}
 	}
 
@@ -109,11 +110,11 @@ export default class HeroFigure extends Vue {
 
 		div {
 			width: 100%;
-			height: 50%;
+			height: auto;
 			bottom: 0;
 			left: 0;
 			position: absolute;
-			padding: $spacing * 2 $spacing * 2;
+			padding: $spacing * 2 $spacing;
 			background-color: $white;
 			z-index: 2;
 
@@ -123,7 +124,12 @@ export default class HeroFigure extends Vue {
 		}
 
 		figure {
-			height: 50%;
+			height: 100%;
+
+			&--align-right {
+				position: absolute;
+				right: 0;
+			}
 		}
 	}
 
@@ -135,6 +141,8 @@ export default class HeroFigure extends Vue {
 		position: relative;
 
 		&::after {
+			@include stripes();
+
 			content: '';
 			display: block;
 			position: absolute;
@@ -144,8 +152,6 @@ export default class HeroFigure extends Vue {
 			width: 16rem;
 			height: 16rem;
 			border-radius: 50%;
-
-			@include stripes();
 		}
 
 		p {
@@ -155,7 +161,9 @@ export default class HeroFigure extends Vue {
 		}
 
 		h1 {
-			font-size: $font-title * 0.7;
+			@include break-long-word;
+
+			font-size: $font-title * 0.5;
 			line-height: 1.1;
 			letter-spacing: 0.03em;
 			max-width: 90rem;
@@ -173,17 +181,36 @@ export default class HeroFigure extends Vue {
 	}
 }
 
-@media all and (min-width: $m) {
+@media all and (min-width: $s) {
 	.hero-figure {
 		> div {
+			div {
+				padding: $spacing * 2 $spacing * 2;
+			}
+		}
+	}
+}
+
+@media all and (min-width: $m) {
+	.hero-figure {
+		> article {
+			padding: $spacing * 8 $spacing * 3 $spacing * 4;
+
+			h1 {
+				font-size: $font-title * 0.8;
+			}
+		}
+
+		> div {
+			background-color: $green;
+
 			figure {
 				height: 100%;
 			}
 
 			div {
-				height: auto;
 				width: 60rem;
-				padding: $spacing * 4 $spacing * 6;
+				padding: $spacing * 3 $spacing * 3;
 
 				> p {
 					text-overflow: ellipsis;
@@ -192,10 +219,13 @@ export default class HeroFigure extends Vue {
 				}
 			}
 		}
+	}
+}
 
+@media all and (min-width: $l) {
+	.hero-figure {
 		> article {
-			justify-content: center;
-			padding: $spacing * 7 $spacing * 6 $spacing * 4;
+			padding: $spacing * 8 $spacing * 6 $spacing * 4;
 
 			h1 {
 				font-size: $font-title;

@@ -6,6 +6,8 @@ $white: #fff;
 $black: #000;
 $grey: #40434e;
 $light-grey: #c5c5c5;
+$loading-down: #f0f0f0;
+$loading-up: #e4e4e4;
 $pink: #ea40f7;
 $green: #00ffc9;
 $red: #be0000;
@@ -14,6 +16,7 @@ $red: #be0000;
 $background-base: #fff;
 $background: #f1f1f1;
 $background-dark: #1d1d1c;
+$background-light-dark: #333;
 // color
 $color: #191919;
 $color-light: $white;
@@ -23,6 +26,7 @@ $color-head: #1d1d1c;
 $base-font-mobile: 52.5%;
 $base-font-tablet: 52.5%;
 $base-font-laptop: 62.5%; // 1rem = ~10px
+$base-font-desktop: 76.5%;
 
 $font-base: 'DM Sans', sans-serif;
 $font-highlight: 'Benton Sans Wd Bd', sans-serif;
@@ -49,6 +53,7 @@ $m: 768px;
 $l: 992px;
 $xl: 1200px;
 $max: 1670px;
+$desktop: 1920px;
 
 // Animations
 $gom: cubic-bezier(0.7, 0.06, 0.42, 0.99);

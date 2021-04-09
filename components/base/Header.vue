@@ -21,7 +21,13 @@ export default class Header extends Vue {}
 	width: 100%;
 	position: absolute;
 	z-index: 2;
-	padding: $spacing * 1.5 $spacing 0;
+	padding: $spacing $spacing 0;
+}
+
+@media all and (min-width: $s) {
+	.header {
+		padding: $spacing * 1.5 $spacing 0;
+	}
 }
 
 @media all and (min-width: $m) {

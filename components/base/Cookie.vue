@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="nocontent">
 		<transition>
 			<div
 				v-if="displayBanner"
@@ -9,25 +9,21 @@
 				:hidden="!displayBanner"
 			>
 				<article class="cookie-bar-content">
-					<svg>
-						<use xlink:href="#cookie" />
-					</svg>
+					<h2>Cookiemelding</h2>
 					<p>
-						tfe.nl gaat zeer zorgvuldig om met haar bezoekers informatie en zal deze gegevens nimmer aan
+						tfe.nl gaat zeer zorgvuldig om met haar bezoekersinformatie en zal deze gegevens nimmer aan
 						derden ter beschikking stellen. Lees meer over ons
-						<a href="/privacy">Privacy- en Cookiebeleid.</a>
+						<nuxt-link to="/privacy" itemprop="url">Privacy- en Cookiebeleid.</nuxt-link>
 					</p>
 					<div>
-						<button class="button--reset" @click="accept()">
-							Akkoord
-						</button>
+						<button class="button--reset" @click="accept()">Akkoord</button>
 						<button
 							class="button--reset"
 							aria-controls="cookie-settings"
 							aria-expanded="false"
 							@click="change()"
 						>
-							Voorkeur aanpassen
+							Wijzigen <span class="icon">›</span>
 						</button>
 					</div>
 				</article>
@@ -49,17 +45,13 @@
 					aria-expanded="false"
 					aria-label="Sluit dialog"
 					@click="change()"
-				>
-					<svg>
-						<use xlink:href="#close" />
-					</svg>
-				</button>
+				></button>
 				<article class="rich-text">
 					<p>
 						Jij kan hieronder instellen welke cookies jij van ons accepteert. Houd er rekening mee dat door
 						het niet accepteren van cookies jouw website ervaring niet optimaal kan zijn. Meer informatie
 						over het gebruik van gegevens van verschillende cookies vind je in ons
-						<a href="#">Privacy- en Cookiebeleid.</a>
+						<nuxt-link to="/privacy" itemprop="url">Privacy- en Cookiebeleid.</nuxt-link>
 					</p>
 					<ul class="cookie-list">
 						<li>
@@ -113,11 +105,8 @@
 							</article>
 						</li>
 					</ul>
-
-					<button class="cookie-save button--reset" @click="save()">
-						instellingen opslaan
-					</button>
 				</article>
+				<button class="cookie-save button--reset" @click="save()">Opslaan</button>
 			</div>
 		</transition>
 	</div>
@@ -143,6 +132,14 @@ export default class Default extends Vue {
 	accept() {
 		this.setPrivacy();
 		this.displayBanner = false;
+		this.$gtm.push({
+			event: 'tfe-event',
+			'tfe-data': {
+				category: 'Cookies',
+				action: 'Accept',
+				label: 'Standaard',
+			},
+		});
 	}
 
 	change() {
@@ -153,6 +150,14 @@ export default class Default extends Vue {
 	save() {
 		this.displayPopup = false;
 		this.displayBanner = false;
+		this.$gtm.push({
+			event: 'tfe-event',
+			'tfe-data': {
+				category: 'Cookies',
+				action: 'Accept',
+				label: this.privacyLevel === 2 ? 'Standaard' : this.privacyLevel === 1 ? 'Beperkt' : 'Zeer beperkt',
+			},
+		});
 
 		this.setPrivacy();
 	}
@@ -162,26 +167,7 @@ export default class Default extends Vue {
 	}
 
 	setPrivacy() {
-		this.createCookie({
-			name: 'privacy',
-			value: this.privacyLevel,
-			days: 30,
-		});
 		localStorage.setItem('privacy', this.privacyLevel);
-	}
-
-	// eslint-disable-next-line class-methods-use-this
-	createCookie({ name, value, days }) {
-		// eslint-disable-next-line init-declarations
-		let expires;
-		if (days) {
-			const date = new Date();
-			date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-			expires = '; expires=' + date.toGMTString();
-		} else {
-			expires = '';
-		}
-		document.cookie = name + '=' + value + expires + '; path=/';
 	}
 }
 </script>
@@ -195,36 +181,61 @@ export default class Default extends Vue {
 	bottom: $spacing * 5;
 	z-index: 4;
 
-	svg {
-		width: 5rem;
-		height: 5rem;
-		margin-bottom: 1rem;
+	h2 {
+		font-family: $font-highlight;
+		font-size: $font;
+		margin-bottom: 1.5rem;
 	}
 
 	button {
 		color: $black;
-		font-size: $font-m;
+		font-size: 1.5rem;
+		font-family: $font-highlight;
+		border: 1px solid $color;
+		padding: $spacing * 0.9 $spacing * 2.5 $spacing * 0.9 $spacing * 2;
 		line-height: 1.5;
 		transform: translateY(0.1em);
 		text-align: center;
 		display: block;
 		width: 100%;
-		padding: $spacing * 0.25 $spacing;
+		transition: border-color 0.3s ease-in-out;
+
+		.icon {
+			color: $pink;
+			font-size: 2.8rem;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: $spacing * 1.5;
+			margin-left: 1rem;
+			transition: color 0.3s ease-in-out;
+		}
 
 		&:hover,
 		&:focus {
-			color: $pink;
+			border-color: rgba($color, 0.5);
+			background-color: $color;
+			color: $white;
+
+			.icon {
+				color: $color;
+			}
 		}
 
 		&:first-of-type {
-			border: 2px solid $light-grey;
-			padding: $spacing * 0.5 $spacing;
+			color: $white;
+			border: 1px solid $color;
+			background-color: $color;
+			padding: $spacing * 0.9 $spacing * 2;
 			margin-bottom: 0.5rem;
+			font-size: 1.5rem;
+			transition: all 0.3s ease-in-out;
+			margin-right: 2rem;
 
 			&:hover,
 			&:focus {
-				border-color: $green;
-				color: $green;
+				background-color: $white;
+				color: $color;
 			}
 		}
 	}
@@ -235,37 +246,57 @@ export default class Default extends Vue {
 	background-color: $white;
 	padding: $spacing;
 	margin-left: $spacing;
-	box-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.3), 0 21px 13px -5px rgba(0, 0, 0, 0.2);
+	border: 1px solid $grey;
+	box-shadow: 0 5rem 4rem -2rem rgba($black, 0.2);
 
 	p {
 		color: $black;
 		font-size: $font;
-		line-height: 2.4;
+		line-height: 2;
 		font-family: $font-base;
 	}
 
 	a {
-		color: $green;
+		position: relative;
+		color: $black;
+
+		&::after {
+			position: absolute;
+			content: '';
+			height: 1px;
+			left: 0;
+			right: 0;
+			background-color: $pink;
+			bottom: -1px;
+			transform-origin: center right;
+			transition: transform 0.3s ease-in-out;
+		}
+
+		&:hover {
+			color: $pink;
+
+			&::after {
+				transform: scaleX(0.0001);
+			}
+		}
 	}
 
 	> div {
-		margin-top: 2rem;
+		margin-top: 3rem;
 	}
 }
 
 .cookie-settings {
 	position: fixed;
-	top: 5vh;
+	top: 0;
+	height: 100%;
 	left: 0;
 	right: 0;
-	padding: 50px 40px 20px;
+	padding: $spacing * 2 $spacing;
 	z-index: 4;
-	overflow-y: auto;
-	max-height: 90vh;
 	margin: 0 auto;
 	max-width: 65rem;
 	background-color: $white;
-	box-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.3), 0 21px 13px -5px rgba(0, 0, 0, 0.2);
 
 	p {
 		margin-bottom: 2rem;
@@ -273,6 +304,12 @@ export default class Default extends Vue {
 		&:last-child {
 			margin-bottom: 0;
 		}
+	}
+
+	.rich-text {
+		max-height: 65vh;
+		overflow-y: auto;
+		margin: $spacing 0;
 	}
 }
 
@@ -287,25 +324,46 @@ export default class Default extends Vue {
 	width: 5rem;
 	height: 5rem;
 
-	svg {
-		width: 100%;
-		height: 100%;
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-45deg);
+		width: 24px;
+		height: 24px;
+		height: 4px;
+		background-color: $color-head;
+		transition: background-color 0.25s ease-in-out;
+	}
+
+	&::after {
+		transform: translate(-50%, -50%) rotate(45deg);
 	}
 
 	&:hover {
-		fill: $pink;
 		transform: rotate(90deg);
+
+		&::before,
+		&::after {
+			background-color: $pink;
+		}
 	}
 }
 
 .cookie-save {
-	font-size: $font-m;
-	border: 2px solid $light-grey;
-	padding: $spacing * 0.5 $spacing;
+	background-color: $color;
+	font-size: $font;
+	border: 1px solid $color;
+	padding: $spacing * 0.8 $spacing * 2;
+	color: $white;
+	font-family: $font-highlight;
+	transition: all 0.3s ease-in-out;
 
 	&:hover {
-		border-color: $green;
-		color: $green;
+		background-color: $white;
+		color: $color;
 	}
 }
 
@@ -314,8 +372,14 @@ export default class Default extends Vue {
 	margin-bottom: $spacing;
 
 	article {
-		margin-left: 30px;
+		margin-left: 36px;
 		margin-bottom: 1rem;
+	}
+
+	li {
+		&::before {
+			display: none;
+		}
 	}
 
 	ul {
@@ -326,39 +390,35 @@ export default class Default extends Vue {
 	label {
 		position: relative;
 		font-weight: 700;
-
-		&:hover {
-			color: $green;
-		}
 	}
 
 	[type='radio'] {
-		margin-right: 8px;
+		margin-right: 14px;
 		opacity: 0.0001;
 
 		+ label {
 			&::before {
 				position: absolute;
-				left: -26px;
+				left: -36px;
 				top: 0;
 				content: '';
 				display: block;
-				width: 15px;
-				height: 15px;
+				width: 22px;
+				height: 22px;
 				background-color: #fff;
-				border: 1px solid $green;
+				border: 1px solid $pink;
 				border-radius: 50%;
 			}
 
 			&::after {
 				position: absolute;
-				left: -24px;
-				top: 2px;
+				left: -32px;
+				top: 4px;
 				content: '';
 				display: block;
-				width: 11px;
-				height: 11px;
-				background-color: $green;
+				width: 14px;
+				height: 14px;
+				background-color: $pink;
 				border-radius: 50%;
 				opacity: 0;
 				transition: opacity 0.2s ease;
@@ -384,6 +444,31 @@ export default class Default extends Vue {
 			margin-left: $spacing * 1.5;
 		}
 	}
+
+	.cookie-settings {
+		top: 5vh;
+		height: auto;
+		border: 1px solid $grey;
+		padding: $spacing * 2;
+		box-shadow: 0 5rem 4rem -2rem rgba($black, 0.2);
+
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 4rem;
+			bottom: 12rem;
+			left: 0;
+			z-index: 1;
+			background-image: linear-gradient(transparent 0%, $white 100%);
+		}
+
+		.rich-text {
+			max-height: 60rem;
+			padding-bottom: $spacing;
+		}
+	}
 }
 
 @media all and (min-width: $l) {
@@ -392,7 +477,7 @@ export default class Default extends Vue {
 
 		article {
 			max-width: 50rem;
-			padding: $spacing;
+			padding: $spacing * 1.5;
 		}
 
 		button {
@@ -411,6 +496,6 @@ export default class Default extends Vue {
 .v-enter,
 .v-leave-to {
 	opacity: 0;
-	transform: translateY(2rem);
+	transform: translate3d(0, 2rem, 0);
 }
 </style>

@@ -2,13 +2,6 @@
 
 export class BreakPoint {
 	init() {
-		if (!process.env.NODE_ENV === 'development') {
-			// eslint-disable-next-line no-console
-			console.log(
-				'%c ',
-				'padding-left:100%;padding-top:50%;background-size:cover;background-image:url("https://i.giphy.com/media/MM0Jrc8BHKx3y/giphy.webp")'
-			);
-		}
 		const debounce = (func, wait, immediate) => {
 			let timeout;
 			return () => {

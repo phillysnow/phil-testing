@@ -1,40 +1,40 @@
 <template>
 	<section class="follow-up">
 		<div class="follow-up-content">
+			<article
+				v-if="data.primary.title && data.primary.title.length && data.primary.title[0].text"
+				class="follow-up-article"
+			>
+				<h2 v-if="name">{{ number ? `${number}.` : '' }} {{ name }}</h2>
+				<h3>{{ $prismic.asText(data.primary.title) }}</h3>
+
+				<ul class="follow-up-text-group">
+					<template v-for="(item, index) in data.items">
+						<li v-if="item.text && item.text.length" :key="index">
+							<h4 v-if="item.headline && item.headline.length && item.headline[0].text">
+								<span v-if="number">{{ `${number}.${index + 1} ` }}</span
+								>{{ $prismic.asText(item.headline) }}
+							</h4>
+							<prismic-rich-text v-if="item.text" class="rich-text" :field="item.text" />
+						</li>
+					</template>
+				</ul>
+
+				<ul class="follow-up-group">
+					<template v-for="(item, index) in data.items">
+						<li v-if="item.link && (item.link.url || item.link.id)" :key="index">
+							<prismic-link :field="item.link"> {{ item.label }} » </prismic-link>
+						</li>
+					</template>
+				</ul>
+			</article>
 			<div>
-				<article
-					v-if="data.primary.title && data.primary.title.length && data.primary.title[0].text"
-					class="follow-up-article"
-				>
-					<h2>{{ `${number ? `${number}.` : ''} ${name}` }}</h2>
-					<h3>{{ $prismic.asText(data.primary.title) }}</h3>
-
-					<ul class="follow-up-text-group">
-						<template v-for="(item, index) in data.items">
-							<li v-if="item.text && item.text.length" :key="index">
-								<h4 v-if="item.headline && item.headline.length && item.headline[0].text">
-									<span>{{ `${number}.${index + 1} ` }}</span
-									>{{ $prismic.asText(item.headline) }}
-								</h4>
-								<prismic-rich-text v-if="item.text" class="rich-text" :field="item.text" />
-							</li>
-						</template>
-					</ul>
-
-					<ul class="follow-up-group">
-						<template v-for="(item, index) in data.items">
-							<li v-if="item.link && (item.link.url || item.link.id)" :key="index">
-								<prismic-link :field="item.link"> {{ item.label }} » </prismic-link>
-							</li>
-						</template>
-					</ul>
-				</article>
+				<FigureImage
+					v-if="data.primary.image && data.primary.image.url"
+					class="follow-up-image"
+					:image="data.primary.image"
+				/>
 			</div>
-			<FigureImage
-				v-if="data.primary.image && data.primary.image.url"
-				class="follow-up-image"
-				:image="data.primary.image"
-			/>
 		</div>
 	</section>
 </template>
@@ -55,25 +55,31 @@ export default class FollowUp extends Vue {
 </script>
 <style lang="scss">
 .follow-up-content {
-	padding: $spacing * 24 $spacing $spacing * 6;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding-top: 60vh;
 	position: relative;
 }
 
-.follow-up {
-	margin-top: $spacing * 4;
-
+.follow-up-article {
 	@include stripes();
 
-	&--big-image {
-		padding-right: $spacing;
+	position: relative;
+	padding: $spacing;
+	background-color: $white;
 
-		.follow-up-content {
-			max-width: 100%;
-		}
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: -26rem;
+		left: 0;
+		width: 100%;
+		height: 26rem;
+		background: linear-gradient(0deg, white 20%, rgba($white, 0) 100%);
 	}
-}
 
-.follow-up-article {
 	h2 {
 		color: $pink;
 		font-family: $font-highlight;
@@ -87,7 +93,7 @@ export default class FollowUp extends Vue {
 }
 
 .follow-up-image {
-	height: $spacing * 26;
+	height: 70vh;
 	width: 100%;
 	position: absolute;
 	top: 0;
@@ -101,11 +107,12 @@ export default class FollowUp extends Vue {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		width: 26rem;
-		height: 26rem;
+		width: 25rem;
+		height: 25rem;
 		background-color: $green;
 		border-radius: 50%;
 		opacity: 0.2;
+		z-index: 1;
 
 		@supports (mix-blend-mode: multiply) {
 			opacity: 1;
@@ -121,13 +128,34 @@ export default class FollowUp extends Vue {
 		left: 0;
 		width: 100%;
 		height: 26rem;
-		z-index: 1;
+		z-index: 2;
 		background: linear-gradient(0deg, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
 	}
 
 	img {
-		opacity: 0.8;
 		filter: grayscale(100%);
+	}
+
+	.opinion &,
+	.expertise & {
+		opacity: 0.9;
+		z-index: -1;
+
+		&::after {
+			display: none;
+		}
+	}
+}
+
+.follow-up {
+	margin-top: $spacing * 4;
+
+	&--big-image {
+		padding-right: $spacing;
+
+		.follow-up-content {
+			max-width: 100%;
+		}
 	}
 }
 
@@ -159,7 +187,6 @@ ul.follow-up-group {
 		background-color: $white;
 		padding: $spacing * 1.5 $spacing * 2;
 		color: $grey;
-		text-decoration: none;
 		font-weight: bold;
 	}
 
@@ -179,36 +206,70 @@ ul.follow-up-group {
 }
 
 @media all and (min-width: $m) {
+	.follow-up-article {
+		padding: 0;
+		padding-right: $spacing * 2;
+		background: transparent;
+
+		&::before {
+			content: none;
+		}
+	}
+
 	.follow-up {
-		padding: 0 $spacing;
+		@include stripes();
 	}
 
 	.follow-up-content {
 		display: grid;
 		grid-template: 1fr / 40rem auto;
 		position: relative;
+		justify-content: initial;
 		padding: $spacing * 6;
+
+		.opinion &,
+		.expertise & {
+			padding-right: 0;
+			padding-bottom: 0;
+		}
 	}
 
 	.follow-up-image {
+		position: -webkit-sticky; /* Safari */
+		position: sticky;
+		top: 0;
 		height: 100%;
+		max-height: 100vh;
 		width: 100%;
-		position: relative;
+		z-index: 1;
 
 		&::before {
 			content: none;
 		}
 
-		img {
-			opacity: 1;
+		&::after {
+			width: 45rem;
+			height: 45rem;
 		}
-	}
 
-	.follow-up-article {
-		position: -webkit-sticky; /* Safari */
-		position: sticky;
-		top: $spacing * 2;
-		padding-right: $spacing * 2;
+		.opinion &,
+		.expertise & {
+			text-align: right;
+			max-height: none;
+
+			picture {
+				text-align: right;
+			}
+
+			img {
+				max-width: 1200px;
+				margin: 0 0 0 auto;
+			}
+
+			&::after {
+				display: none;
+			}
+		}
 	}
 }
 </style>

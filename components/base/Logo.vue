@@ -35,7 +35,6 @@ export default class Logo extends Vue {
 .logo {
 	display: flex;
 	align-items: center;
-	text-decoration: none;
 	width: 25rem;
 	position: relative;
 
@@ -102,6 +101,18 @@ export default class Logo extends Vue {
 
 		svg {
 			fill: $white;
+		}
+	}
+
+	// which means you are at the home page
+	&.nuxt-link-exact-active {
+		p {
+			display: none;
+		}
+
+		h3 {
+			opacity: 1;
+			width: 8rem;
 		}
 	}
 }

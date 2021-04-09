@@ -1,7 +1,12 @@
 <template>
 	<section class="livequote">
 		<div class="livequote-content">
-			<figureVideo v-if="data.primary.video" :video="data.primary.video" :poster="data.primary.poster" />
+			<figureVideo
+				v-if="data.primary.video"
+				:video="data.primary.video"
+				:poster="data.primary.poster"
+				parent="livequote"
+			/>
 			<article>
 				<div>
 					<h2>{{ $prismic.asText(data.primary.quote) }}</h2>
@@ -29,7 +34,7 @@ export default class LiveQuote extends Vue {
 
 <style lang="scss" scoped>
 .livequote {
-	padding: $spacing * 6 0 $spacing;
+	padding: $spacing * 2 $spacing * 0.5 $spacing * 2;
 }
 
 .livequote-content {
@@ -40,7 +45,7 @@ export default class LiveQuote extends Vue {
 	@include stripes();
 
 	> figure {
-		max-height: 71rem;
+		max-height: 50rem;
 	}
 }
 
@@ -56,6 +61,8 @@ article {
 	}
 
 	h2 {
+		@include break-long-word;
+
 		text-overflow: ellipsis;
 		overflow: hidden;
 		max-height: 7.7em;
@@ -63,9 +70,12 @@ article {
 
 	p {
 		margin-top: $spacing * 2;
+		font-family: $font-head;
+		font-style: italic;
 
 		> span {
 			color: $pink;
+			font-style: normal;
 			font-weight: bold;
 		}
 	}
@@ -77,7 +87,7 @@ section.livequote .livequote-content {
 
 @media all and (min-width: $m) {
 	.livequote {
-		padding: $spacing * 6 $spacing * 6 $spacing;
+		padding: $spacing * 5 $spacing * 3 $spacing * 2;
 	}
 
 	.livequote-content {
@@ -85,12 +95,18 @@ section.livequote .livequote-content {
 		grid-template: 60rem / 40rem auto;
 
 		> figure {
-			max-height: auto;
+			max-height: inherit;
 		}
 	}
 
 	article {
 		padding: $spacing * 2;
+	}
+}
+
+@media all and (min-width: $l) {
+	.livequote {
+		padding: $spacing * 6 $spacing * 6 $spacing * 2;
 	}
 }
 </style>

@@ -34,22 +34,29 @@ export default class HeroIntro extends Vue {
 	ticking = false;
 
 	scroll = (e) => this.animate();
+	scrollNextSection = (e) => this.scollToNextSection();
 
 	mounted() {
-		if (this.data.intro_text) {
+		const plainIntroText = this.$prismic.asText(this.data.intro_text);
+
+		if (plainIntroText) {
 			window.addEventListener('scroll', this.scroll, { passive: true });
 
 			setTimeout(() => {
 				if (window.scrollY <= 2) {
 					window.scrollTo(0, 1);
 				}
-			}, 600);
+			}, 1600);
+		} else {
+			window.addEventListener('scroll', this.scrollNextSection, { passive: true });
 		}
 	}
 
 	beforeDestroy() {
 		if (this.data.intro_text) {
 			window.removeEventListener('scroll', this.scroll, { passive: true });
+		} else {
+			window.removeEventListener('scroll', this.scrollNextSection, { passive: true });
 		}
 	}
 
@@ -72,6 +79,12 @@ export default class HeroIntro extends Vue {
 			this.ticking = true;
 		}
 	}
+
+	scollToNextSection() {
+		const element = document.scrollingElement || document.documentElement;
+		this.$scrollTo(element, window.innerHeight, 1500);
+		window.removeEventListener('scroll', this.scrollNextSection, { passive: true });
+	}
 }
 </script>
 
@@ -85,7 +98,7 @@ export default class HeroIntro extends Vue {
 
 	&--up {
 		> div {
-			transform: translateY(-100vh);
+			transform: translate3d(0, -100vh, 0);
 		}
 	}
 
@@ -133,7 +146,9 @@ export default class HeroIntro extends Vue {
 		}
 
 		h1 {
-			font-size: $font-title * 0.7;
+			@include break-long-word;
+
+			font-size: $font-title * 0.5;
 			line-height: 1.1;
 			letter-spacing: 0.03em;
 			max-width: 90rem;
@@ -159,12 +174,27 @@ export default class HeroIntro extends Vue {
 @media all and (min-width: $m) {
 	.hero-intro {
 		> div {
+			padding: $spacing * 7 $spacing * 3 $spacing * 6;
+		}
+
+		> article {
+			padding: $spacing * 8 $spacing * 3 $spacing * 4;
+
+			h1 {
+				font-size: $font-title * 0.8;
+			}
+		}
+	}
+}
+
+@media all and (min-width: $l) {
+	.hero-intro {
+		> div {
 			padding: $spacing * 7 $spacing * 6 $spacing * 6;
 		}
 
 		> article {
-			justify-content: center;
-			padding: $spacing * 7 $spacing * 6 $spacing * 4;
+			padding: $spacing * 8 $spacing * 6 $spacing * 4;
 
 			h1 {
 				font-size: $font-title;

@@ -21,7 +21,6 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component({
-	layout: 'default-alt',
 	head() {
 		return {
 			title: `${this.message()} | theFactor.e`,
@@ -71,7 +70,6 @@ a {
 	font-size: $font-l;
 	padding-right: $spacing;
 	color: $green;
-	text-decoration: none;
 
 	> span {
 		display: inline-block;

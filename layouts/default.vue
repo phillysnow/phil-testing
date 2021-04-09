@@ -40,6 +40,11 @@ export default class Default extends Vue {
 </script>
 
 <style lang="scss">
-@include font-family();
-@include transition();
+main.home ~ .footer,
+main.error ~ .footer,
+main.actueel ~ .footer,
+main.opinies ~ .footer,
+main.cases ~ .footer {
+	display: none;
+}
 </style>

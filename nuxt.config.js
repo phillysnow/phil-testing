@@ -1,40 +1,37 @@
 require('dotenv').config();
 
 export default {
-	mode: 'universal',
+	server: {
+		host: '0.0.0.0',
+	},
+	target: 'server',
+	ssr: true,
 	/*
 	 ** Headers of the page
 	 */
 	head: {
-		title: 'Human First Digital Agency | theFactor.e',
+		title: 'theFactor.e | Human First Digital Agency',
 		htmlAttrs: {
 			lang: 'nl',
 		},
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-			{
-				name: 'description',
-				content:
-					'Wij maken menselijke technologie voor digitale mensen. Door te weten wat technisch mogelijk is én wat mensen bezighoudt. Samenwerken?',
-			},
-			{
-				name: 'og:description',
-				content:
-					'Wij maken menselijke technologie voor digitale mensen. Door te weten wat technisch mogelijk is én wat mensen bezighoudt. Samenwerken?',
-			},
+			{ name: 'google-site-verification', content: 'hTeXiYaJ5zJ-If6IbPk-xzLCqNuUPQTGRwsCMIesCWo' },
 			{ name: 'language', content: 'nl' },
 			{ property: 'og:site_name', content: 'theFactor.e' },
 		],
 		link: [
-			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-			{ rel: 'dns-prefetch', href: 'https://cloud.typenetwork.com' },
+			{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
 			{ rel: 'dns-prefetch', href: 'https://thefactore.prismic.io' },
 			{ rel: 'dns-prefetch', href: 'https://images.prismic.io' },
+			{ rel: 'preload', href: 'https://cloud.typenetwork.com/projects/4051/fontface.css/', as: 'style' },
 			{
 				rel: 'stylesheet',
 				type: 'text/css',
+				media: 'print',
 				href: 'https://cloud.typenetwork.com/projects/4051/fontface.css/',
+				onload: "media='all'",
 			},
 		],
 	},
@@ -51,11 +48,13 @@ export default {
 	 */
 	plugins: [
 		'@/plugins/type.js',
+		'@/plugins/subtitlePrepend.js',
 		'@/plugins/aos.client.js',
 		'@/plugins/directives.client.js',
 		'@/plugins/breakpoint.client.js',
 		'@/plugins/metaHead.js',
 		'@/plugins/scroll.client.js',
+		'@/plugins/prismicLink.client.js',
 	],
 	/*
 	 ** Nuxt.js dev-modules
@@ -69,6 +68,8 @@ export default {
 	],
 	gtm: {
 		id: 'GTM-57QMNHF',
+		pageTracking: true,
+		pageViewEventName: 'virtualPageView',
 	},
 	/*
 	 ** Nuxt.js modules
@@ -80,13 +81,6 @@ export default {
 		'@/prismic/static',
 		'@/prismic/crawler',
 		'@nuxtjs/prismic',
-		[
-			'@nuxtjs/device',
-			{
-				defaultUserAgent:
-					'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
-			},
-		],
 	],
 	prismic: {
 		// https://tfe-new-resolver-test.cdn.prismic.io/api/v2
@@ -117,12 +111,20 @@ export default {
 					path: '/actueel/events/:uid',
 				},
 				{
+					type: 'at_work',
+					path: '/actueel/at-work/:uid',
+				},
+				{
 					type: 'sector',
 					path: '/services/sectoren/:uid',
 				},
 				{
 					type: 'expertise',
-					path: '/services/expertise/:uid',
+					path: '/services/expertises/:uid',
+				},
+				{
+					type: 'expertise_dci',
+					path: '/services/expertises/data-en-customer-intelligence/:uid',
 				},
 			],
 		},
@@ -139,6 +141,13 @@ export default {
 	 ** See https://axios.nuxtjs.org/options
 	 */
 	axios: {},
+	render: {
+		bundleRenderer: {
+			shouldPreload: (file, type) => {
+				return ['script', 'style', 'font'].includes(type);
+			},
+		},
+	},
 	/*
 	 ** Build configuration
 	 */
@@ -157,7 +166,7 @@ export default {
 		postcss: {
 			preset: {
 				autoprefixer: {
-					grid: true,
+					grid: false,
 				},
 			},
 		},

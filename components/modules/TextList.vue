@@ -31,7 +31,7 @@ export default class TextList extends Vue {
 
 <style lang="scss">
 .text-list {
-	padding: $spacing * 6 $spacing $spacing;
+	@include section-padding();
 
 	article {
 		display: grid;
@@ -75,6 +75,10 @@ export default class TextList extends Vue {
 
 	.rich-text {
 		padding-top: $spacing * 0.5;
+
+		p:empty:not(:last-child) {
+			padding-bottom: $spacing;
+		}
 	}
 }
 
@@ -94,9 +98,15 @@ export default class TextList extends Vue {
 	}
 }
 
-@media all and (min-width: $m) {
+@media all and (min-width: $s) {
+	.text-list {
+		@include section-padding('s');
+	}
+}
+
+@media all and (min-width: $m + 1) {
 	.text-list-group {
-		grid-template: 1fr / 1fr 1fr;
+		grid-template: 1fr / 1fr;
 	}
 
 	.text-list-header {
@@ -105,12 +115,22 @@ export default class TextList extends Vue {
 	}
 
 	.text-list {
-		padding: $spacing * 6 $spacing * 6 $spacing;
+		@include section-padding('m');
 
 		article {
 			display: grid;
 			grid-template: 1fr / 40rem auto;
 		}
+	}
+}
+
+@media all and (min-width: $l) {
+	.text-list-group {
+		grid-template: 1fr / 1fr 1fr;
+	}
+
+	.text-list {
+		@include section-padding('l');
 	}
 }
 </style>

@@ -7,9 +7,12 @@
 		</article>
 		<ul v-if="data.items" class="partners-group">
 			<li v-for="(item, index) in data.items" :key="index" class="partners-item">
-				<prismic-link v-if="item.link" :field="item.link">
+				<prismic-link v-if="item.link.url" :field="item.link">
 					<FigureImage class="partners-image" :image="item.image" />
 				</prismic-link>
+				<div v-else>
+					<FigureImage class="partners-image" :image="item.image" />
+				</div>
 			</li>
 		</ul>
 	</section>
@@ -23,14 +26,14 @@ import { FigureImage } from '@/components/elements';
 		FigureImage,
 	},
 })
-export default class Stack extends Vue {
+export default class Partners extends Vue {
 	@Prop() data;
 }
 </script>
 
 <style lang="scss">
 .partners {
-	padding: $spacing * 2 $spacing $spacing;
+	@include section-padding();
 
 	> article {
 		margin: 0 auto;
@@ -49,19 +52,45 @@ export default class Stack extends Vue {
 	}
 }
 
-.partners-group {
+ul.partners-group {
 	display: grid;
-	grid-template: 1fr / repeat(4, 1fr);
+	grid-template: 1fr / repeat(2, 1fr);
 	gap: $spacing * 1.5;
+	padding: $spacing * 3 0 $spacing;
+}
+
+.partners-image {
+	filter: grayscale(100%);
+	transition: 0.3s ease filter;
+}
+
+.partners-item {
+	&:hover {
+		.partners-image {
+			filter: grayscale(0%);
+		}
+	}
 }
 
 @media all and (min-width: $m) {
 	.partners {
-		padding: $spacing * 6;
+		@include section-padding('m');
+	}
 
-		> article {
-			padding-bottom: $spacing * 4;
-		}
+	ul.partners-group {
+		grid-template: 1fr / repeat(3, 1fr);
+		padding: $spacing * 4 0 $spacing;
+	}
+}
+
+@media all and (min-width: $l) {
+	.partners {
+		@include section-padding('l');
+	}
+
+	ul.partners-group {
+		grid-template: 1fr / repeat(4, 1fr);
+		padding: $spacing * 5 0 $spacing * 2;
 	}
 }
 </style>

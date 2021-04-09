@@ -1,11 +1,21 @@
 <template>
-	<figure v-if="video" class="figure-video">
-		<span v-if="!playing" class="play" @click="toggle">
-			<svg>
+	<figure v-if="video" class="figure-video" :class="{ playing }" @mouseover="intentionToWatch()">
+		<span class="play" @click="toggle">
+			<svg v-if="!playing">
 				<use xlink:href="#play" />
 			</svg>
+			<svg v-else>
+				<use xlink:href="#pause" />
+			</svg>
 		</span>
-		<video ref="video" :src="video.url" :poster="poster ? poster.url : ''" playsinline @click="toggle"></video>
+		<video
+			ref="video"
+			:src="video.url"
+			:poster="poster ? poster.url : ''"
+			playsinline
+			:preload="preload"
+			@click="toggle"
+		></video>
 	</figure>
 </template>
 
@@ -13,20 +23,30 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component
-export default class FigureImage extends Vue {
+export default class FigureVideo extends Vue {
 	@Prop() video;
 	@Prop() poster;
+	@Prop() parent;
+	preload = 'none';
 	playing = false;
+
+	intentionToWatch() {
+		console.log('hover');
+		this.preload = 'auto';
+	}
 
 	toggle() {
 		const video = this.$refs.video;
 
 		if (!video.paused) {
 			this.playing = false;
+			this.$gtm.push({ event: 'figureVideo', playing: this.playing, parent: this.parent });
 			return video.pause();
+		} else {
+			this.playing = true;
+			this.$gtm.push({ event: 'figureVideo', playing: this.playing, parent: this.parent });
+			return video.play();
 		}
-		this.playing = true;
-		return video.play();
 	}
 }
 </script>
@@ -46,7 +66,8 @@ export default class FigureImage extends Vue {
 		fill: $white;
 		width: $spacing * 3;
 		height: $spacing * 3;
-		transition: 0.2s ease-in-out transform;
+		transition: 0.2s ease-in-out transform, 0.2s 0.2s ease-in-out opacity;
+		z-index: 1;
 	}
 }
 
@@ -54,7 +75,7 @@ export default class FigureImage extends Vue {
 	width: 100%;
 	height: 100%;
 	position: relative;
-	background-color: $black;
+	overflow: hidden;
 
 	&:hover {
 		.play svg {
@@ -65,6 +86,32 @@ export default class FigureImage extends Vue {
 	video {
 		height: 100%;
 		width: 100%;
+		transition: 0.5s ease opacity;
+	}
+
+	&.playing {
+		video {
+			opacity: 1;
+		}
+
+		.play svg {
+			opacity: 0;
+		}
+
+		&:hover {
+			.play svg {
+				opacity: 1;
+				transition: 0.2s ease-in-out transform, 0.2s ease-in-out opacity;
+			}
+		}
+	}
+}
+
+@media all and (min-width: $m) {
+	.figure-video {
+		video {
+			opacity: 0.8;
+		}
 	}
 }
 </style>

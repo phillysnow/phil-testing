@@ -31,7 +31,6 @@ export default class Hero extends Vue {
 
 <style lang="scss">
 .hero {
-	min-height: -webkit-fill-available;
 	position: relative;
 
 	> article {
@@ -46,7 +45,9 @@ export default class Hero extends Vue {
 		}
 
 		h1 {
-			font-size: $font-title * 0.7;
+			@include break-long-word;
+
+			font-size: $font-title * 0.5;
 			line-height: 1.1;
 			letter-spacing: 0.03em;
 			max-width: 90rem;
@@ -66,16 +67,49 @@ export default class Hero extends Vue {
 			color: $white;
 		}
 	}
+
+	&--full {
+		height: 100vh;
+		min-height: -webkit-fill-available;
+	}
+
+	&--transparent {
+		background-color: transparent;
+
+		&.dark {
+			background-color: transparent;
+		}
+	}
 }
 
 @media all and (min-width: $m) {
 	.hero {
 		> article {
 			justify-content: center;
-			padding: $spacing * 10 $spacing * 6 0;
+			padding: $spacing * 8 $spacing * 3 0;
+
+			h1 {
+				font-size: $font-title * 0.8;
+			}
+
+			p {
+				font-size: $font-l;
+			}
+		}
+	}
+}
+
+@media all and (min-width: $l) {
+	.hero {
+		> article {
+			padding: $spacing * 8 $spacing * 6 0;
 
 			h1 {
 				font-size: $font-title;
+			}
+
+			p {
+				font-size: $font-l;
 			}
 		}
 	}

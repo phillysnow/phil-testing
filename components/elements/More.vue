@@ -1,14 +1,24 @@
 <template>
 	<transition>
-		<span
-			v-if="appear"
+		<button
+			v-if="appear && !theEnd"
+			v-cursor-focus="cursorState()"
 			class="more"
-			:class="{ 'more--sideway': sideway, 'more--animate': animate, dark }"
+			:class="{ 'more--sideway': sideway, 'more--animate': animate, 'more--end': theEnd, dark }"
 			@click="event()"
 		>
 			There is more
-			<span>☞</span>
-		</span>
+			<svg>
+				<use xlink:href="#hand" />
+			</svg>
+		</button>
+		<button
+			v-else-if="appear"
+			class="more more--end"
+			:class="{ 'more--sideway': sideway, 'more--animate': animate, dark }"
+		>
+			That was it
+		</button>
 	</transition>
 </template>
 <script>
@@ -20,9 +30,25 @@ export default class More extends Vue {
 	@State dark;
 	animate = false;
 	appear = false;
+	timeout = 200;
+	theEnd = false;
+	text = 'There is more';
+	scroll = () => this.pageTracking();
+
+	cursorState() {
+		return this.sideway ? 'more-down' : 'more';
+	}
 
 	@Emit('click')
 	event() {
+		this.$gtm.push({
+			event: 'tfe-event',
+			'tfe-data': {
+				category: 'Interaction',
+				action: 'There is more',
+				label: this.sideway ? 'vertical' : 'horizontal',
+			},
+		});
 		return true;
 	}
 
@@ -31,6 +57,22 @@ export default class More extends Vue {
 		setTimeout(() => {
 			this.animate = true;
 		}, 500);
+
+		if (this.sideway) {
+			document.addEventListener('scroll', this.scroll, { passive: true });
+		}
+	}
+
+	pageTracking() {
+		if (this.timeout) clearTimeout(this.timeout);
+		this.timeout = setTimeout(() => {
+			if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 1) {
+				this.theEnd = true;
+			} else {
+				this.theEnd = false;
+			}
+			// update timeout time too
+		}, 200);
 	}
 }
 </script>
@@ -39,50 +81,68 @@ export default class More extends Vue {
 .more {
 	display: block;
 	position: absolute;
-	top: $spacing * 0.2;
-	right: 0;
+	top: $spacing * 1.4;
+	right: 6rem;
 	font-family: $font-highlight;
 	font-size: $font-s;
-	padding-right: $spacing;
+	padding-right: $spacing * 2;
 	z-index: 3;
+	background-color: transparent;
 	color: transparent;
-	width: 9rem;
+	outline: none;
+	border: none;
 	user-select: none;
 
-	> span {
+	> svg {
 		display: inline-block;
+		position: absolute;
 		margin-left: $spacing * 0.5;
-		line-height: 1.6rem;
-		font-size: 4em;
-		transform: translateY(0.3em);
+		width: 3em;
+		height: 2em;
+		top: -0.6em;
+		right: -0.5rem;
 		color: $color;
 	}
 
 	&--sideway {
 		display: none;
+
+		> svg {
+			right: -5.5rem;
+		}
 	}
 
 	&--animate {
-		> span {
+		> svg {
 			animation: point 2s 2 forwards;
+		}
+	}
+
+	&--end {
+		> svg {
+			color: transparent;
 		}
 	}
 
 	&.dark {
 		color: $pink;
 
-		> span {
-			color: $pink;
+		> svg {
+			fill: $pink;
 		}
+	}
+}
+
+@media all and (min-width: $s) {
+	.more {
+		top: $spacing * 1.8;
+		color: $color;
 	}
 }
 
 @media all and (min-width: $m) {
 	.more {
-		top: $spacing * 2;
-		padding-right: $spacing * 2;
-		color: $color;
-		width: 24rem;
+		top: $spacing * 2.3;
 
 		&--sideway {
 			display: block;
@@ -90,6 +150,22 @@ export default class More extends Vue {
 			padding-right: 0;
 			position: fixed;
 			top: 50%;
+		}
+
+		&--end {
+			transform: rotate(90deg) translateY(-5.8em);
+		}
+	}
+}
+
+@media all and (min-width: $l) {
+	.more {
+		&--sideway {
+			transform: rotate(90deg) translateY(-4em);
+		}
+
+		&--end {
+			transform: rotate(90deg) translateY(-3.6em);
 		}
 	}
 }

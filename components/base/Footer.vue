@@ -1,12 +1,8 @@
 <template>
 	<section class="footer">
 		<div class="footer-content">
-			<nuxt-link to="/" itemprop="url">
-				© theFactor.e
-			</nuxt-link>
-			<p>
-				We ontwikkelen digitale toepassingen die een verschil maken voor mensen.
-			</p>
+			<nuxt-link to="/" itemprop="url"> © theFactor.e </nuxt-link>
+			<p>We ontwikkelen digitale toepassingen die een verschil maken voor mensen.</p>
 		</div>
 	</section>
 </template>
@@ -36,14 +32,24 @@ export default class Footer extends Vue {}
 		color: $white;
 		font-family: $font-highlight-light;
 		max-width: 40rem;
-		text-decoration: none;
+	}
+
+	a {
+		font-family: $font-highlight;
 	}
 }
 
-@media all and (min-width: $m) {
+@media all and (min-width: $m + 1) {
 	.footer-content {
 		flex-direction: row;
 		align-items: center;
+		padding: $spacing $spacing * 6 $spacing;
+	}
+}
+
+@media all and (min-width: $l) {
+	.footer-content {
+		height: 22rem;
 		padding: $spacing $spacing * 6 $spacing;
 	}
 }

@@ -21,6 +21,7 @@
 			/>
 			<Values v-if="slice.slice_type === 'values'" :key="'slice-' + index" :data="slice" />
 			<LiveQuote v-if="slice.slice_type === 'livequote'" :key="'slice-' + index" :data="slice" />
+			<Locations v-if="slice.slice_type === 'locations'" :key="'slice-' + index" :data="slice" />
 			<FollowUp
 				v-if="slice.slice_type === 'followup'"
 				:key="'slice-' + index"
@@ -28,6 +29,14 @@
 				:number="slice.primary.number || ''"
 				:name="slice.primary.sub_title"
 			/>
+			<FollowUpCta
+				v-if="slice.slice_type === 'followupcta'"
+				:key="'slice-' + index"
+				:data="slice"
+				:number="slice.primary.number || ''"
+				:name="slice.primary.sub_title"
+			/>
+			<EventInfo v-if="slice.slice_type === 'event_info'" :key="'slice-' + index" :data="slice" />
 		</template>
 	</section>
 </template>
@@ -36,26 +45,32 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator';
 import {
 	LiveQuote,
 	TextList,
+	Locations,
 	FigureModule,
 	FollowUp,
+	FollowUpCta,
 	IntroText,
 	CallToAction,
 	Values,
 	Stack,
 	Partners,
+	EventInfo,
 } from '@/components/modules';
 
 @Component({
 	components: {
 		TextList,
 		LiveQuote,
+		Locations,
 		FigureModule,
 		FollowUp,
+		FollowUpCta,
 		CallToAction,
 		IntroText,
 		Values,
 		Stack,
 		Partners,
+		EventInfo,
 	},
 })
 export default class Slices extends Vue {

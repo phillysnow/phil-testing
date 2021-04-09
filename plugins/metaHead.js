@@ -1,5 +1,5 @@
 export default (context, inject) => {
-	const metaHead = (data, $prismic) => {
+	const metaHead = (data, $prismic, page) => {
 		let metaImage;
 
 		if (data.meta_image && data.meta_image.url) {
@@ -16,24 +16,37 @@ export default (context, inject) => {
 			title = $prismic.asText(data.fallback.page_title);
 		}
 
+		const descriptionFallback =
+			'Wij maken menselijke technologie voor digitale mensen. Door te weten wat technisch mogelijk is én wat mensen bezighoudt. Samenwerken?';
+
+		let bodyClass = {};
+
+		if (page) {
+			bodyClass = {
+				class: [`page--${page}`],
+			};
+		}
+
+		const canonical = {
+			rel: 'canonical',
+			href: `https://tfe.nl${data.url}`,
+		};
+
 		const titleOg = {
 			...(title && {
 				name: 'og:title',
 				content: `${title} | theFactor.e`,
 			}),
 		};
+
 		const descriptionOg = {
-			...(data.description && {
-				name: 'og:description',
-				content: data.description,
-			}),
+			name: 'og:description',
+			content: data.description ? data.description : descriptionFallback,
 		};
 
 		const description = {
-			...(data.description && {
-				name: 'description',
-				content: data.description,
-			}),
+			name: 'description',
+			content: data.description ? data.description : descriptionFallback,
 		};
 
 		const image = {
@@ -45,11 +58,15 @@ export default (context, inject) => {
 		if (title) {
 			return {
 				title: `${title} | theFactor.e`,
+				link: [canonical],
+				bodyAttrs: bodyClass,
 				meta: [titleOg, image, description, descriptionOg],
 			};
 		}
 
 		return {
+			link: [canonical],
+			bodyAttrs: bodyClass,
 			meta: [titleOg, image, description, descriptionOg],
 		};
 	};

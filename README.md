@@ -53,4 +53,4 @@ Build can be triggerd in 3 ways:
 
 -   [Local](https://localhost:3000)
 -   [Staging](https://tfe.acc.tfe.nl/)
--   [Production](https://www2.tfe.nl/)
+-   [Production](https://tfe.nl/)

@@ -24,11 +24,13 @@
 }
 
 @mixin break-long-word() {
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-	word-break: break-all;
-	word-break: break-word;
-	hyphens: auto;
+	@media all and (max-width: $m) {
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		word-break: break-all;
+		word-break: break-word;
+		hyphens: auto;
+	}
 }
 
 @mixin stripes {
@@ -51,17 +53,27 @@
 	@font-face {
 		font-family: 'Playfair Display';
 		font-style: normal;
-		font-display: swap;
+		font-display: optional;
 		font-weight: 800;
-		src: local('Playfair Display'), url('../assets/fonts/playfair-display-v20-latin-800.woff2') format('woff2'),
-			url('../assets/fonts/playfair-display-v20-latin-800.woff') format('woff');
+		src: local('Playfair Display'), url('../assets/fonts/playfair-display-v21-latin-800.woff2') format('woff2'),
+			url('../assets/fonts/playfair-display-v21-latin-800.woff') format('woff');
+	}
+
+	/* playfair-display-regular - latin */
+	@font-face {
+		font-family: 'Playfair Display';
+		font-style: normal;
+		font-display: optional;
+		font-weight: 400;
+		src: local(''), url('../assets/fonts/playfair-display-v21-latin-regular.woff2') format('woff2'),
+			url('../assets/fonts/playfair-display-v21-latin-regular.woff') format('woff');
 	}
 
 	/* dm-sans-regular - latin */
 	@font-face {
 		font-family: 'DM Sans';
 		font-style: normal;
-		font-display: swap;
+		font-display: optional;
 		font-weight: 400;
 		src: local('DM Sans Regular'), local('DMSans-Regular'),
 			url('../assets/fonts/dm-sans-v4-latin-regular.woff2') format('woff2'),
@@ -72,7 +84,7 @@
 	@font-face {
 		font-family: 'DM Sans';
 		font-style: normal;
-		font-display: swap;
+		font-display: optional;
 		font-weight: 500;
 		src: local('DM Sans Medium'), local('DMSans-Medium'),
 			url('../assets/fonts/dm-sans-v4-latin-500.woff2') format('woff2'),
@@ -80,15 +92,33 @@
 	}
 }
 
-@mixin transition {
-	// animations
-	.layout-enter-active,
-	.layout-leave-active {
-		transition: all 0s;
+@mixin transitionBefore($value, $color) {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 30;
+	transform: translate3d(0, $value, 0);
+	background-color: $color;
+}
+
+@mixin section-padding($breakpoint: 'xs') {
+	@if $breakpoint == 'xs' {
+		padding: $spacing * 2 $spacing $spacing * 2;
 	}
 
-	.layout-enter,
-	.layout-leave-to {
-		opacity: 0;
+	@if $breakpoint == 's' {
+		padding: $spacing * 4 $spacing * 2 $spacing * 2;
+	}
+
+	@if $breakpoint == 'm' {
+		padding: $spacing * 5 $spacing * 3 $spacing * 2;
+	}
+
+	@if $breakpoint == 'l' {
+		padding: $spacing * 6 $spacing * 6 $spacing * 2;
 	}
 }

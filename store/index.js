@@ -1,6 +1,8 @@
 export const state = () => ({
 	menu: {},
 	dark: false,
+	routeBack: '',
+	detailpage: false,
 });
 
 export const mutations = {
@@ -12,6 +14,15 @@ export const mutations = {
 	},
 	SET_THEME(state, value) {
 		state.dark = value;
+	},
+	SET_PARENTROUTE(state, value) {
+		state.routeBack = value;
+	},
+	SET_PARENTROUTEFALLBACK(state, value) {
+		if (state.routeBack === '') state.routeBack = value;
+	},
+	SET_DETAILPAGE(state, value) {
+		state.detailpage = value;
 	},
 };
 
