@@ -4,7 +4,7 @@ export default {
 	server: {
 		host: '0.0.0.0',
 	},
-	target: 'server',
+	target: 'static',
 	ssr: true,
 	/*
 	 ** Headers of the page
