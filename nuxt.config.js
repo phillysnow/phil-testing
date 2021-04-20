@@ -4,7 +4,7 @@ export default {
 	server: {
 		host: '0.0.0.0',
 	},
-	target: 'static',
+	target: 'server',
 	ssr: true,
 	/*
 	 ** Headers of the page
@@ -86,42 +86,6 @@ export default {
 		endpoint: 'https://thefactore.prismic.io/api/v2',
 		linkResolver: '@/prismic/link-resolver.js',
 		htmlSerializer: '@/prismic/html-serializer',
-		apiOptions: {
-			routes: [
-				{
-					type: 'default',
-					path: '/:uid',
-				},
-				{
-					type: 'case',
-					path: '/cases/:uid',
-				},
-				{
-					type: 'opinie',
-					path: '/opinies/:uid',
-				},
-				{
-					type: 'nieuws',
-					path: '/actueel/nieuws/:uid',
-				},
-				{
-					type: 'event',
-					path: '/actueel/events/:uid',
-				},
-				{
-					type: 'sector',
-					path: '/services/sectoren/:uid',
-				},
-				{
-					type: 'expertise',
-					path: '/services/expertises/:uid',
-				},
-				{
-					type: 'expertise_dci',
-					path: '/services/expertises/data-en-customer-intelligence/:uid',
-				},
-			],
-		},
 	},
 	/*
 	 ** Style resources module configuration
