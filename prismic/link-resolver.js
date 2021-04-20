@@ -8,7 +8,7 @@ export default function (doc) {
 		return '/404'
 	}
 	if (doc.type === 'at_work') {
-    return `/actueel/atwork/${doc.uid}`
+    return `/actueel/at-work/${doc.uid}`
   }
 	else {
 		return '/404'
