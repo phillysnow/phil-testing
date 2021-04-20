@@ -17,10 +17,6 @@ export default function (doc) {
 	if (doc.type === 'over_ons') {
 		return '/over-ons'
 	}
-	if (doc.type === 'default') {
-		return `/${doc.uid}`
-	}
-
   if (doc.type === 'page') {
     return `/${doc.lang}/${doc.uid}`
   }

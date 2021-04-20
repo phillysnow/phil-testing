@@ -88,10 +88,6 @@ export default {
 		apiOptions: {
 			routes: [
 				{
-					type: 'default',
-					path: '/:uid',
-				},
-				{
 					type: 'case',
 					path: '/cases/:uid',
 				},
