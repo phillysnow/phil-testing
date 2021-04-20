@@ -109,10 +109,6 @@ export default {
 					path: '/actueel/events/:uid',
 				},
 				{
-					type: 'at_work',
-					path: '/actueel/at-work/:uid',
-				},
-				{
 					type: 'sector',
 					path: '/services/sectoren/:uid',
 				},
