@@ -61,6 +61,9 @@ export default {
 	 */
 	buildModules: [
 		// Doc: https://github.com/nuxt-community/stylelint-module
+		'@nuxtjs/stylelint-module',
+		// Doc: https://github.com/nuxt-community/eslint-module
+		'@nuxtjs/eslint-module',
 		'@nuxtjs/gtm',
 	],
 	gtm: {
@@ -75,8 +78,6 @@ export default {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/style-resources',
-		'@/prismic/static',
-		'@/prismic/crawler',
 		'@nuxtjs/prismic',
 	],
 	prismic: {
@@ -87,6 +88,10 @@ export default {
 		htmlSerializer: '@/prismic/html-serializer',
 		apiOptions: {
 			routes: [
+				{
+					type: 'default',
+					path: '/:uid',
+				},
 				{
 					type: 'case',
 					path: '/cases/:uid',
@@ -102,6 +107,10 @@ export default {
 				{
 					type: 'event',
 					path: '/actueel/events/:uid',
+				},
+				{
+					type: 'at_work',
+					path: '/actueel/at-work/:uid',
 				},
 				{
 					type: 'sector',
