@@ -61,9 +61,6 @@ export default {
 	 */
 	buildModules: [
 		// Doc: https://github.com/nuxt-community/stylelint-module
-		'@nuxtjs/stylelint-module',
-		// Doc: https://github.com/nuxt-community/eslint-module
-		'@nuxtjs/eslint-module',
 		'@nuxtjs/gtm',
 	],
 	gtm: {
@@ -109,10 +106,6 @@ export default {
 				{
 					type: 'event',
 					path: '/actueel/events/:uid',
-				},
-				{
-					type: 'at_work',
-					path: '/actueel/at-work/:uid',
 				},
 				{
 					type: 'sector',

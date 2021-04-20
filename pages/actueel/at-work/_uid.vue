@@ -47,16 +47,12 @@ import { Hero, Slices, UpNext } from '@/components/modules';
 export default class AtWork extends Vue {
 	async asyncData({ $prismic, params, error }) {
 		try {
-			const data = await $prismic.api.getByUID('at_work', params.uid, {
-				fetchLinks: ['at_work.page_title', 'at_work.page_subtitle', 'at_work.visable'],
-			});
-
-			const doc = data.data;
+			const doc = (await $prismic.api.getByUID('at_work', params.uid)).data
 
 			return {
 				hero: {
 					// title required
-					type: data.type,
+					type: doc.type,
 					title: doc.page_title,
 					subtitle: doc.page_subtitle,
 					image: doc.page_image,
@@ -70,7 +66,7 @@ export default class AtWork extends Vue {
 					description: doc.meta_description ? doc.meta_description : undefined,
 					image: doc.meta_image,
 					fallback: doc,
-					url: $prismic.linkResolver(data),
+					url: $prismic.linkResolver(doc),
 				},
 			};
 		} catch (e) {
